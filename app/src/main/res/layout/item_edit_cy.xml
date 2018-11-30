@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/fl_selector"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/iv_selector"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@drawable/selector_btn_circle"
+            android:layout_marginTop="@dimen/dp_15"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/dp_10"
+        android:layout_toRightOf="@+id/fl_selector">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20">
+
+        <ImageView
+            android:id="@+id/iv_has_notify"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_8"
+            android:src="@drawable/dot_notify"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_has_notify"
+            android:textColor="@color/color_22262A"
+            android:textSize="@dimen/sp_16"
+            tools:text="张珊珊"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_toRightOf="@+id/tv_name"
+            android:textColor="@color/color_ABAFB3"
+            android:textSize="@dimen/sp_11"
+            tools:text="12-15 13:59"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_accessory"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_5"
+                android:src="@drawable/icon_accessory_gray"/>
+
+            <ImageView
+                android:id="@+id/iv_focus"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:src="@drawable/icon_focus_gray"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/dp_5"
+        android:maxLines="2"
+        android:textColor="@color/color_22262A"
+        android:textSize="@dimen/sp_13"
+        tools:text="实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA"/>
+    </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0d5"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/color_204_204_204"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_15"/>
+</LinearLayout>

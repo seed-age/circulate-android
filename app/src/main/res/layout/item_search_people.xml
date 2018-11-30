@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_64"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_15"
+    android:paddingRight="@dimen/dp_10">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_head"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_centerVertical="true"
+        android:src="@drawable/img_head"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/civ_head"
+        android:layout_alignTop="@+id/civ_head"
+        tools:text="阿水"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/color_22262A"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:id="@+id/textView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/civ_head"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:textColor="@color/color_53585C"
+        android:textSize="@dimen/sp_12"
+        tools:text="广州实地集团/技术部"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0d5"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_204_204_204"/>
+</RelativeLayout>

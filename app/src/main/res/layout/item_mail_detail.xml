@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_mail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:text="OA传阅迭代更新"
+        android:textColor="@color/color_22262A"
+        android:textSize="@dimen/sp_16"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16">
+
+        <LinearLayout
+            android:id="@+id/ll_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_deliver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发件人:  张三  产品部"
+                    android:textColor="@color/color_ABAFB3"
+                    android:textSize="@dimen/sp_12"/>
+
+                <TextView
+                    android:id="@+id/tv_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="隐藏"
+                    android:textColor="@color/color_008cd6"
+                    android:textSize="@dimen/sp_12"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="传阅时间:  2018-01-09  14:45"
+                android:textColor="@color/color_ABAFB3"
+                android:textSize="@dimen/sp_12"/>
+
+            <TextView
+                android:id="@+id/tv_receiver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="接收人:  张三;  李经理;  李总"
+                android:textColor="@color/color_ABAFB3"
+                android:textSize="@dimen/sp_12"/>
+
+            <TextView
+                android:id="@+id/tv_accessory_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="附件数:  3个"
+                android:textColor="@color/color_ABAFB3"
+                android:textSize="@dimen/sp_12"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_omit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三    产品部"
+                android:textColor="@color/color_008cd6"
+                android:textSize="@dimen/sp_12"/>
+
+            <TextView
+                android:id="@+id/tv_attach_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@+id/tv_sender"
+                android:drawableLeft="@drawable/icon_accessory_gray"
+                android:text="3"
+                android:textColor="@color/color_ABAFB3"
+                android:textSize="@dimen/sp_12"/>
+
+            <TextView
+                android:id="@+id/tv_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="展开"
+                android:textColor="@color/color_008cd6"
+                android:textSize="@dimen/sp_12"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/dp_5"
+        android:minHeight="@dimen/dp_323"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_12"
+        android:text="OA传阅迭代更新OA传阅迭代更新OA传阅迭代更新OA传阅迭代更新"
+        android:textColor="@color/color_22262A"
+        android:textSize="@dimen/sp_14"/>
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_12"
+        android:background="@color/color_bg"/>
+
+    <LinearLayout
+        android:id="@+id/ll_accessory_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+</LinearLayout>

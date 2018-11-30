@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.ecology.view.seedland.circulate"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.android.support:design:26.1.0'
+    //BRVAH
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //circleimageview
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    implementation files('libs/pinyin4j-2.5.0.jar')
+    //expandableTextView
+    compile 'cn.carbs.android:ExpandableTextView:1.0.3'
+    //Okhttp
+    compile 'com.squareup.okhttp3:mockwebserver:3.9.1'
+    //MaterialChipsInput
+    //    compile 'com.github.pchmn:MaterialChipsInput:1.0.8'
+    //fastjson
+    compile 'com.alibaba:fastjson:1.2.44'
+    //AgentWeb
+    compile 'com.just.agentweb:agentweb:4.0.2'
+    //glide图片加载框架
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //filePicker
+    compile 'com.droidninja:filepicker:2.1.2'
+    //permissionsdispatcher
+    compile 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+    //tokenautocomplete
+    //    compile "com.splitwise:tokenautocomplete:2.0.8@aar"
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.github.bmelnychuk:atv:1.2.+'
+    //richtext
+    compile 'com.zzhoujay.richtext:richtext:3.0.5'
+}

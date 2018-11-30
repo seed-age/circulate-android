@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ecology.view.seedland.circulate.view.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!-- 菜单布局 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_focus"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="match_parent"
+            android:background="@color/color_008cd6"
+            android:gravity="center"
+            android:text="关注"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_15"/>
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="match_parent"
+            android:background="@color/color_FF5151"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_15"/>
+
+    </LinearLayout>
+    <!--内容布局-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_10">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <ImageView
+                android:id="@+id/iv_has_notify"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_8"
+                android:src="@drawable/dot_notify"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_has_notify"
+                android:textColor="@color/color_22262A"
+                android:textSize="@dimen/sp_16"
+                tools:text="张珊珊"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_toRightOf="@+id/tv_name"
+                android:textColor="@color/color_ABAFB3"
+                android:textSize="@dimen/sp_11"
+                tools:text="12-15 13:59"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_accessory"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:src="@drawable/icon_accessory_gray"/>
+
+                <ImageView
+                    android:id="@+id/iv_focus"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:src="@drawable/icon_focus_gray"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/dp_5"
+            android:maxLines="2"
+            android:textColor="@color/color_22262A"
+            android:textSize="@dimen/sp_13"
+            tools:text="实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA实地OA"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0d5"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/color_204_204_204"/>
+    </LinearLayout>
+</com.ecology.view.seedland.circulate.view.SwipeLayout>

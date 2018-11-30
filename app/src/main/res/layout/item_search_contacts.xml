@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="16dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="left"
+        tools:text="萨马尔岛实地看风景的饭的饭卡圣诞节放假"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_company"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_100"
+        android:layout_gravity="center_vertical"
+        android:maxLines="1"
+        tools:text="萨马尔岛实地看风景的饭的饭卡圣诞节放假"
+        android:gravity="left"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_department"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_220"
+        android:gravity="left"
+        android:maxWidth="@dimen/dp_120"
+        tools:text="上课的卷发开始剪短发的季节"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"
+        android:singleLine="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:background="#cccccc"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+</FrameLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/dp_246"
+              android:layout_height="wrap_content"
+              android:layout_centerInParent="true"
+              android:minHeight="@dimen/dp_154"
+              android:layout_gravity="center_horizontal"
+              android:background="@drawable/shape_bg_result_dialog"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_110">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系人已达到上限"
+            android:layout_gravity="center"
+            android:textColor="@color/color_22262A"
+            android:textSize="@dimen/sp_16"/>
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0d5"
+        android:background="@color/color_204_204_204"/>
+    <TextView
+        android:id="@+id/tv_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="确认"
+        android:textColor="@color/color_008cd6"
+        android:textSize="@dimen/sp_15"/>
+
+</LinearLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_small">
+
+        <com.ecology.view.seedland.circulate.view.MyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"/>
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0d5"
+        android:background="@color/color_204_204_204"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_49"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/fl_comment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_comment"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_focus"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:id="@+id/iv_focus"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:src="@drawable/selector_detail_focus"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_object"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_object"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="@dimen/dp_193"
+            android:layout_height="match_parent"
+            android:background="@color/color_008cd6"
+            android:gravity="center"
+            android:text="确认"
+            android:onClick="onClick"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_15"/>
+    </LinearLayout>
+</LinearLayout>
