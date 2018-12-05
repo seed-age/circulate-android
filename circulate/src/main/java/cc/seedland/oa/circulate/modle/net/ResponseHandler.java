@@ -7,7 +7,7 @@ import org.json.JSONObject;
  */
 
 public interface ResponseHandler {
-    void onError(String msg);
+    void onError(String msg, String code);
 
     void onSuccess(String json, JSONObject jsonObject,BaseResponse response);
 }

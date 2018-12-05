@@ -61,7 +61,7 @@ public class NetManager {
                 Global.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        req.getHandler().onError(e.getMessage());
+                        req.getHandler().onError(e.getMessage(), "500");
                     }
                 });
             }
@@ -93,7 +93,7 @@ public class NetManager {
                 Global.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        req.getHandler().onError(e.getMessage());
+                        req.getHandler().onError(e.getMessage(), "500");
                     }
                 });
             }
@@ -130,7 +130,7 @@ public class NetManager {
                 if (res.isSuccess()) {
                     req.getHandler().onSuccess(json, jsonObject, res);
                 } else {
-                    req.getHandler().onError(res.getMsg());
+                    req.getHandler().onError(res.getMsg(),res.getCode());
 //                    Global.showToast(res.getMsg());
                 }
             } else { //json不满足{"success": true,"code":"","msg": "","data": {}}的数据格式
@@ -138,7 +138,7 @@ public class NetManager {
             }
         } catch (JSONException e) {
             LogUtil.e(e.getMessage());
-            req.getHandler().onError(e.getMessage());
+            req.getHandler().onError(e.getMessage(), "500");
         }
     }
 

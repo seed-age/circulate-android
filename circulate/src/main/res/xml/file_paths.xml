@@ -2,4 +2,5 @@
 <paths>
     <external-path path="Android/data/cc.seedland.oa.circulate/" name="files_root" />
     <external-path path="." name="external_storage_root" />
+    <external-files-path name="circulate" path="path" />
 </paths>

@@ -1,18 +1,12 @@
 package cc.seedland.oa.circulate.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -198,7 +192,7 @@ public class FileListActivity extends CirculateBaseActivity implements ResponseH
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         showToast(msg);
     }
 

@@ -251,11 +251,10 @@ public class CYDetailAdapter extends BaseMultiItemQuickAdapter<CYDetailInfo, Bas
         mFileMenu.findViewById(R.id.tv_preview).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCyDetailActivity.showDelayDialog();
+                Global.sPreViewFileName = attachBean.fileName;
+                mCyDetailActivity.showDownloadDialog(attachBean.itemId);
                 mFileMenu.dismiss();
 //                HttpService.previewFile(attachBean.itemId,attachBean.bulkId,mCyDetailActivity);
-                Global.sPreViewFileName = attachBean.fileName;
-                HttpService.downloadFile(attachBean.itemId, mCyDetailActivity);
             }
         });
 

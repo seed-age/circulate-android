@@ -2,26 +2,21 @@ package cc.seedland.oa.circulate.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.adapter.CommentListAdapter;
-import cc.seedland.oa.circulate.base.CirculateBaseActivity;
 import cc.seedland.oa.circulate.base.NoImmerseBaseActivity;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.DiscussListInfo;
@@ -159,7 +154,7 @@ public class CommentListActivity extends NoImmerseBaseActivity implements Respon
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         mSwipeRefresh.setRefreshing(false);
         showToast(msg);
     }

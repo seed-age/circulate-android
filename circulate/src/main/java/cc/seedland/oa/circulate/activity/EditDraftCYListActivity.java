@@ -180,7 +180,7 @@ public class EditDraftCYListActivity extends CirculateBaseActivity implements Re
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         showToast(msg);
     }
 

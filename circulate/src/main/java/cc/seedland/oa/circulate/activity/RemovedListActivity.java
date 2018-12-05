@@ -146,7 +146,7 @@ public class RemovedListActivity extends CirculateBaseActivity implements Respon
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         showToast(msg);
     }
 

@@ -386,7 +386,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         hideDelayDialog();
         showToast(msg);
     }

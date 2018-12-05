@@ -21,9 +21,7 @@ import cc.seedland.oa.circulate.view.MyToolbar;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Route(path = "/Function/Circulate")
 public class ChuanYueActivity extends CirculateBaseActivity implements ResponseHandler {
@@ -127,7 +125,7 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         showToast(msg);
     }
 

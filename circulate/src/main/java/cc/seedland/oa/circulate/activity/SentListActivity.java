@@ -285,7 +285,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         showToast(msg);
     }
 

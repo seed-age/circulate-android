@@ -36,7 +36,7 @@
             android:layout_height="45dp"
             android:layout_margin="2dp"
             android:gravity="center"
-            android:text="预览"
+            android:text="下载预览"
             android:textColor="@color/color_565656"
             android:textSize="@dimen/sp_15"
             android:textStyle="italic"/>

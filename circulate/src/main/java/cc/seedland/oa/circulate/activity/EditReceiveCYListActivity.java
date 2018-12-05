@@ -198,7 +198,7 @@ public class EditReceiveCYListActivity extends CirculateBaseActivity implements 
     }
 
     @Override
-    public void onError(String msg) {
+    public void onError(String msg, String code) {
         showToast(msg);
     }
 

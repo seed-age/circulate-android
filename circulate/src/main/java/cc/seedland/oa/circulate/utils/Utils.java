@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -324,7 +323,7 @@ public class Utils {
     public static void getUnReadCount(final OnUnReadCountListener onUnReadCountListener) {
         HttpService.loadMailCount(new ResponseHandler() {
             @Override
-            public void onError(String msg) {
+            public void onError(String msg, String code) {
                 onUnReadCountListener.unReadCount(false,msg);
             }
 
