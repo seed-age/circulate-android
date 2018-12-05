@@ -42,37 +42,39 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
             helper.addOnClickListener(R.id.ll_private_group);
             helper.addOnClickListener(R.id.ll_search);
         }else if (itemType == ContactsMultiInfo.CONTENT) {
-            TextView tvLetter = helper.getView(R.id.tv_letter);
             helper.setText(R.id.tv_name,item.getName());
-            String initLetter = item.getInitLetter();
-            Pattern p = Pattern.compile(regex);
-            Matcher m = p.matcher(initLetter);
-            if (m.find()) {
-                initLetter = initLetter.toUpperCase();
-            } else {
-                initLetter = "#";
-            }
-            tvLetter.setText(initLetter);
-            int position = helper.getAdapterPosition();
+            // ============把首字母逻辑注释==============
+//            TextView tvLetter = helper.getView(R.id.tv_letter);
+//            String initLetter = item.getInitLetter();
+//            Pattern p = Pattern.compile(regex);
+//            Matcher m = p.matcher(initLetter);
+//            if (m.find()) {
+//                initLetter = initLetter.toUpperCase();
+//            } else {
+//                initLetter = "#";
+//            }
+//            tvLetter.setText(initLetter);
+//            int position = helper.getAdapterPosition();
             // 第一个列表项会显示首字母
-            if (position == 0) {
-                tvLetter.setVisibility(View.VISIBLE);
-            } else {
-                // 上一个列表项的javabean
-                ContactsMultiInfo contactsMultiInfo = super.getData().get(position - 1);
-
-                // 与上一个列表项的javabean的首字母不一样，是显示
-                String initLetter1 = contactsMultiInfo.getInitLetter();
-                Matcher m1 = p.matcher(initLetter1);
-                if (m1.find()) {
-                    initLetter1 = initLetter1.toUpperCase();
-                }
-                if (!initLetter.equals(initLetter1)) {
-                    tvLetter.setVisibility(View.VISIBLE);
-                } else { // 不显示
-                    tvLetter.setVisibility(View.GONE);
-                }
-            }
+//            if (position == 0) {
+//                tvLetter.setVisibility(View.VISIBLE);
+//            } else {
+//                // 上一个列表项的javabean
+//                ContactsMultiInfo contactsMultiInfo = super.getData().get(position - 1);
+//
+//                // 与上一个列表项的javabean的首字母不一样，是显示
+//                String initLetter1 = contactsMultiInfo.getInitLetter();
+//                Matcher m1 = p.matcher(initLetter1);
+//                if (m1.find()) {
+//                    initLetter1 = initLetter1.toUpperCase();
+//                }
+//                if (!initLetter.equals(initLetter1)) {
+//                    tvLetter.setVisibility(View.VISIBLE);
+//                } else { // 不显示
+//                    tvLetter.setVisibility(View.GONE);
+//                }
+//            }
+            // ============把首字母逻辑注释==============
 
             helper.setText(R.id.tv_department,item.userInfo.fullName+"/"+item.userInfo.deptFullname);
             ImageView ivSelector = helper.getView(R.id.iv_selector);

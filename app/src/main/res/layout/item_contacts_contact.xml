@@ -14,7 +14,8 @@
         android:text="A"
         android:gravity="center_vertical"
         android:textColor="@color/color_22262A"
-        android:textSize="@dimen/sp_12"/>
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/ll_contact"

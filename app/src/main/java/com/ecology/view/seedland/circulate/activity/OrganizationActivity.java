@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSONArray;
 import com.ecology.view.seedland.circulate.R;
 import com.ecology.view.seedland.circulate.base.CirculateBaseActivity;
 import com.ecology.view.seedland.circulate.fragment.CommonGroupFragment;
@@ -18,10 +20,14 @@ import com.ecology.view.seedland.circulate.global.Global;
 import com.ecology.view.seedland.circulate.modle.bean.ContactsMultiInfo;
 import com.ecology.view.seedland.circulate.modle.bean.UserInfo;
 import com.ecology.view.seedland.circulate.utils.LogUtil;
+import com.ecology.view.seedland.circulate.utils.PreferenceUtils;
 import com.ecology.view.seedland.circulate.utils.UISkipUtils;
+import com.ecology.view.seedland.circulate.utils.Utils;
 import com.ecology.view.seedland.circulate.view.MyToolbar;
 
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,9 +83,9 @@ public class OrganizationActivity extends CirculateBaseActivity {
         mType = intent.getIntExtra("TYPE", 0);
         if (mType == 0) {
             mToolbar.setTitle("组织");
-        }else if (mType == 1){
+        } else if (mType == 1) {
             mToolbar.setTitle("公用组");
-        }else if (mType == 2){
+        } else if (mType == 2) {
             mToolbar.setTitle("私人组");
         }
         createFragment();
@@ -98,7 +104,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
             mCommonGroupFragment = new CommonGroupFragment();
             mCommonGroupFragment.setArguments(bundle);
             mTransaction.replace(R.id.fl_container, mCommonGroupFragment).commit();
-        }else if (mType == 2) {
+        } else if (mType == 2) {
             mPrivateGroupFragment = new PrivateGroupFragment();
             mPrivateGroupFragment.setArguments(bundle);
             mTransaction.replace(R.id.fl_container, mPrivateGroupFragment).commit();
@@ -118,6 +124,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
         }
         switch (id) {
             case R.id.tv_right:
+                refreshSelectedUser(selectedNode);
                 intent.putExtra("DATA", (Serializable) selectedNode);
                 setResult(UISkipUtils.FROM_SELECTED, intent);
                 finish();
@@ -136,6 +143,34 @@ public class OrganizationActivity extends CirculateBaseActivity {
         }
     }
 
+    private void refreshSelectedUser(List<UserInfo> selectedNode) {
+        String selectedUser = PreferenceUtils.getString(this, "SELECTED_USER");
+        List<UserInfo> userInfos = null;
+        if (!TextUtils.isEmpty(selectedUser)) {
+            userInfos = Utils.parseJsonArray(selectedUser, UserInfo.class);
+        }
+        if (userInfos == null) {
+            userInfos = selectedNode;
+        }else {
+            List<String> userIds = new ArrayList<>();
+            for (UserInfo userInfo : userInfos) {
+                userIds.add(userInfo.userId);
+            }
+            for (UserInfo userInfo : selectedNode) {
+                if (!userIds.contains(userInfo.userId)) {
+                    if (userInfos.size() >= 10) {
+                        userInfos.remove(0);
+                    }
+                    userInfos.add(userInfo);
+                }
+            }
+        }
+        String newSelectedUser = JSONArray.toJSONString(userInfos);
+        PreferenceUtils.putString(this,"SELECTED_USER",newSelectedUser);
+//        LogUtil.e("selectedUser = " + string);
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -144,9 +179,9 @@ public class OrganizationActivity extends CirculateBaseActivity {
                 List<UserInfo> selected = (List<UserInfo>) data.getSerializableExtra("DATA");
                 if (mType == 0) {
                     mOrganizationFragment.setSelectedNode(selected);
-                }else if (mType == 1) {
+                } else if (mType == 1) {
                     mCommonGroupFragment.setSelectedNode(selected);
-                }else if (mType == 2) {
+                } else if (mType == 2) {
                     mPrivateGroupFragment.setSelectedNode(selected);
                 }
             }
@@ -160,9 +195,9 @@ public class OrganizationActivity extends CirculateBaseActivity {
         List<UserInfo> selectedNode = null;
         if (mType == 0) {
             selectedNode = mOrganizationFragment.getSelectedNode();
-        }else if (mType == 1) {
+        } else if (mType == 1) {
             selectedNode = mCommonGroupFragment.getSelectedNode();
-        }else if (mType == 2) {
+        } else if (mType == 2) {
             selectedNode = mPrivateGroupFragment.getSelectedNode();
         }
         intent.putExtra("DATA", (Serializable) selectedNode);

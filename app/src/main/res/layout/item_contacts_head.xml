@@ -97,4 +97,10 @@
             android:layout_marginLeft="@dimen/dp_12"
             android:textColor="@color/color_22262A"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0d5"
+        android:background="@color/color_204_204_204"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_20"/>
 </LinearLayout>

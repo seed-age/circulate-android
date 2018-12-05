@@ -3,6 +3,7 @@ package com.ecology.view.seedland.circulate.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -16,7 +17,9 @@ import com.ecology.view.seedland.circulate.global.Constants;
 import com.ecology.view.seedland.circulate.global.Global;
 import com.ecology.view.seedland.circulate.modle.bean.ContactsMultiInfo;
 import com.ecology.view.seedland.circulate.modle.bean.UserInfo;
+import com.ecology.view.seedland.circulate.utils.PreferenceUtils;
 import com.ecology.view.seedland.circulate.utils.UISkipUtils;
+import com.ecology.view.seedland.circulate.utils.Utils;
 import com.ecology.view.seedland.circulate.view.LimitDialog;
 import com.ecology.view.seedland.circulate.view.MyToolbar;
 import com.ecology.view.seedland.circulate.view.QuickIndexBar;
@@ -137,7 +140,7 @@ public class ContactsActivity extends CirculateBaseActivity {
                     mGroupType = 1;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
                             mSelectedUserList, mGroupType);
-                }else if (id == R.id.ll_private_group) {
+                } else if (id == R.id.ll_private_group) {
                     mGroupType = 2;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
                             mSelectedUserList, mGroupType);
@@ -174,102 +177,45 @@ public class ContactsActivity extends CirculateBaseActivity {
         if (user_list != null)
             mSelectedUserList = user_list;
         List<ContactsMultiInfo> contentInfo = new ArrayList<>();
-        List<UserInfo> userInfos = Global.sUserInfo;
-        //正常添加数据的方法
-        if (userInfos != null) {
-            for (int i = 0; i < userInfos.size(); i++) {
-                UserInfo userInfo = userInfos.get(i);
-                if (userInfo != null) {
-                    ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo
-                            .CONTENT);
+        String selectedUser = PreferenceUtils.getString(this, "SELECTED_USER");
+        if (!TextUtils.isEmpty(selectedUser)) {
+            List<UserInfo> userInfos = Utils.parseJsonArray(selectedUser, UserInfo.class);
+//        List<UserInfo> userInfos = Global.sUserInfo;
+//        //正常添加数据的方法
+            if (userInfos != null) {
+                for (int i = 0; i < userInfos.size(); i++) {
+                    UserInfo userInfo = userInfos.get(i);
+                    if (userInfo != null) {
+                        ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo
+                                .CONTENT);
 
-                    contactsMultiInfo.setName(userInfo.lastName);
-                    contactsMultiInfo.userInfo = userInfo;
-                    if (mSelectedUserList != null && mSelectedUserList.size() > 0) {
-                        for (UserInfo info : mSelectedUserList) {
-                            if (userInfo.userId.equals(info.userId)) {
-                                contactsMultiInfo.isSelected = true;
+                        contactsMultiInfo.setName(userInfo.lastName);
+                        contactsMultiInfo.userInfo = userInfo;
+                        if (mSelectedUserList != null && mSelectedUserList.size() > 0) {
+                            for (UserInfo info : mSelectedUserList) {
+                                if (userInfo.userId.equals(info.userId)) {
+                                    contactsMultiInfo.isSelected = true;
+                                }
                             }
                         }
+                        contentInfo.add(contactsMultiInfo);
                     }
-                    contentInfo.add(contactsMultiInfo);
                 }
             }
+            refreshSelected(contentInfo);
         }
-        refreshSelected(contentInfo);
-        //添加测试数据
-//        for (int i = 0; i < 500; i++) {
-//            ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
-//            contactsMultiInfo.setName("阿" + i);
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.lastName = "阿" + i;
-//            userInfo.userId = i+"";
-//            userInfo.fullName = "阿";
-//            userInfo.deptFullname = "阿";
-//            contentInfo.add(contactsMultiInfo);
-//        }
-//        for (int i = 0; i < 500; i++) {
-//            ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
-//            contactsMultiInfo.setName("陈" + i);
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.lastName = "陈" + i;
-//            userInfo.userId = i+"";
-//            userInfo.fullName = "陈";
-//            userInfo.deptFullname = "陈";
-//            contentInfo.add(contactsMultiInfo);
-//        }
-//        for (int i = 0; i < 500; i++) {
-//            ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
-//            contactsMultiInfo.setName("何" + i);
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.lastName = "何" + i;
-//            userInfo.userId = i+"";
-//            userInfo.fullName = "何";
-//            userInfo.deptFullname = "何";
-//            contentInfo.add(contactsMultiInfo);
-//        }
-//        for (int i = 0; i < 500; i++) {
-//            ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
-//            contactsMultiInfo.setName("万" + i);
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.lastName = "万" + i;
-//            userInfo.userId = i+"";
-//            userInfo.fullName = "万";
-//            userInfo.deptFullname = "万";
-//            contentInfo.add(contactsMultiInfo);
-//        }
-//        for (int i = 0; i < 500; i++) {
-//            ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
-//            contactsMultiInfo.setName("有" + i);
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.lastName = "有" + i;
-//            userInfo.userId = i+"";
-//            userInfo.fullName = "有";
-//            userInfo.deptFullname = "有";
-//            contentInfo.add(contactsMultiInfo);
-//        }
-//        for (int i = 0; i < 500; i++) {
-//            ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
-//            contactsMultiInfo.setName("这" + i);
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.lastName = "这" + i;
-//            userInfo.userId = i+"";
-//            userInfo.fullName = "这";
-//            userInfo.deptFullname = "这";
-//            contentInfo.add(contactsMultiInfo);
-//        }
-        // 按首字母进行排序
-        Collections.sort(contentInfo, new Comparator<ContactsMultiInfo>() {
-
-            @Override
-            public int compare(ContactsMultiInfo o1, ContactsMultiInfo o2) {
-                if (o1.getItemType() == ContactsMultiInfo.CONTENT && o2.getItemType() ==
-                        ContactsMultiInfo.CONTENT)
-                    return o1.getPingyin().compareTo(o2.getPingyin());
-                else
-                    return 0;
-            }
-        });
+//        // 按首字母进行排序
+//        Collections.sort(contentInfo, new Comparator<ContactsMultiInfo>() {
+//
+//            @Override
+//            public int compare(ContactsMultiInfo o1, ContactsMultiInfo o2) {
+//                if (o1.getItemType() == ContactsMultiInfo.CONTENT && o2.getItemType() ==
+//                        ContactsMultiInfo.CONTENT)
+//                    return o1.getPingyin().compareTo(o2.getPingyin());
+//                else
+//                    return 0;
+//            }
+//        });
         data.add(0, new ContactsMultiInfo(ContactsMultiInfo.HEAD));
         data.addAll(contentInfo);
         mAdapter.notifyDataSetChanged();
