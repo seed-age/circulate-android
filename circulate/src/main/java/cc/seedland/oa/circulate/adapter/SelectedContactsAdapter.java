@@ -50,8 +50,8 @@ public class SelectedContactsAdapter extends BaseQuickAdapter<UserInfo,BaseViewH
             }
         });
 
-        helper.setText(R.id.tv_name,item.lastName);
-        helper.setText(R.id.tv_department,item.fullName+"/"+item.deptFullname);
+        helper.setText(R.id.tv_name, item.lastName);
+        helper.setText(R.id.tv_department, item.fullCompanyName + "/" + item.deptFullName);
         helper.addOnClickListener(R.id.tv_delete);
     }
 }

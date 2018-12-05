@@ -171,13 +171,13 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         for (UserInfo userInfo : Global.sUserInfo) {
             UserInfo user = new UserInfo();
             user.departmentId = userInfo.departmentId;
-            user.deptFullname = userInfo.deptFullname;
-            user.fullName = userInfo.fullName;
+            user.deptFullName = userInfo.deptFullName;
+            user.fullCompanyName = userInfo.fullCompanyName;
             user.lastName = userInfo.lastName;
             user.loginId = userInfo.loginId;
-            user.subcompanyId1 = userInfo.subcompanyId1;
+            user.subCompanyId = userInfo.subCompanyId;
             user.userId = userInfo.userId;
-            user.userMssageId = userInfo.userMssageId;
+            user.userMessageId = userInfo.userMessageId;
             user.workCode = userInfo.workCode;
             mUserInfos.add(user);
         }

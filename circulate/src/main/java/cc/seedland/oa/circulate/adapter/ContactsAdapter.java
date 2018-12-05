@@ -1,14 +1,20 @@
 package cc.seedland.oa.circulate.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import cc.seedland.oa.circulate.R;
+import cc.seedland.oa.circulate.global.Constants;
+import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.ContactsMultiInfo;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,7 +82,18 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
 //            }
             // ============把首字母逻辑注释==============
 
-            helper.setText(R.id.tv_department,item.userInfo.fullName+"/"+item.userInfo.deptFullname);
+            helper.setText(R.id.tv_department, item.userInfo.fullCompanyName + "/" + item.userInfo.deptFullName);
+            if (!TextUtils.isEmpty(item.userInfo.headerUrl) && !TextUtils.isEmpty(Global.sKnife.getImageHost())) {
+                try {
+                    String imageUrl = Global.sKnife.getImageHost().replace("client",
+                            "downloadpic")
+                            + "?url="
+                            + URLEncoder.encode(item.userInfo.headerUrl, "utf-8") + "&thumbnail=1";
+                    Glide.with(mContext).load(imageUrl).placeholder(R.drawable.ic_avatar_loading).into((ImageView) helper.getView(R.id.civ_head));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
             ImageView ivSelector = helper.getView(R.id.iv_selector);
             ivSelector.setSelected(item.isSelected);
         }

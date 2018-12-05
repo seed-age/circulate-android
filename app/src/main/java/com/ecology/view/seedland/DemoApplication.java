@@ -46,6 +46,11 @@ public class DemoApplication extends Application {
             }
 
             @Override
+            public String getImageHost() {
+                return null;
+            }
+
+            @Override
             public String getCurrentUserId() {
                 return "4173";
             }

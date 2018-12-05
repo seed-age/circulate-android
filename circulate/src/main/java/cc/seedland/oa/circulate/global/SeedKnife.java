@@ -27,6 +27,11 @@ public abstract class SeedKnife {
      */
     public abstract String getHost();
 
+    /**
+     * 注入图片服务器域名
+     * @return
+     */
+    public abstract String getImageHost();
 
     /**
      * 获取当前用户ID

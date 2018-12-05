@@ -30,7 +30,7 @@ public class OrganizationMemberItemHolder extends TreeNode.BaseNodeViewHolder<Us
         TextView tvName = view.findViewById(R.id.tv_name);
         tvName.setText(value.lastName);
         TextView tvDepartment = view.findViewById(R.id.tv_department);
-        tvDepartment.setText(value.fullName + "/" + value.deptFullname);
+        tvDepartment.setText(value.fullCompanyName + "/" + value.deptFullName);
         final ImageView ivSelector = view.findViewById(R.id.iv_selector);
         ivSelector.setSelected(node.isSelected());
         view.setOnClickListener(new View.OnClickListener() {

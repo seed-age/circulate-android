@@ -26,9 +26,9 @@ public class SearchPeopleAdapter extends BaseQuickAdapter<UserInfo,BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, UserInfo item) {
-        helper.setGone(R.id.tv_letter,false);
-        helper.setText(R.id.tv_name,item.lastName);
-        helper.setText(R.id.tv_department,item.fullName+"/"+item.deptFullname);
+        helper.setGone(R.id.tv_letter, false);
+        helper.setText(R.id.tv_name, item.lastName);
+        helper.setText(R.id.tv_department, item.fullCompanyName + "/" + item.deptFullName);
         ImageView ivSelector = helper.getView(R.id.iv_selector);
         ivSelector.setSelected(item.isSelected);
     }
