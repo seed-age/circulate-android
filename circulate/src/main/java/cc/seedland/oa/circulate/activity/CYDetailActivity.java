@@ -527,7 +527,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
     }
 
     public static Uri getUriForFile(File file) {
-        return FileProvider.getUriForFile(Global.sContext, "cc.seedland.oa.demo.fileprovider", file);
+        return FileProvider.getUriForFile(Global.sContext, Global.sContext.getPackageName() + ".fileprovider", file);
     }
 
     public void showDownloadDialog(int itemId) {

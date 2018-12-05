@@ -2,6 +2,7 @@ package cc.seedland.oa.circulate.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,7 +13,6 @@ import cc.seedland.oa.circulate.global.Constants;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
-import cc.seedland.oa.circulate.utils.LogUtil;
 import cc.seedland.oa.circulate.view.LimitDialog;
 import cc.seedland.oa.circulate.view.OrganizationDepartmentItemHolder;
 import cc.seedland.oa.circulate.view.OrganizationMemberItemHolder;
@@ -21,6 +21,7 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hch on 2018/2/2.
@@ -128,41 +129,10 @@ public class OrganizationFragment extends CirculateBaseFragment implements Organ
     }
 
     @Override
-    public void onToggleListener(TreeNode department, boolean active, DepartmentInfo value) {
+    public void onToggleListener(TreeNode treeNode, boolean active, DepartmentInfo info) {
         if (active) {
-            if (value.haveSubDepart) {
-                DepartmentInfo subA = new DepartmentInfo();
-                subA.departmentName = "子部门A";
-                subA.iconRes = R.drawable.icon_organization_add;
-                subA.member = Global.sUserInfo;
-                OrganizationDepartmentItemHolder subDetartmentHolderA = new OrganizationDepartmentItemHolder(mActivity);
-                TreeNode childSubDepartmentA = new TreeNode(subA).setViewHolder(subDetartmentHolderA);
-                department.addChild(childSubDepartmentA);
-                subDetartmentHolderA.setOnToggleListener(childSubDepartmentA,this);
-            }
-            if (value.member != null) {
-                outer:for (UserInfo userInfo : value.member) {
-                    OrganizationMemberItemHolder memberItemHolder = new OrganizationMemberItemHolder(mActivity);
-                    memberItemHolder.setOnNodeSelectListener(OrganizationFragment.this);
-                    TreeNode member = new TreeNode(userInfo).setViewHolder(memberItemHolder);
-                    for (UserInfo selectedUser : mSelectedUsers) {
-                        if (selectedUser.userId.equals(userInfo.userId)) {
-                            member.setSelected(true);
-                        }
-                    }
-                    //处理重复问题
-                    List<TreeNode> children = department.getChildren();
-                    for (TreeNode child : children) {
-                        if (child.getValue() instanceof UserInfo) {
-                            UserInfo member1 = (UserInfo) child.getValue();
-                            if (userInfo.userId.equals(member1.userId)) {
-                                continue outer;
-                            }
-                        }
-                    }
-                    department.addChild(member);
-                }
-            }
+            Global.sKnife.buildSubTree(mActivity, treeNode, info, this, this, mSelectedUsers);
         }
     }
+
 }

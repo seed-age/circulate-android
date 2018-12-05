@@ -4,8 +4,14 @@ import android.content.Context;
 
 import com.unnamed.b.atv.model.TreeNode;
 
+import java.util.List;
+import java.util.Map;
+
+import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
+import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.view.OrganizationDepartmentItemHolder;
+import cc.seedland.oa.circulate.view.OrganizationMemberItemHolder;
 
 /**
  * 作者 ： 徐春蕾
@@ -41,4 +47,23 @@ public abstract class SeedKnife {
      * @return
      */
     public abstract TreeNode buildTreeNode(Context context, OrganizationDepartmentItemHolder.ToggleListener listener);
+
+
+    /**
+     *
+     * @param parentId
+     */
+    public abstract List<Map<String, String>> loadSubCompany(String parentId);
+
+    /**
+     * 构建子树节点
+     * @param context
+     * @param node
+     */
+    public abstract void buildSubTree(Context context,
+                                      TreeNode node,
+                                      DepartmentInfo info,
+                                      OrganizationDepartmentItemHolder.ToggleListener toggleListener,
+                                      OrganizationMemberItemHolder.OnNodeSelectListener nodeListener,
+                                      List<UserInfo> users);
 }

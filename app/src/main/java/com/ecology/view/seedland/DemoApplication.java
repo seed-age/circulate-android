@@ -8,7 +8,9 @@ import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import cc.seedland.oa.circulate.fragment.OrganizationFragment;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.global.SeedKnife;
 import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
@@ -16,7 +18,9 @@ import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.view.OrganizationDepartmentItemHolder;
+import cc.seedland.oa.circulate.view.OrganizationMemberItemHolder;
 import cc.seedland.oa.demo.BuildConfig;
+import cc.seedland.oa.demo.R;
 
 /**
  * 作者 ： 徐春蕾
@@ -93,6 +97,52 @@ public class DemoApplication extends Application {
                 }
                 root.addChild(parent);
                 return root;
+            }
+
+            @Override
+            public List<Map<String, String>> loadSubCompany(String parentId) {
+                return null;
+            }
+
+            @Override
+            public void buildSubTree(Context context, TreeNode node, DepartmentInfo info,
+                                     OrganizationDepartmentItemHolder.ToggleListener toggleListener,
+                                     OrganizationMemberItemHolder.OnNodeSelectListener nodeListener,
+                                     List<UserInfo> users) {
+                if (info.haveSubDepart) {
+                    DepartmentInfo subA = new DepartmentInfo();
+                    subA.departmentName = "子部门A";
+                    subA.iconRes = R.drawable.icon_organization_add;
+                    subA.member = Global.sUserInfo;
+                    OrganizationDepartmentItemHolder subDetartmentHolderA = new OrganizationDepartmentItemHolder(context);
+                    TreeNode childSubDepartmentA = new TreeNode(subA).setViewHolder(subDetartmentHolderA);
+                    node.addChild(childSubDepartmentA);
+                    subDetartmentHolderA.setOnToggleListener(childSubDepartmentA,toggleListener);
+                }
+                if (info.member != null) {
+                    outer:for (UserInfo userInfo : info.member) {
+                        OrganizationMemberItemHolder memberItemHolder = new OrganizationMemberItemHolder(context);
+                        memberItemHolder.setOnNodeSelectListener(nodeListener);
+                        TreeNode member = new TreeNode(userInfo).setViewHolder(memberItemHolder);
+                        for (UserInfo selectedUser : users) {
+                            if (selectedUser.userId.equals(userInfo.userId)) {
+                                member.setSelected(true);
+                            }
+                        }
+                        //处理重复问题
+                        List<TreeNode> children = node.getChildren();
+                        for (TreeNode child : children) {
+                            if (child.getValue() instanceof UserInfo) {
+                                UserInfo member1 = (UserInfo) child.getValue();
+                                if (userInfo.userId.equals(member1.userId)) {
+                                    continue outer;
+                                }
+                            }
+                        }
+                        node.addChild(member);
+                    }
+                }
+
             }
         });
     }
