@@ -396,7 +396,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
         hideDelayDialog();
         if (response != null) {
             int type = response.getType();
-            if (type == HttpApis.CREATE_MAIL.hashCode()) {
+            if (type == HttpApis.getCreateMail().hashCode()) {
                 JSONObject data = jsonObject.optJSONObject("data");
                 if (data != null) {
                     boolean transmission = data.optBoolean("transmission");
@@ -413,7 +413,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                         showToast(response.getMsg());
                     }
                 }
-            } else if (type == HttpApis.UPLOAD_FILE.hashCode()) {
+            } else if (type == HttpApis.getUploadFile().hashCode()) {
                 String dataStr = jsonObject.optString("data");
                 mBulkids = new ArrayList<>();
                 List<AttachInfo> attachInfos = Utils.parseJsonArray(dataStr, AttachInfo.class);
@@ -424,7 +424,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                 } else {
                     mViewDivider.setVisibility(View.GONE);
                 }
-            } else if (type == HttpApis.PREVIEW_FILE.hashCode()) {
+            } else if (type == HttpApis.getPreviewFile().hashCode()) {
                 JSONObject data = jsonObject.optJSONObject("data");
                 String url = data.optString("url");
                 if (TextUtils.isEmpty(url)) {
@@ -432,7 +432,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                     return;
                 }
                 UISkipUtils.skipToWebActivity(this, url);
-            } else if (type == HttpApis.DOWNLOAD.hashCode()) {
+            } else if (type == HttpApis.getDOWNLOAD().hashCode()) {
                 String previewStr = jsonObject.optString("data");
                 if (TextUtils.isEmpty(previewStr)) {
                     showToast(response.getMsg());
@@ -441,29 +441,28 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                 String category = previewStr.substring(previewStr.lastIndexOf(".") + 1);
                 switch (category) {
                     case "txt":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     case "pdf":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     case "rar":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     case "zip":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     case "dwg":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     case "png":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     case "jpg":
-                        UISkipUtils.skipToWebActivity(this, HttpApis.HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     default:
-                        UISkipUtils.skipToWebActivity(this, HttpApis.PREVIEW_API + HttpApis
-                                .HostApi + previewStr);
+                        UISkipUtils.skipToWebActivity(this, HttpApis.PREVIEW_API + Global.sKnife.getHost() + previewStr);
                         break;
                 }
             }

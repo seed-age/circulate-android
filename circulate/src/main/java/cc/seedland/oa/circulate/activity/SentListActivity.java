@@ -134,7 +134,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
                                 if (!mLoadMoreEnd) {
                                     page++;
 //                                    loadListData(LOAD_MORE, page);
-                                    HttpService.loadCYListData(HttpApis.SENT_LIST, LOAD_MORE,
+                                    HttpService.loadCYListData(HttpApis.getSentList(), LOAD_MORE,
                                             status, page, orderBy, SentListActivity.this);
                                 } else {
                                     mAdapter.loadMoreEnd();
@@ -185,7 +185,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
                 LogUtil.e("status = " + status);
 //                loadListData(INIT_DATA, page);
                 showDelayDialog();
-                HttpService.loadCYListData(HttpApis.SENT_LIST, INIT_DATA, status, page, orderBy,
+                HttpService.loadCYListData(HttpApis.getSentList(), INIT_DATA, status, page, orderBy,
                         SentListActivity.this);
             }
 
@@ -229,7 +229,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
         //设置列表默认参数
 //        loadListData(INIT_DATA, page);
         showDelayDialog();
-        HttpService.loadCYListData(HttpApis.SENT_LIST, INIT_DATA, status, page, orderBy, this);
+        HttpService.loadCYListData(HttpApis.getSentList(), INIT_DATA, status, page, orderBy, this);
     }
 
     @Override
@@ -237,7 +237,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
         if(id == R.id.fl_right_first_ic) {
             UISkipUtils.skipToEditSentCYListActivity(this, status);
         }else if(id == R.id.fl_right_second_ic) {
-            UISkipUtils.skipToSearchCYActivity(this, HttpApis.SEARCH_SEND_LIST,1);
+            UISkipUtils.skipToSearchCYActivity(this, HttpApis.getSearchSendList(),1);
         }else if(id == R.id.fl_sort) {
             showSortDialog();
         }else if(id == R.id.tv_sort_des) {
@@ -246,7 +246,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
             orderBy = 2;
 //                loadListData(INIT_DATA, page);
             showDelayDialog();
-            HttpService.loadCYListData(HttpApis.SENT_LIST, INIT_DATA, status, page, orderBy,
+            HttpService.loadCYListData(HttpApis.getSentList(), INIT_DATA, status, page, orderBy,
                     this);
         }else if(id == R.id.tv_sort_asc) {
             mSortDialog.dismiss();
@@ -254,7 +254,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
             orderBy = 1;
 //                loadListData(INIT_DATA, page);
             showDelayDialog();
-            HttpService.loadCYListData(HttpApis.SENT_LIST, INIT_DATA, status, page, orderBy,
+            HttpService.loadCYListData(HttpApis.getSentList(), INIT_DATA, status, page, orderBy,
                     this);
         }else if(id == R.id.tv_cancel) {
             mSortDialog.dismiss();
@@ -279,7 +279,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT && resultCode == UISkipUtils.FROM_EDIT) {
             page = 1;
-            HttpService.loadCYListData(HttpApis.SENT_LIST, INIT_DATA, status, page, orderBy,
+            HttpService.loadCYListData(HttpApis.getSentList(), INIT_DATA, status, page, orderBy,
                     this);
         }
     }
@@ -299,7 +299,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
             refreshList(dataStr);
         } else if (type == LOAD_MORE) {
             refreshList(dataStr);
-        } else if (type == HttpApis.DELETE_MAIL.hashCode()) {
+        } else if (type == HttpApis.getDeleteMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
             List<MailInfo> data = mAdapter.getData();
             for (int i = 0; i < data.size(); i++) {
@@ -309,7 +309,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
                     return;
                 }
             }
-        } else if (type == HttpApis.RECEIVED_FOCUS_MAIL.hashCode()){
+        } else if (type == HttpApis.getReceivedFocusMail().hashCode()){
             showToast(jsonObject.optString("msg"));
             List<MailInfo> data = mAdapter.getData();
             for (int i = 0; i < data.size(); i++) {

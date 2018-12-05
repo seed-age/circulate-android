@@ -153,7 +153,7 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
         hideDelayDialog();
         String data = jsonObject.optString("data");
         int type = response.getType();
-        if (type == HttpApis.MAIL_COUNT.hashCode()) {
+        if (type == HttpApis.getMailCount().hashCode()) {
             MailCountInfo mailCountInfo = Utils.parseJson(data, MailCountInfo.class);
             mTvReceivedCount.setText(mailCountInfo.getCount());
             mTvSendCount.setText(mailCountInfo.getSendCount());
@@ -165,7 +165,7 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
             mTvReceivedCompleteCount.setText(mailCountInfo.getReceiveCompleteCount());
             mTvSentCompleteCount.setText(mailCountInfo.getCompleteCount());
             mTvUnread.setText(mailCountInfo.getUnreadCount());
-        } else if (type == HttpApis.TEST_CONTACTS.hashCode()) {
+        } else if (type == HttpApis.getTestContacts().hashCode()) {
             List<UserInfo> userInfos = Utils.parseJsonArray(data, UserInfo.class);
             Global.sUserInfo = userInfos;
         }

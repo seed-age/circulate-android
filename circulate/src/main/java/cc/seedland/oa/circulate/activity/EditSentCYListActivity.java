@@ -131,7 +131,7 @@ public class EditSentCYListActivity extends CirculateBaseActivity implements Res
                             if (!mLoadMoreFail) {
                                 if (!mLoadMoreEnd) {
                                     page++;
-                                    HttpService.loadCYListData(HttpApis.SENT_LIST,LOAD_MORE,mStatus,page,-1,EditSentCYListActivity.this);
+                                    HttpService.loadCYListData(HttpApis.getSentList(),LOAD_MORE,mStatus,page,-1,EditSentCYListActivity.this);
                                 } else {
                                     mAdapter.loadMoreEnd();
                                 }
@@ -150,7 +150,7 @@ public class EditSentCYListActivity extends CirculateBaseActivity implements Res
         Intent intent = getIntent();
         mStatus = intent.getIntExtra("STATUS", 5);
         showDelayDialog();
-        HttpService.loadCYListData(HttpApis.SENT_LIST,INIT_DATA, mStatus,page,-1,this);
+        HttpService.loadCYListData(HttpApis.getSentList(),INIT_DATA, mStatus,page,-1,this);
         if (mStatus == 3) {
             mLlRemove.setVisibility(View.GONE);
         }else {
@@ -215,18 +215,18 @@ public class EditSentCYListActivity extends CirculateBaseActivity implements Res
             refreshList(dataStr);
         }else if (type == LOAD_MORE) {
             refreshList(dataStr);
-        }else if (type == HttpApis.DELETE_MAIL.hashCode()) {
+        }else if (type == HttpApis.getDeleteMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
 //            page = 1;
 //            HttpService.loadCYListData(HttpApis.SENT_LIST,INIT_DATA, mStatus,page,-1,this);
             setResult(UISkipUtils.FROM_EDIT);
             page = 1;
-            HttpService.loadCYListData(HttpApis.SENT_LIST,INIT_DATA, mStatus,page,-1,this);
+            HttpService.loadCYListData(HttpApis.getSentList(),INIT_DATA, mStatus,page,-1,this);
 //            finish();
-        } else if (type == HttpApis.RECEIVED_FOCUS_MAIL.hashCode()){
+        } else if (type == HttpApis.getReceivedFocusMail().hashCode()){
             showToast(jsonObject.optString("msg"));
             page = 1;
-            HttpService.loadCYListData(HttpApis.SENT_LIST,INIT_DATA, mStatus,page,-1,this);
+            HttpService.loadCYListData(HttpApis.getSentList(),INIT_DATA, mStatus,page,-1,this);
         }
     }
 

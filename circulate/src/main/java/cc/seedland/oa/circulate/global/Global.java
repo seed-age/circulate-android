@@ -48,12 +48,17 @@ public class Global {
     public static String sPreViewFileName;
     public static String sFileFolder;
 
-    public static void init(Context context) {
+    // 解耦
+    public static SeedKnife sKnife;
+
+    public static void init(Context context, SeedKnife knife) {
         sContext = context;
         initScreenSize();
         getVersion();
         RichText.initCacheDir(sContext);
         sFileFolder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/OA_File";
+
+        sKnife = knife;
     }
 
     /**

@@ -138,7 +138,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     @Override
     public void onSuccess(String json, JSONObject jsonObject, BaseResponse response) {
         int type = response.getType();
-        if (type == HttpApis.REMOVE_OBJECT.hashCode()) {
+        if (type == HttpApis.getRemoveObject().hashCode()) {
             showToast(response.getMsg());
             mSelectedUser.remove(mRemovePosition);
             mAdapter.notifyDataSetChanged();

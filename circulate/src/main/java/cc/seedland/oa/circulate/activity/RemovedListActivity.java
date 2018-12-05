@@ -141,7 +141,7 @@ public class RemovedListActivity extends CirculateBaseActivity implements Respon
     @Override
     public void onClick(View v, int id) {
         if(id == R.id.fl_right_first_ic) {
-            UISkipUtils.skipToSearchCYActivity(this, HttpApis.SEARCH_REMOVED_LIST,2);
+            UISkipUtils.skipToSearchCYActivity(this, HttpApis.getSearchRemovedList(),2);
         }
     }
 

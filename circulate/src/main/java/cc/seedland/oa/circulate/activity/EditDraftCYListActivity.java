@@ -194,7 +194,7 @@ public class EditDraftCYListActivity extends CirculateBaseActivity implements Re
             refreshList(dataStr);
         }else if (type == LOAD_MORE) {
             refreshList(dataStr);
-        }else if (type == HttpApis.DELETE_DRAFT.hashCode()) {
+        }else if (type == HttpApis.getDeleteDraft().hashCode()) {
             showToast(jsonObject.optString("msg"));
 //            page = 1;
 //            HttpService.loadDraftList(INIT_DATA,page, this);

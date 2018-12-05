@@ -5,6 +5,7 @@ import android.app.Application;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import cc.seedland.oa.circulate.global.Global;
+import cc.seedland.oa.circulate.global.SeedKnife;
 import cc.seedland.oa.demo.BuildConfig;
 
 /**
@@ -24,6 +25,11 @@ public class DemoApplication extends Application {
         }
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
 
-        Global.init(getApplicationContext());
+        Global.init(getApplicationContext(), new SeedKnife() {
+            @Override
+            public String getHost() {
+                return "http://sloa2.isunn.cn";
+            }
+        });
     }
 }

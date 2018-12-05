@@ -158,7 +158,7 @@ public class DraftListActivity extends CirculateBaseActivity implements Response
     @Override
     public void onClick(View v, int id) {
         if(id == R.id.fl_right_second_ic) {
-            UISkipUtils.skipToSearchCYActivity(this,HttpApis.SEARCH_DRAFT,4);
+            UISkipUtils.skipToSearchCYActivity(this,HttpApis.getSearchDraft(),4);
         }else if(id == R.id.fl_right_first_ic) {
             UISkipUtils.skipToEditDraftListActivity(this);
         }
@@ -187,7 +187,7 @@ public class DraftListActivity extends CirculateBaseActivity implements Response
             refreshList(dataStr);
         }else if (type == LOAD_MORE) {
             refreshList(dataStr);
-        }else if (type == HttpApis.DELETE_DRAFT.hashCode()) {
+        }else if (type == HttpApis.getDeleteDraft().hashCode()) {
             showToast(response.getMsg());
             List<MailInfo> data = mAdapter.getData();
             for (int i = 0; i < data.size(); i++) {

@@ -155,14 +155,14 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
         switch (mFlag) {
             case 1: // 发
                 mTvConfirm.setVisibility(View.GONE);
-                commentApi = HttpApis.POST_SENT_DISCUSS;
+                commentApi = HttpApis.getPostSentDiscuss();
                 break;
             case 2: // 删除
                 mLlBottombar.setVisibility(View.GONE);
                 mToolbar.isShowRightFirstIv(false);
                 break;
             case 3: //收
-                commentApi = HttpApis.POST_RECEIVE_DISCUSS;
+                commentApi = HttpApis.getPostReceiveDiscuss();
                 break;
         }
     }
@@ -354,10 +354,10 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
         if (response != null) {
             int type = response.getType();
             String dataStr = jsonObject.optString("data");
-            if (type == HttpApis.MAIL_DETAIL.hashCode()) {
+            if (type == HttpApis.getMailDetail().hashCode()) {
                 if (!TextUtils.isEmpty(dataStr) && !"null".equalsIgnoreCase(dataStr))
                     refreshData(dataStr);
-            } else if (type == HttpApis.RECEIVED_FOCUS_MAIL.hashCode()) {
+            } else if (type == HttpApis.getReceivedFocusMail().hashCode()) {
                 showToast(response.getMsg());
                 if (mFlag == 3) {
                     mMailInfo.receiveAttention = !mMailInfo.receiveAttention;
@@ -372,19 +372,19 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                 refreshDiscuss(dataStr);
             } else if (type == LOAD_MORE) {
                 refreshDiscuss(dataStr);
-            } else if (type == HttpApis.CONFIRM_CY.hashCode()) {
+            } else if (type == HttpApis.getConfirmCy().hashCode()) {
                 showToast(response.getMsg());
                 HttpService.loadMailDetail(mMailId, mFlag, this);
-            } else if (type == HttpApis.ADD_CY_OBJECT.hashCode()) {
+            } else if (type == HttpApis.getAddCyObject().hashCode()) {
                 showToast(response.getMsg());
                 HttpService.loadMailDetail(mMailId, mFlag, this);
-            } else if (type == HttpApis.UPLOAD_FILE.hashCode()) {
+            } else if (type == HttpApis.getUploadFile().hashCode()) {
                 showToast(response.getMsg());
                 HttpService.loadMailDetail(mMailId, mFlag, this);
-            } else if (type == HttpApis.DELETE_FILE.hashCode()) {
+            } else if (type == HttpApis.getDeleteFile().hashCode()) {
                 showToast(response.getMsg());
                 HttpService.loadMailDetail(mMailId, mFlag, this);
-            } else if (type == HttpApis.PREVIEW_FILE.hashCode()) {
+            } else if (type == HttpApis.getPreviewFile().hashCode()) {
                 JSONObject data = jsonObject.optJSONObject("data");
                 String url = data.optString("url");
                 if (TextUtils.isEmpty(url)) {
@@ -392,13 +392,13 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                     return;
                 }
                 UISkipUtils.skipToWebActivity(this, url);
-            } else if (type == HttpApis.DOWNLOAD.hashCode()) {
+            } else if (type == HttpApis.getDOWNLOAD().hashCode()) {
                 String previewStr = jsonObject.optString("data");
                 if (TextUtils.isEmpty(previewStr)) {
                     showToast(response.getMsg());
                     return;
                 }
-                final String downloadUrl = HttpApis.HostApi + previewStr;
+                final String downloadUrl = Global.sKnife.getHost() + previewStr;
                 final DownLoadDialog downLoadDialog = new DownLoadDialog(this);
                 downLoadDialog.show();
                 TextView tvCancel = downLoadDialog.findViewById(R.id.tv_cancel);

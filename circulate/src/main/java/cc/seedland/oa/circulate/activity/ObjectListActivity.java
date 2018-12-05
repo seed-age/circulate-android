@@ -126,7 +126,7 @@ public class ObjectListActivity extends CirculateBaseActivity implements Respons
         if (type == INIT_DATA) {
             mData.clear();
             refreshList(dataStr);
-        }else if (type == HttpApis.REMOVE_OBJECT.hashCode()) {
+        }else if (type == HttpApis.getRemoveObject().hashCode()) {
             showToast(response.getMsg());
             HttpService.loadObjectList(INIT_DATA, mMailid,this);
         }

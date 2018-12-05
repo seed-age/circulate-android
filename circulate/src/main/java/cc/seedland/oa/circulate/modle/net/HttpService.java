@@ -22,8 +22,8 @@ public class HttpService {
         HttpParams params = new HttpParams();
         params.put("userId", Constants.userId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.MAIL_COUNT)
-                .setType(HttpApis.MAIL_COUNT.hashCode())
+                .setUrl(HttpApis.getMailCount())
+                .setType(HttpApis.getMailCount().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -64,8 +64,8 @@ public class HttpService {
         params.put("userId", Constants.userId);
         params.put("mailId", mailId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DELETE_MAIL)
-                .setType(HttpApis.DELETE_MAIL.hashCode())
+                .setUrl(HttpApis.getDeleteMail())
+                .setType(HttpApis.getDeleteMail().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -82,8 +82,8 @@ public class HttpService {
         params.put("mailId", mailId);
         params.put("attention", attention);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.SENT_FOCUS_MAIL)
-                .setType(HttpApis.SENT_FOCUS_MAIL.hashCode())
+                .setUrl(HttpApis.getSentFocusMail())
+                .setType(HttpApis.getSentFocusMail().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -103,8 +103,8 @@ public class HttpService {
         params.put("attention", attention);
         params.put("status", status);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.RECEIVED_FOCUS_MAIL)
-                .setType(HttpApis.RECEIVED_FOCUS_MAIL.hashCode())
+                .setUrl(HttpApis.getReceivedFocusMail())
+                .setType(HttpApis.getReceivedFocusMail().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -120,8 +120,8 @@ public class HttpService {
         params.put("userId", Constants.userId);
         params.put("mailId", mailId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.JUMP_MAIL)
-                .setType(HttpApis.JUMP_MAIL.hashCode())
+                .setUrl(HttpApis.getJumpMail())
+                .setType(HttpApis.getJumpMail().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -138,7 +138,7 @@ public class HttpService {
         params.put("page", page);
         params.put("pageRows", pageRows);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.REMOVED_LIST)
+                .setUrl(HttpApis.getRemovedList())
                 .setType(type)
                 .params(params)
                 .postExecute(handler);
@@ -175,8 +175,8 @@ public class HttpService {
         params.put("userId", Constants.userId);
         params.put("mailId", mailId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.READ_CY)
-                .setType(HttpApis.READ_CY.hashCode())
+                .setUrl(HttpApis.getReadCy())
+                .setType(HttpApis.getReadCy().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -213,7 +213,7 @@ public class HttpService {
         params.put("page", page);
         params.put("pageRows", pageRows);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DISCUSS_LIST)
+                .setUrl(HttpApis.getDiscussList())
                 .setType(type)
                 .params(params)
                 .postExecute(handler);
@@ -231,8 +231,8 @@ public class HttpService {
         params.put("mailId", mailId);
         params.put("mailStatus", mailStatus);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.MAIL_DETAIL)
-                .setType(HttpApis.MAIL_DETAIL.hashCode())
+                .setUrl(HttpApis.getMailDetail())
+                .setType(HttpApis.getMailDetail().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -251,7 +251,7 @@ public class HttpService {
 //        params.put("page",page);
 //        params.put("pageRows",pageRows);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.OBJECT_LIST)
+                .setUrl(HttpApis.getObjectList())
                 .setType(type)
                 .params(params)
                 .postExecute(handler);
@@ -272,8 +272,8 @@ public class HttpService {
         params.put("remark", remark);
         params.put("statusConfirm", statusConfirm);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.CONFIRM_CY)
-                .setType(HttpApis.CONFIRM_CY.hashCode())
+                .setUrl(HttpApis.getConfirmCy())
+                .setType(HttpApis.getConfirmCy().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -291,8 +291,8 @@ public class HttpService {
         params.put("mailId", mailId);
         params.put("receiveUserId", receiveUserId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.ADD_CY_OBJECT)
-                .setType(HttpApis.ADD_CY_OBJECT.hashCode())
+                .setUrl(HttpApis.getAddCyObject())
+                .setType(HttpApis.getAddCyObject().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -310,8 +310,8 @@ public class HttpService {
         params.put("mailId", mailId);
         params.put("receiveUserId", receiveUserId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.REMOVE_OBJECT)
-                .setType(HttpApis.REMOVE_OBJECT.hashCode())
+                .setUrl(HttpApis.getRemoveObject())
+                .setType(HttpApis.getRemoveObject().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -329,8 +329,8 @@ public class HttpService {
         params.put("loginid", "");
         params.put("userId", Constants.userId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.TEST_CONTACTS)
-                .setType(HttpApis.TEST_CONTACTS.hashCode())
+                .setUrl(HttpApis.getTestContacts())
+                .setType(HttpApis.getTestContacts().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -344,8 +344,8 @@ public class HttpService {
         HttpParams params = new HttpParams();
         params.put("itemId", itemId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DOWNLOAD)
-                .setType(HttpApis.DOWNLOAD.hashCode())
+                .setUrl(HttpApis.getDOWNLOAD())
+                .setType(HttpApis.getDOWNLOAD().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -359,8 +359,8 @@ public class HttpService {
         HttpParams params = new HttpParams();
         params.put("itemId", itemId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DOWNLOAD)
-                .setType(HttpApis.DOWNLOAD.hashCode())
+                .setUrl(HttpApis.getDOWNLOAD())
+                .setType(HttpApis.getDOWNLOAD().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -378,7 +378,7 @@ public class HttpService {
         params.put("page", page);
         params.put("pageRows", pageRows);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DRAFT_LIST)
+                .setUrl(HttpApis.getDraftList())
                 .setType(type)
                 .params(params)
                 .postExecute(handler);
@@ -395,8 +395,8 @@ public class HttpService {
         params.put("userId", Constants.userId);
         params.put("mailId", mailId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DELETE_DRAFT)
-                .setType(HttpApis.DELETE_DRAFT.hashCode())
+                .setUrl(HttpApis.getDeleteDraft())
+                .setType(HttpApis.getDeleteDraft().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -418,7 +418,7 @@ public class HttpService {
         params.put("pageRows", pageRows);
         params.put("userId", Constants.userId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.LOAD_FILE_LIST)
+                .setUrl(HttpApis.getLoadFileList())
                 .setType(type)
                 .params(params)
                 .postExecute(handler);
@@ -446,8 +446,8 @@ public class HttpService {
         params.put("mailContent", mailContent);
         params.put("mailId", mailId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.CREATE_MAIL)
-                .setType(HttpApis.CREATE_MAIL.hashCode())
+                .setUrl(HttpApis.getCreateMail())
+                .setType(HttpApis.getCreateMail().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -464,8 +464,8 @@ public class HttpService {
         params.put("neid",neid);
         params.put("userId",Constants.userId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.UPLOAD_FILE)
-                .setType(HttpApis.UPLOAD_FILE.hashCode())
+                .setUrl(HttpApis.getUploadFile())
+                .setType(HttpApis.getUploadFile().hashCode())
                 .params(params)
                 .postExecute(handler);
 
@@ -487,7 +487,7 @@ public class HttpService {
         params.put("page",page);
         params.put("pageRows",pageRows);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.SEARCH_FILE)
+                .setUrl(HttpApis.getSearchFile())
                 .setType(type)
                 .params(params)
                 .postExecute(handler);
@@ -506,8 +506,8 @@ public class HttpService {
         params.put("itemId",itemId);
         params.put("mailId",mailId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.DELETE_FILE)
-                .setType(HttpApis.DELETE_FILE.hashCode())
+                .setUrl(HttpApis.getDeleteFile())
+                .setType(HttpApis.getDeleteFile().hashCode())
                 .params(params)
                 .postExecute(handler);
     }
@@ -523,8 +523,8 @@ public class HttpService {
         params.put("itemId",itemId);
         params.put("bulkId",bulkId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.PREVIEW_FILE)
-                .setType(HttpApis.PREVIEW_FILE.hashCode())
+                .setUrl(HttpApis.getPreviewFile())
+                .setType(HttpApis.getPreviewFile().hashCode())
                 .params(params)
                 .postExecute(handler);
     }

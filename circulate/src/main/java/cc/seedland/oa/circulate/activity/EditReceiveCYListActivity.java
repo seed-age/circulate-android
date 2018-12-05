@@ -126,7 +126,7 @@ public class EditReceiveCYListActivity extends CirculateBaseActivity implements 
                                 if (!mLoadMoreEnd) {
                                     page++;
 //                                    loadListData(LOAD_MORE, page);
-                                    HttpService.loadCYListData(HttpApis.RECEIVED_LIST, LOAD_MORE,
+                                    HttpService.loadCYListData(HttpApis.getReceivedList(), LOAD_MORE,
                                             mStatus, page, -1, EditReceiveCYListActivity.this);
                                 } else {
                                     mAdapter.loadMoreEnd();
@@ -148,7 +148,7 @@ public class EditReceiveCYListActivity extends CirculateBaseActivity implements 
 //        loadListData(INIT_DATA, page);
         mLlRemove.setVisibility(mStatus == 1 || mStatus == 3 ? View.GONE : View.VISIBLE);
         showDelayDialog();
-        HttpService.loadCYListData(HttpApis.RECEIVED_LIST, INIT_DATA, mStatus, page, -1, this);
+        HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, mStatus, page, -1, this);
     }
 
     @Override
@@ -212,11 +212,11 @@ public class EditReceiveCYListActivity extends CirculateBaseActivity implements 
             refreshList(dataStr);
         } else if (type == LOAD_MORE) {
             refreshList(dataStr);
-        } else if (type == HttpApis.RECEIVED_FOCUS_MAIL.hashCode()) {
+        } else if (type == HttpApis.getReceivedFocusMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
             page = 1;
-            HttpService.loadCYListData(HttpApis.RECEIVED_LIST, INIT_DATA, mStatus, page, -1, this);
-        } else if (type == HttpApis.JUMP_MAIL.hashCode()) {
+            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, mStatus, page, -1, this);
+        } else if (type == HttpApis.getJumpMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
 //            page = 1;
 //            HttpService.loadCYListData(HttpApis.RECEIVED_LIST, INIT_DATA, mStatus, page, -1, this);
