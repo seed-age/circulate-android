@@ -62,46 +62,8 @@ public class OrganizationFragment extends CirculateBaseFragment implements Organ
 
     @NonNull
     private TreeNode getTreeNode() {
-        DepartmentInfo top = new DepartmentInfo();
-        top.departmentName = "广州实地房地产开发有限公司";
-        top.iconRes = R.drawable.icon_top_company;
-        List<DepartmentInfo> subDepartment = new ArrayList<>();
-        DepartmentInfo sub = new DepartmentInfo();
-        sub.departmentName = "营销管理中心";
-        sub.iconRes = R.drawable.icon_organization_add;
-        sub.haveSubDepart = true;
-        List<UserInfo> userInfos = Global.sUserInfo;
-        sub.member = userInfos;
-        subDepartment.add(sub);
-        top.subDepartment = subDepartment;
 
-        //1、创建树根节点
-        TreeNode root = TreeNode.root();
-        //2、创建和添加加点(使用自定义对象作为构造函数参数)
-        final TreeNode parent = new TreeNode(top).setViewHolder(new OrganizationDepartmentItemHolder(mActivity));
-        if (top.subDepartment != null) {
-            for (final DepartmentInfo departmentInfo : top.subDepartment) {
-                OrganizationDepartmentItemHolder subDetartmentHolder = new OrganizationDepartmentItemHolder(mActivity);
-                TreeNode childDepartment = new TreeNode(departmentInfo).setViewHolder(subDetartmentHolder);
-                subDetartmentHolder.setOnToggleListener(childDepartment,this);
-//                if (departmentInfo.member != null) {
-//                    for (UserInfo userInfo : departmentInfo.member) {
-//                        OrganizationMemberItemHolder memberItemHolder = new OrganizationMemberItemHolder(mActivity);
-//                        memberItemHolder.setOnNodeSelectListener(this);
-//                        TreeNode member = new TreeNode(userInfo).setViewHolder(memberItemHolder);
-//                        for (UserInfo selectedUser : mSelectedUsers) {
-//                            if (selectedUser.userId == userInfo.userId) {
-//                                member.setSelected(true);
-//                            }
-//                        }
-//                        childDepartment.addChild(member);
-//                    }
-//                }
-                parent.addChild(childDepartment);
-            }
-        }
-        root.addChild(parent);
-        return root;
+        return Global.sKnife.buildTreeNode(mActivity, this);
     }
 
     @Override

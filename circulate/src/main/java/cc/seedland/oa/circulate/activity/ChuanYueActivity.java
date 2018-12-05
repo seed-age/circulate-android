@@ -81,24 +81,7 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
 
     @Override
     public void initData() {
-        //使用测试数据
-        HttpService.testContacts(this);
-        //使用本地数据
-//        ArrayList<Map<String, String>> allUserList = new ArrayList<>(
-//                1); // 所有人的数据
-//        allUserList.addAll(SQLTransaction.getInstance().queryHRAllPeopelForWorkCenter());
-//        List<UserInfo> users = new ArrayList<>();
-//        for (Map<String, String> map : allUserList) {
-//            UserInfo info = new UserInfo();
-//            info.headerUrl = map.get(TableFiledName.HrmResource.HEADER_URL);
-//            info.fullCompanyName = map.get(TableFiledName.HrmResource.SUB_COMPANY_NAME);
-//            info.deptFullName = map.get(TableFiledName.HrmResource.DEPARTMENT_NAME);
-//            info.userId = map.get(TableFiledName.HrmResource.ID);
-//            info.lastName = map.get(TableFiledName.HrmResource.NAME);
-//            info.mobile = map.get(TableFiledName.HrmResource.MOBILE);
-//            users.add(info);
-//        }
-//        Global.sUserInfo = users;
+        Global.sKnife.loadAllUsers(this);
     }
 
     @Override
