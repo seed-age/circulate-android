@@ -1,0 +1,106 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cc.seedland.oa.circulate">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--//获取设备网络状态，禁用后无法获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application>
+        <activity android:name="cc.seedland.oa.circulate.activity.ChuanYueActivity" />
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.CreateMailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.ReceiveListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.EditReceiveCYListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.ContactsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.SelectedContactsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.CYDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.CommentListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.ObjectListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.SearchPeopleActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.WebActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.SentListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.EditSentCYListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.RemovedListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.SearchCYActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.FileListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.DraftListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.EditDraftCYListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.DBankActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.OrganizationActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="cc.seedland.oa.circulate.activity.SearchFileActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="cc.seedland.oa.circulate.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+    </application>
+</manifest>

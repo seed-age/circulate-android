@@ -22,7 +22,7 @@
 
 #-------------------------------------------定制化区域----------------------------------------------
 #---------------------------------1.实体类---------------------------------
--keep class com.ecology.view.seedland.circulate.modle.bean.** { *; }
+-keep class cc.seedland.oa.circulate.modle.bean.** { *; }
 
 #-------------------------------------------------------------------------
 
@@ -90,13 +90,13 @@
 
 #---------------------------------3.与js互相调用的类------------------------
 
--keep class com.ecology.view.seedland.circulate.activity.WebActivity { *; }
+-keep class cc.seedland.oa.circulate.activity.WebActivity { *; }
 
 #-------------------------------------------------------------------------
 
 #---------------------------------4.反射相关的类和方法-----------------------
 
--keep class com.ecology.view.seedland.circulate.activity.CYDetailActivity { *; }
+-keep class cc.seedland.oa.circulate.activity.CYDetailActivity { *; }
 
 #----------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------

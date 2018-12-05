@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:id="@+id/fl_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <cc.seedland.oa.circulate.view.MyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44" />
+    </FrameLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_below="@id/fl_top_bar"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_49">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp_49" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_49"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_F2F4F5"
+        android:focusable="true"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingBottom="@dimen/dp_8"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/edt_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:background="@drawable/shape_white_corner_bg"
+            android:gravity="center_vertical"
+            android:hint="说点什么"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:paddingLeft="@dimen/dp_10"
+            android:textColorHint="@color/color_ABAFB3"
+            android:textSize="@dimen/sp_12" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion compile_sdk_version
+
+
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode circulate_version_code
+        versionName circulate_version_name
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:$support_version"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    implementation "com.android.support:design:$support_version"
+    //BRVAH
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //circleimageview
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation files('libs/pinyin4j-2.5.0.jar')
+    //expandableTextView
+    implementation 'cn.carbs.android:ExpandableTextView:1.0.3'
+    //Okhttp
+    implementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
+    //MaterialChipsInput
+    //    compile 'com.github.pchmn:MaterialChipsInput:1.0.8'
+    //fastjson
+    implementation 'com.alibaba:fastjson:1.2.44'
+    //AgentWeb
+    implementation 'com.just.agentweb:agentweb:4.0.2'
+    //glide图片加载框架
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    //filePicker
+    implementation 'com.droidninja:filepicker:2.1.2'
+    //permissionsdispatcher
+    implementation 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+    //tokenautocomplete
+    //    compile "com.splitwise:tokenautocomplete:2.0.8@aar"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation 'com.github.bmelnychuk:atv:1.2.+'
+    //richtext
+    implementation 'com.zzhoujay.richtext:richtext:3.0.5'
+
+    implementation 'com.alibaba:arouter-api:1.4.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+}

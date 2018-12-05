@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_small">
+
+        <cc.seedland.oa.circulate.view.MyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_49"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:text="接收人"
+                    android:textColor="@color/color_ABAFB3"
+                    android:textSize="@dimen/sp_14"/>
+
+                <!--<com.pchmn.materialchips.ChipsInput-->
+                <!--android:id="@+id/chips_input"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dp_5"-->
+                <!--android:layout_marginRight="@dimen/dp_5"-->
+                <!--android:layout_weight="1"-->
+                <!--app:chip_labelColor="@color/colorWhite"-->
+                <!--app:chip_hasAvatarIcon="false"-->
+                <!--app:chip_deletable="true"-->
+                <!--app:chip_backgroundColor="@color/color_008cd6"-->
+                <!--android:textSize="@dimen/sp_10"/>-->
+                <cc.seedland.oa.circulate.view.contacts.ContactsCompletionView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:focusableInTouchMode="true"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textNoSuggestions|textMultiLine"
+                    android:lineSpacingExtra="1dp"
+                    android:nextFocusDown="@+id/editText"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/sp_16"/>
+
+                <FrameLayout
+                    android:id="@+id/fl_add"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/iv_add"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_add"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0d5"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_ABAFB3"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_49"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:text="主题"
+                    android:textColor="@color/color_ABAFB3"
+                    android:textSize="@dimen/sp_14"/>
+
+                <EditText
+                    android:id="@+id/edt_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textSize="@dimen/sp_14"/>
+
+                <FrameLayout
+                    android:id="@+id/fl_accessory"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/iv_accessory"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/dp_3"
+                        android:src="@drawable/icon_accessory_blue"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0d5"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_ABAFB3"/>
+
+            <EditText
+                android:id="@+id/edt_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_323"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="请输入传阅内容"
+                android:padding="@dimen/dp_10"
+                android:textSize="@dimen/sp_14"/>
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_12"
+                android:background="@color/color_bg"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/ll_accessory_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
