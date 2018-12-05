@@ -416,6 +416,7 @@ public class HttpService {
         params.put("pathType", pathType);
         params.put("page",page);
         params.put("pageRows", pageRows);
+        params.put("userId", Constants.userId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.LOAD_FILE_LIST)
                 .setType(type)
