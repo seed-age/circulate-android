@@ -61,7 +61,7 @@ public class ObjectListAdapter extends BaseQuickAdapter<ObjectInfo,BaseViewHolde
             helper.setText(R.id.tv_status,"已确认");
             helper.setTextColor(R.id.tv_status, Global.getColor(R.color.color_00C21E));
         }
-        if (Constants.userId.equals(String.valueOf(item.reDifferentiate))) {
+        if (Global.sKnife.getCurrentUserId().equals(String.valueOf(item.reDifferentiate))) {
             helper.setGone(R.id.tv_delete,true);
             helper.addOnClickListener(R.id.tv_delete);
         }else {

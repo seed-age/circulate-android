@@ -3,6 +3,7 @@ package cc.seedland.oa.circulate.modle.net;
 import android.text.TextUtils;
 
 import cc.seedland.oa.circulate.global.Constants;
+import cc.seedland.oa.circulate.global.Global;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class HttpService {
      */
     public static void loadMailCount(ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getMailCount())
                 .setType(HttpApis.getMailCount().hashCode())
@@ -42,7 +43,7 @@ public class HttpService {
         HttpParams params = new HttpParams();
         params.put("status", status);
         params.put("page", page);
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("pageRows", pageRows);
         if (orderBy != -1)
             params.put("orderBy", orderBy);
@@ -61,7 +62,7 @@ public class HttpService {
      */
     public static void deleteMail(List<String> mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getDeleteMail())
@@ -78,7 +79,7 @@ public class HttpService {
      */
     public static void focusSentMail(List<String> mailId, boolean attention, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId",  Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("attention", attention);
         BaseRequest.getInstance()
@@ -98,7 +99,7 @@ public class HttpService {
      */
     public static void focusReceivedMail(List<String> mailId, boolean attention,int status, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("attention", attention);
         params.put("status", status);
@@ -117,7 +118,7 @@ public class HttpService {
      */
     public static void jumpMail(List<String> mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getJumpMail())
@@ -134,7 +135,7 @@ public class HttpService {
      */
     public static void loadRemovedList(int type, int page, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("page", page);
         params.put("pageRows", pageRows);
         BaseRequest.getInstance()
@@ -153,7 +154,7 @@ public class HttpService {
      */
     public static void searchCYList(String api, int type, int page, String likeName, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("likeName", likeName);
         params.put("page", page);
         params.put("pageRows", pageRows);
@@ -172,7 +173,7 @@ public class HttpService {
      */
     public static void readCY(long mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getReadCy())
@@ -190,7 +191,7 @@ public class HttpService {
      */
     public static void postDiscuss(String api, long mailId, String discussContent, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("discussContent", discussContent);
         BaseRequest.getInstance()
@@ -208,7 +209,7 @@ public class HttpService {
      */
     public static void loadDiscussList(int type, long mailId, int page, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("page", page);
         params.put("pageRows", pageRows);
@@ -227,7 +228,7 @@ public class HttpService {
      */
     public static void loadMailDetail(long mailId, int mailStatus, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", !TextUtils.isEmpty(Constants.userId) ? Constants.userId : Constants.userId);
+        params.put("userId", !TextUtils.isEmpty(Global.sKnife.getCurrentUserId()) ? Global.sKnife.getCurrentUserId() : Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("mailStatus", mailStatus);
         BaseRequest.getInstance()
@@ -246,7 +247,7 @@ public class HttpService {
      */
     public static void loadObjectList(int type, long mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
 //        params.put("page",page);
 //        params.put("pageRows",pageRows);
@@ -267,7 +268,7 @@ public class HttpService {
      */
     public static void confirmCy(long mailId, String remark, boolean statusConfirm, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("remark", remark);
         params.put("statusConfirm", statusConfirm);
@@ -287,7 +288,7 @@ public class HttpService {
      */
     public static void addCYObject(long mailId, List<String> receiveUserId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("receiveUserId", receiveUserId);
         BaseRequest.getInstance()
@@ -306,7 +307,7 @@ public class HttpService {
      */
     public static void removeObject(long mailId, String receiveUserId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("receiveUserId", receiveUserId);
         BaseRequest.getInstance()
@@ -327,7 +328,7 @@ public class HttpService {
         params.put("departmentid", "");
         params.put("deptLastChangdate", "");
         params.put("loginid", "");
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getTestContacts())
                 .setType(HttpApis.getTestContacts().hashCode())
@@ -374,7 +375,7 @@ public class HttpService {
      */
     public static void loadDraftList(int type, int page, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("page", page);
         params.put("pageRows", pageRows);
         BaseRequest.getInstance()
@@ -392,7 +393,7 @@ public class HttpService {
      */
     public static void deleteDraft(List<String> mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getDeleteDraft())
@@ -416,7 +417,7 @@ public class HttpService {
         params.put("pathType", pathType);
         params.put("page",page);
         params.put("pageRows", pageRows);
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getLoadFileList())
                 .setType(type)
@@ -441,7 +442,7 @@ public class HttpService {
         params.put("receiveUserId", receiveUserId);
         if (bulkId != null)
             params.put("bulkId", bulkId);
-        params.put("userId", Constants.userId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("title", title);
         params.put("mailContent", mailContent);
         params.put("mailId", mailId);
@@ -462,7 +463,7 @@ public class HttpService {
         HttpParams params = new HttpParams();
         params.put("mailId",mailId);
         params.put("neid",neid);
-        params.put("userId",Constants.userId);
+        params.put("userId",Global.sKnife.getCurrentUserId());
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getUploadFile())
                 .setType(HttpApis.getUploadFile().hashCode())
@@ -483,7 +484,7 @@ public class HttpService {
         params.put("likeName",likeName);
         params.put("searchPath",searchPath);
         params.put("pathType",pathType);
-        params.put("userId",Constants.userId);
+        params.put("userId",Global.sKnife.getCurrentUserId());
         params.put("page",page);
         params.put("pageRows",pageRows);
         BaseRequest.getInstance()
@@ -502,7 +503,7 @@ public class HttpService {
      */
     public static void deleteFile(long itemId,long mailId,ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId",Constants.userId);
+        params.put("userId",Global.sKnife.getCurrentUserId());
         params.put("itemId",itemId);
         params.put("mailId",mailId);
         BaseRequest.getInstance()

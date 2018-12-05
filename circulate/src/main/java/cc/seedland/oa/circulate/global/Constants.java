@@ -5,7 +5,6 @@ package cc.seedland.oa.circulate.global;
  */
 
 public interface Constants {
-    String userId = "4173";
     //添加联系人上限
     int selectLimit = 5;
 }

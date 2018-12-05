@@ -30,6 +30,11 @@ public class DemoApplication extends Application {
             public String getHost() {
                 return "http://sloa2.isunn.cn";
             }
+
+            @Override
+            public String getCurrentUserId() {
+                return "4173";
+            }
         });
     }
 }

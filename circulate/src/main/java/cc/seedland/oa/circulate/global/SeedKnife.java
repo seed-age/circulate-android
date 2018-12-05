@@ -8,5 +8,12 @@ package cc.seedland.oa.circulate.global;
  **/
 public abstract class SeedKnife {
 
+    /**
+     * 注入域名
+     * @return
+     */
     public abstract String getHost();
+
+
+    public abstract String getCurrentUserId();
 }
