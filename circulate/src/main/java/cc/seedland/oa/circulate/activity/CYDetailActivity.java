@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
@@ -455,7 +456,12 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                                             //获取文件file的MIME类型
                                             String type = getMIMEType(file);
                                             //设置intent的data和Type属性。
-                                            intent.setDataAndType(getUriForFile(file), type);
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                                intent.setDataAndType(getUriForFile(file), type);
+                                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//注意加上这句话
+                                            }else {
+                                                intent.setDataAndType(Uri.fromFile(file), type);
+                                            }
                                             //跳转
                                             CYDetailActivity.this.startActivity(intent);
                                         } catch (ActivityNotFoundException e) {
@@ -526,8 +532,8 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
         }
     }
 
-    public static Uri getUriForFile(File file) {
-        return FileProvider.getUriForFile(Global.sContext, Global.sContext.getPackageName() + ".fileprovider", file);
+    public Uri getUriForFile(File file) {
+        return FileProvider.getUriForFile(this, Global.sContext.getPackageName() + ".fileprovider", file);
     }
 
     public void showDownloadDialog(int itemId) {
