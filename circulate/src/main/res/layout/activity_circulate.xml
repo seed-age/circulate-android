@@ -633,6 +633,7 @@
             android:onClick="onClick"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/sp_16"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:visibility="gone"/>
     </FrameLayout>
 </LinearLayout>
