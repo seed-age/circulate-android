@@ -89,7 +89,7 @@ public class OADownloadUtil {
                         int usedTime = (int) ((curTime-startTime)/1000);
 
                         if(usedTime==0)usedTime = 1;
-                        float downloadSpeed = (sum/usedTime)/2048; // 下载速度
+                        float downloadSpeed = (sum/usedTime)/3072; // 下载速度
                         // 下载中
                         listener.onDownloading(progress,downloadSpeed);
                     }
