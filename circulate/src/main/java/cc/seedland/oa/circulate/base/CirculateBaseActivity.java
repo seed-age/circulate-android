@@ -55,7 +55,7 @@ public abstract class CirculateBaseActivity extends AppCompatActivity implements
 
 
     public void hideDelayDialog() {
-        if (mDelayDialog.isShowing())
+        if (mDelayDialog != null && mDelayDialog.isShowing())
             mDelayDialog.dismiss();
     }
 

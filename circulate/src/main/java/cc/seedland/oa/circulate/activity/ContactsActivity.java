@@ -94,7 +94,6 @@ public class ContactsActivity extends CirculateBaseActivity {
                     ContactsMultiInfo bean = data.get(i);
                     if (letter.equals(bean.getInitLetter())) {
                         // 列表滚动到对应的位置
-//                        mRvList.smoothScrollToPosition(i);
 //                        mRvList.scrollToPosition(i);
                         mLayoutManager.scrollToPositionWithOffset(i, 0);
                         mLayoutManager.setStackFromEnd(false);

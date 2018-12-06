@@ -11,11 +11,13 @@ ext {
     version_name = '1.0.0'
 
     // corework库构建版本
-    circulate_version_code = 1
+    circulate_version_code = 2
 //    corework_version_name = '1.0.2-SNAPSHOT'
-    circulate_version_name = '1.0.0'
+    circulate_version_name = '1.0.1'
 
     // 依赖第三方库版本
     support_version = '27.1.0'
+    arouter_api_version = '1.4.1'
+    arouter_compiler_version = '1.2.2'
 
 }

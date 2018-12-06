@@ -7,9 +7,11 @@ import com.unnamed.b.atv.model.TreeNode;
 import java.util.List;
 import java.util.Map;
 
+import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
+import cc.seedland.oa.circulate.view.CommonGroupDepartmentItemHolder;
 import cc.seedland.oa.circulate.view.OrganizationDepartmentItemHolder;
 import cc.seedland.oa.circulate.view.OrganizationMemberItemHolder;
 
@@ -25,7 +27,9 @@ public abstract class SeedKnife {
      * 注入域名
      * @return
      */
-    public abstract String getHost();
+    public String getHost() {
+        return Global.sContext.getString(R.string.host);
+    }
 
     /**
      * 注入图片服务器域名
@@ -53,13 +57,6 @@ public abstract class SeedKnife {
      */
     public abstract TreeNode buildTreeNode(Context context, OrganizationDepartmentItemHolder.ToggleListener listener);
 
-
-    /**
-     *
-     * @param parentId
-     */
-    public abstract List<Map<String, String>> loadSubCompany(String parentId);
-
     /**
      * 构建子树节点
      * @param context
@@ -71,4 +68,18 @@ public abstract class SeedKnife {
                                       OrganizationDepartmentItemHolder.ToggleListener toggleListener,
                                       OrganizationMemberItemHolder.OnNodeSelectListener nodeListener,
                                       List<UserInfo> users);
+
+    /**
+     * 构建私有组树节点
+     * @param context
+     * @param listener
+     */
+    public abstract TreeNode buildTreeForPrivateGroup(Context context, CommonGroupDepartmentItemHolder.ToggleListener listener);
+
+    /**
+     * 构建公共组树节点
+     * @param context
+     * @param listener
+     */
+    public abstract TreeNode buildTreeForCommonGroup(Context context, CommonGroupDepartmentItemHolder.ToggleListener listener);
 }

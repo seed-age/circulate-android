@@ -62,24 +62,7 @@ public class CommonGroupFragment extends CirculateBaseFragment implements Organi
 
     @NonNull
     private TreeNode getTreeNode() {
-        List<DepartmentInfo> subDepartment = new ArrayList<>();
-        DepartmentInfo sub = new DepartmentInfo();
-        sub.departmentName = "营销管理中心";
-        sub.iconRes = R.drawable.icon_organization_add;
-        sub.haveSubDepart = true;
-        List<UserInfo> userInfos = Global.sUserInfo;
-        sub.member = userInfos;
-        subDepartment.add(sub);
-//        top.subDepartment = subDepartment;
-
-        //1、创建树根节点
-        TreeNode root = TreeNode.root();
-        //2、创建和添加加点(使用自定义对象作为构造函数参数)
-        CommonGroupDepartmentItemHolder parentHolder = new CommonGroupDepartmentItemHolder(mActivity);
-        TreeNode parent = new TreeNode(sub).setViewHolder(parentHolder);
-        parentHolder.setOnToggleListener(parent,this);
-        root.addChild(parent);
-        return root;
+        return Global.sKnife.buildTreeForCommonGroup(mActivity, this);
     }
 
     @Override

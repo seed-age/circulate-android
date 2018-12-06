@@ -6,5 +6,5 @@ package cc.seedland.oa.circulate.global;
 
 public interface Constants {
     //添加联系人上限
-    int selectLimit = 5;
+    int selectLimit = 150;
 }

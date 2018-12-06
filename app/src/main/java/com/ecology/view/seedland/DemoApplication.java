@@ -17,6 +17,7 @@ import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
+import cc.seedland.oa.circulate.view.CommonGroupDepartmentItemHolder;
 import cc.seedland.oa.circulate.view.OrganizationDepartmentItemHolder;
 import cc.seedland.oa.circulate.view.OrganizationMemberItemHolder;
 import cc.seedland.oa.demo.BuildConfig;
@@ -105,11 +106,6 @@ public class DemoApplication extends Application {
             }
 
             @Override
-            public List<Map<String, String>> loadSubCompany(String parentId) {
-                return null;
-            }
-
-            @Override
             public void buildSubTree(Context context, TreeNode node, DepartmentInfo info,
                                      OrganizationDepartmentItemHolder.ToggleListener toggleListener,
                                      OrganizationMemberItemHolder.OnNodeSelectListener nodeListener,
@@ -148,6 +144,50 @@ public class DemoApplication extends Application {
                     }
                 }
 
+            }
+
+            @Override
+            public TreeNode buildTreeForPrivateGroup(Context context, CommonGroupDepartmentItemHolder.ToggleListener listener) {
+                List<DepartmentInfo> subDepartment = new ArrayList<>();
+                DepartmentInfo sub = new DepartmentInfo();
+                sub.departmentName = "营销管理中心";
+                sub.iconRes = cc.seedland.oa.circulate.R.drawable.icon_organization_add;
+                sub.haveSubDepart = true;
+                List<UserInfo> userInfos = Global.sUserInfo;
+                sub.member = userInfos;
+                subDepartment.add(sub);
+//        top.subDepartment = subDepartment;
+
+                //1、创建树根节点
+                TreeNode root = TreeNode.root();
+                //2、创建和添加加点(使用自定义对象作为构造函数参数)
+                CommonGroupDepartmentItemHolder parentHolder = new CommonGroupDepartmentItemHolder(context);
+                TreeNode parent = new TreeNode(sub).setViewHolder(parentHolder);
+                parentHolder.setOnToggleListener(parent,listener);
+                root.addChild(parent);
+                return root;
+            }
+
+            @Override
+            public TreeNode buildTreeForCommonGroup(Context context, CommonGroupDepartmentItemHolder.ToggleListener listener) {
+                List<DepartmentInfo> subDepartment = new ArrayList<>();
+                DepartmentInfo sub = new DepartmentInfo();
+                sub.departmentName = "营销管理中心";
+                sub.iconRes = cc.seedland.oa.circulate.R.drawable.icon_organization_add;
+                sub.haveSubDepart = true;
+                List<UserInfo> userInfos = Global.sUserInfo;
+                sub.member = userInfos;
+                subDepartment.add(sub);
+//        top.subDepartment = subDepartment;
+
+                //1、创建树根节点
+                TreeNode root = TreeNode.root();
+                //2、创建和添加加点(使用自定义对象作为构造函数参数)
+                CommonGroupDepartmentItemHolder parentHolder = new CommonGroupDepartmentItemHolder(context);
+                TreeNode parent = new TreeNode(sub).setViewHolder(parentHolder);
+                parentHolder.setOnToggleListener(parent,listener);
+                root.addChild(parent);
+                return root;
             }
         });
     }

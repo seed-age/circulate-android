@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import cc.seedland.oa.circulate.activity.ChuanYueActivity;
@@ -19,10 +20,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.circulate_txv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ARouter.getInstance().build("/Function/Circulate")
-//                        .navigation();
-                Intent i = new Intent(MainActivity.this, ChuanYueActivity.class);
-                startActivity(i);
+                ARouter.getInstance().build("/Function/Circulate")
+                        .navigation();
+//                Intent i = new Intent(MainActivity.this, ChuanYueActivity.class);
+//                startActivity(i);
             }
         });
     }

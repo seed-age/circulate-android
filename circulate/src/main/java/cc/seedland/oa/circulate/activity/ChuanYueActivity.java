@@ -121,7 +121,14 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
         }else if(id == R.id.rl_unread) {
             status = 5;
             UISkipUtils.skipToReceiveListActivity(this, status, "收到传阅", true);
+        }else if(id == R.id.rl_old_receive) {
+            UISkipUtils.skipToOldReceiveActivity(this);
+        }else if(id == R.id.rl_old_processing) {
+            UISkipUtils.skipToOldProcessActivity(this);
+        }else if(id == R.id.rl_old_completed) {
+            UISkipUtils.skipToOldCompletedActivity(this);
         }
+        
     }
 
     @Override

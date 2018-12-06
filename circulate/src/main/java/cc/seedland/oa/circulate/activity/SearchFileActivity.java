@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -83,7 +84,10 @@ public class SearchFileActivity extends CirculateBaseActivity implements BaseQui
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    mKeyword = mEdtKeyword.getText().toString();
+                    mKeyword = mEdtKeyword.getText().toString().trim();
+                    if (TextUtils.isEmpty(mKeyword)) {
+                        return true;
+                    }
                     showDelayDialog();
                     HttpService.searchFile(INIT_DATA, page, mKeyword,mPath,mPathType, SearchFileActivity.this);
                     InputMethodManager im = (InputMethodManager) getSystemService(Context
@@ -128,7 +132,7 @@ public class SearchFileActivity extends CirculateBaseActivity implements BaseQui
                 FileInfo fileInfo = data.get(position);
                 int itemType = fileInfo.getItemType();
                 if (itemType == FileInfo.TYPE_DIR) {
-                    UISkipUtils.skipToFileListActivity(SearchFileActivity.this, fileInfo.path, fileInfo.pathType,
+                    UISkipUtils.skipToFileListActivity(SearchFileActivity.this, fileInfo.desc, fileInfo.pathType,
                             fileInfo.path);
                 } else if (itemType == FileInfo.TYPE_FILE) {
                     fileInfo.isSelected = !fileInfo.isSelected;

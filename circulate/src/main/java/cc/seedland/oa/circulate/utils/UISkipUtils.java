@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import cc.seedland.oa.circulate.activity.CYDetailActivity;
 import cc.seedland.oa.circulate.activity.CommentListActivity;
 import cc.seedland.oa.circulate.activity.ContactsActivity;
@@ -145,6 +147,32 @@ public class UISkipUtils {
         Intent intent = new Intent(context, DraftListActivity.class);
         context.startActivity(intent);
     }
+
+    public static void skipToOldReceiveActivity(Context context) {
+        ARouter.getInstance().build("/Workflow/List")
+                .withString("moduleid","1")
+                .withString("scopeid", "61")
+                .withString("title", "收到传阅")
+                .navigation(context);
+    }
+
+    public static void skipToOldProcessActivity(Context context) {
+        ARouter.getInstance().build("/Workflow/List")
+                .withString("moduleid","8")
+                .withString("scopeid", "62")
+                .withString("title", "传阅中")
+                .navigation(context);
+    }
+
+    public static void skipToOldCompletedActivity(Context context) {
+
+        ARouter.getInstance().build("/Workflow/List")
+                .withString("moduleid","7")
+                .withString("scopeid", "63")
+                .withString("title", "已完成传阅")
+                .navigation(context);
+    }
+
 
     public static void skipToFileListActivity(Activity context) {
         Intent intent = new Intent(context,FileListActivity.class);

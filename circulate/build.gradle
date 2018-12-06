@@ -22,8 +22,22 @@ android {
     }
 
     buildTypes {
+
+        dev {
+            resValue "string", "host", "http://cc-test.seedland.cc"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            resValue "string", "host", "http://cc-test.seedland.cc"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
-            minifyEnabled false
+            resValue "string", "host", "https://cy.seedland.cc"
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -71,6 +85,10 @@ dependencies {
     //richtext
     implementation 'com.zzhoujay.richtext:richtext:3.0.5'
 
-    implementation 'com.alibaba:arouter-api:1.4.1'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    implementation ("com.alibaba:arouter-api:$arouter_api_version"){
+        exclude group:'com.android.support'
+    }
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }
+
+apply from: 'publish.gradle'
