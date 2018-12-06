@@ -2,6 +2,7 @@ package cc.seedland.oa.circulate.global;
 
 import android.content.Context;
 import android.widget.ImageView;
+import android.support.annotation.NonNull;
 
 import com.unnamed.b.atv.model.TreeNode;
 
@@ -75,6 +76,7 @@ public abstract class SeedKnife {
      * @param context
      * @param listener
      */
+    @NonNull
     public abstract TreeNode buildTreeForPrivateGroup(Context context, CommonGroupDepartmentItemHolder.ToggleListener listener);
 
     /**

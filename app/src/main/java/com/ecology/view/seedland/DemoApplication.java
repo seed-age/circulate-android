@@ -2,10 +2,14 @@ package cc.seedland.oa;
 
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.unnamed.b.atv.model.TreeNode;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +51,23 @@ public class DemoApplication extends Application {
             }
 
             @Override
-            public String getImageHost() {
-                return null;
-            }
+            public void loadImage(String url, ImageView v) {
+//                if (!TextUtils.isEmpty(url)) {
+//                    try {
+//                        String imageUrl = Global.sKnife.getImageHost().replace("client",
+//                                "downloadpic")
+//                                + "?url="
+//                                + URLEncoder.encode(item.userInfo.headerUrl, "utf-8") + "&thumbnail=1";
+//                        Glide.with(mContext)
+//                                .load(imageUrl)
+//                                .apply(new RequestOptions().placeholder(cc.seedland.oa.circulate.R.drawable.ic_avatar_loading))
+//                                .into((ImageView) helper.getView(cc.seedland.oa.circulate.R.id.civ_head));
+//                    } catch (UnsupportedEncodingException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
 
+            }
             @Override
             public String getCurrentUserId() {
                 return "4173";

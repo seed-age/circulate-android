@@ -1,6 +1,7 @@
 package cc.seedland.oa.circulate.view;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +10,13 @@ import android.widget.TextView;
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.unnamed.b.atv.model.TreeNode;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by hch on 2018/2/2.
@@ -41,6 +48,22 @@ public class OrganizationMemberItemHolder extends TreeNode.BaseNodeViewHolder<Us
                 mOnNodeSelectListener.onNodeSelectListener(ivSelector,node,value);
             }
         });
+
+        if (!TextUtils.isEmpty(value.headerUrl) && !TextUtils.isEmpty(Global.sKnife.getImageHost())) {
+            try {
+                String imageUrl = Global.sKnife.getImageHost().replace("client",
+                        "downloadpic")
+                        + "?url="
+                        + URLEncoder.encode(value.headerUrl, "utf-8") + "&thumbnail=1";
+                Glide.with(context)
+                        .load(imageUrl)
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_avatar_loading))
+                        .into((ImageView) view.findViewById(R.id.civ_head));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
         return view;
     }
 
