@@ -53,12 +53,14 @@ public class OrganizationFragment extends CirculateBaseFragment implements Organ
         Bundle arguments = getArguments();
         mSelectedUsers = (List<UserInfo>) arguments.getSerializable("SELECTED_DATA");
         TreeNode root = getTreeNode();
-        //3、将tree view添加到布局中
-        mTView = new AndroidTreeView(mActivity, root);
-        mTView.setDefaultAnimation(false);
-        mTView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-        mTView.setSelectionModeEnabled(true);
-        mRlContainer.addView(mTView.getView());
+        if (root != null) {
+            //3、将tree view添加到布局中
+            mTView = new AndroidTreeView(mActivity, root);
+            mTView.setDefaultAnimation(false);
+            mTView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+            mTView.setSelectionModeEnabled(true);
+            mRlContainer.addView(mTView.getView());
+        }
     }
 
     @NonNull
