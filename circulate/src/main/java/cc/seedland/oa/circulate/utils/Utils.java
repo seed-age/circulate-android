@@ -16,9 +16,8 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.RequestOptions;
+
 import cc.seedland.oa.circulate.modle.bean.MailCountInfo;
 import cc.seedland.oa.circulate.modle.net.BaseResponse;
 import cc.seedland.oa.circulate.modle.net.HttpService;
@@ -307,18 +306,21 @@ public class Utils {
 
     public static void displayImage(Context context, String url, int loadingImg, int errorImg,
                                     ImageView targetView) {
-        Glide.with(context).load(url).placeholder(loadingImg).error(errorImg).into(targetView);
+        Glide.with(context)
+                .load(url)
+                .apply(new RequestOptions().placeholder(loadingImg).error(errorImg))
+                .into(targetView);
     }
 
-    public static void displayDrawable(Context context, String url, int loadingImg, int errorImg,
-                                       final ImageView targetView) {
-        Glide.with(context).load(url).placeholder(loadingImg).error(errorImg).into(new SimpleTarget<GlideDrawable>() {
-            @Override
-            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                targetView.setImageDrawable(resource);
-            }
-        });
-    }
+//    public static void displayDrawable(Context context, String url, int loadingImg, int errorImg,
+//                                       final ImageView targetView) {
+//        Glide.with(context).load(url).placeholder(loadingImg).error(errorImg).into(new SimpleTarget<GlideDrawable>() {
+//            @Override
+//            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+//                targetView.setImageDrawable(resource);
+//            }
+//        });
+//    }
 
     public static void getUnReadCount(final OnUnReadCountListener onUnReadCountListener) {
         HttpService.loadMailCount(new ResponseHandler() {

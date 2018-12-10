@@ -1,6 +1,7 @@
 package cc.seedland.oa.circulate.global;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.unnamed.b.atv.model.TreeNode;
 
@@ -32,10 +33,10 @@ public abstract class SeedKnife {
     }
 
     /**
-     * 注入图片服务器域名
+     * 注入加载图片工具
      * @return
      */
-    public abstract String getImageHost();
+    public abstract void loadImage(String url, ImageView v);
 
     /**
      * 获取当前用户ID

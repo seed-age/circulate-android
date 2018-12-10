@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import cc.seedland.oa.circulate.R;
@@ -83,16 +84,8 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
             // ============把首字母逻辑注释==============
 
             helper.setText(R.id.tv_department, item.userInfo.fullCompanyName + "/" + item.userInfo.deptFullName);
-            if (!TextUtils.isEmpty(item.userInfo.headerUrl) && !TextUtils.isEmpty(Global.sKnife.getImageHost())) {
-                try {
-                    String imageUrl = Global.sKnife.getImageHost().replace("client",
-                            "downloadpic")
-                            + "?url="
-                            + URLEncoder.encode(item.userInfo.headerUrl, "utf-8") + "&thumbnail=1";
-                    Glide.with(mContext).load(imageUrl).placeholder(R.drawable.ic_avatar_loading).into((ImageView) helper.getView(R.id.civ_head));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+            if (!TextUtils.isEmpty(item.userInfo.headerUrl)) {
+                Global.sKnife.loadImage(item.userInfo.headerUrl, (ImageView) helper.getView(R.id.civ_head));
             }
             ImageView ivSelector = helper.getView(R.id.iv_selector);
             ivSelector.setSelected(item.isSelected);
