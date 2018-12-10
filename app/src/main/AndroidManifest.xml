@@ -3,14 +3,14 @@
     package="cc.seedland.oa.demo">
 
     <application
-        android:name="com.ecology.view.seedland.DemoApplication"
+        android:name="cc.seedland.oa.DemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.ecology.view.seedland.MainActivity">
+        <activity android:name="cc.seedland.oa.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -23,7 +23,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-@Route(path = "/Function/Circulate")
+@Route(path = "/Circulate/Main")
 public class ChuanYueActivity extends CirculateBaseActivity implements ResponseHandler {
 
     private TextView mTvReceivedCount;

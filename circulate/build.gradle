@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: '../config.gradle'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -29,9 +30,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
+        uat{
+
+        }
+
         debug {
             resValue "string", "host", "http://cc-test.seedland.cc"
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -60,7 +65,7 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //circleimageview
     implementation 'de.hdodenhof:circleimageview:2.1.0'
-    implementation files('libs/pinyin4j-2.5.0.jar')
+    api files('libs/pinyin4j-2.5.0.jar')
     //expandableTextView
     implementation 'cn.carbs.android:ExpandableTextView:1.0.3'
     //Okhttp
@@ -85,9 +90,10 @@ dependencies {
     //richtext
     implementation 'com.zzhoujay.richtext:richtext:3.0.5'
 
-    implementation ("com.alibaba:arouter-api:$arouter_api_version"){
-        exclude group:'com.android.support'
-    }
+//    implementation ("com.alibaba:arouter-api:$arouter_api_version"){
+//        exclude group:'com.android.support'
+//    }
+    implementation "com.alibaba:arouter-api:$arouter_api_version"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }
 

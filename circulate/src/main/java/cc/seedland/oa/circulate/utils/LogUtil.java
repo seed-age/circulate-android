@@ -8,8 +8,8 @@ import android.util.Log;
 public class LogUtil {
 	
 	private static final boolean mDebug = true;
-	
-	private static final String TAG = "ShiDiOA";
+
+	private static final String TAG = "circulate";
 
 	/** 在控制台打印信息 */
 	public static void i(String msg) {

@@ -1,4 +1,4 @@
-package com.ecology.view.seedland;
+package cc.seedland.oa;
 
 import android.app.Application;
 import android.content.Context;
