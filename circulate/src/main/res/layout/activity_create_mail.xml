@@ -124,7 +124,8 @@
                     android:id="@+id/fl_accessory"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="match_parent"
-                    android:onClick="onClick">
+                    android:onClick="onClick"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_accessory"
