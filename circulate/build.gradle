@@ -36,7 +36,7 @@ android {
 
         debug {
             resValue "string", "host", "http://cc-test.seedland.cc"
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 

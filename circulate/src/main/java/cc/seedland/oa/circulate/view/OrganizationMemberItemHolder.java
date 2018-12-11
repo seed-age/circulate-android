@@ -49,19 +49,8 @@ public class OrganizationMemberItemHolder extends TreeNode.BaseNodeViewHolder<Us
             }
         });
 
-        if (!TextUtils.isEmpty(value.headerUrl) && !TextUtils.isEmpty(Global.sKnife.getImageHost())) {
-            try {
-                String imageUrl = Global.sKnife.getImageHost().replace("client",
-                        "downloadpic")
-                        + "?url="
-                        + URLEncoder.encode(value.headerUrl, "utf-8") + "&thumbnail=1";
-                Glide.with(context)
-                        .load(imageUrl)
-                        .apply(new RequestOptions().placeholder(R.drawable.ic_avatar_loading))
-                        .into((ImageView) view.findViewById(R.id.civ_head));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+        if (!TextUtils.isEmpty(value.headerUrl)) {
+            Global.sKnife.loadImage(value.headerUrl, (ImageView) view.findViewById(R.id.civ_head));
         }
 
         return view;

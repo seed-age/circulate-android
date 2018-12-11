@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.circulate_txv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ARouter.getInstance().build("/Function/Circulate")
+                ARouter.getInstance().build("/Circulate/Main")
                         .navigation();
 //                Intent i = new Intent(MainActivity.this, ChuanYueActivity.class);
 //                startActivity(i);
