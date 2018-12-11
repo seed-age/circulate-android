@@ -63,7 +63,7 @@
                 android:id="@+id/tv_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="跳过"
+                android:text="批量确认"
                 android:layout_marginTop="@dimen/dp_6"
                 android:textColor="@color/color_22262A"
                 android:textSize="@dimen/sp_10"/>

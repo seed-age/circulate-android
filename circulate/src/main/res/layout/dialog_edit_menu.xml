@@ -19,7 +19,7 @@
             android:layout_height="45dp"
             android:layout_margin="2dp"
             android:gravity="center"
-            android:text="新增传阅对象"
+            android:text="新增人员"
             android:textColor="@color/color_565656"
             android:textSize="@dimen/sp_15"
             android:textStyle="italic"/>

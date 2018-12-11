@@ -201,8 +201,8 @@ public class ContactsActivity extends CirculateBaseActivity {
                     }
                 }
             }
-            refreshSelected(contentInfo);
         }
+        refreshSelected(contentInfo);
 //        // 按首字母进行排序
 //        Collections.sort(contentInfo, new Comparator<ContactsMultiInfo>() {
 //

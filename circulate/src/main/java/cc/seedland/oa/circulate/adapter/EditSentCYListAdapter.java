@@ -34,6 +34,6 @@ public class EditSentCYListAdapter extends BaseQuickAdapter<MailInfo,BaseViewHol
         helper.setGone(R.id.iv_focus, item.attention);
         ImageView ivSelector = helper.getView(R.id.iv_selector);
         ivSelector.setSelected(item.isSelected);
-        helper.addOnClickListener(R.id.fl_selector);
+//        helper.addOnClickListener(R.id.fl_selector);
     }
 }

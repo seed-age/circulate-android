@@ -203,7 +203,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:layout_toRightOf="@+id/iv_wait_deal_icon"
-                            android:text="未确认"
+                            android:text="待办传阅"
                             android:textColor="@color/color_22262A"
                             android:textSize="@dimen/sp_16"/>
 
@@ -244,7 +244,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:layout_toRightOf="@+id/iv_wait_pass_icon"
-                            android:text="草稿"
+                            android:text="待发送"
                             android:textColor="@color/color_22262A"
                             android:textSize="@dimen/sp_16"/>
 

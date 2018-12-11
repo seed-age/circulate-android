@@ -197,7 +197,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         if(id == R.id.tv_cancel) {
             Intent intent = new Intent();
             intent.putExtra("DATA", (Serializable) mSelectedData);
-            setResult(UISkipUtils.FROM_EDIT, intent);
+            setResult(UISkipUtils.FROM_SELECTED, intent);
             finish();
         }else if(id == R.id.tv_btn) {
             mLimitDialog.dismiss();
