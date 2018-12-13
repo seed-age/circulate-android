@@ -215,8 +215,8 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
         mToolbar.setTitle(title);
         LinkedHashMap<String, Integer> tabs = new LinkedHashMap<>();
         tabs.put("未读", 5);
-        tabs.put("未确认", 2);
-        tabs.put("已确认", 6);
+        tabs.put("待办", 2);
+        tabs.put("传阅中", 6);
         tabs.put("全部", 0);
         initTabLayout(tabs);
         status = type;

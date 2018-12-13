@@ -104,7 +104,10 @@ public class EditDraftCYListActivity extends CirculateBaseActivity implements Re
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                List<MailInfo> data = adapter.getData();
+                MailInfo listBean = data.get(position);
+                listBean.isSelected = !listBean.isSelected;
+                adapter.notifyDataSetChanged();
             }
 
             @Override

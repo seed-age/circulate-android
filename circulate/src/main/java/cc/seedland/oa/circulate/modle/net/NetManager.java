@@ -90,10 +90,11 @@ public class NetManager {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
+                LogUtil.e("error");
                 Global.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        req.getHandler().onError(e.getMessage(), "500");
+                        req.getHandler().onError("服务器开小差了，请稍后再试～", "500");
                     }
                 });
             }

@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +45,7 @@ import cc.seedland.oa.circulate.modle.net.HttpApis;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.utils.LogUtil;
+import cc.seedland.oa.circulate.utils.NetWorkSpeedUtils;
 import cc.seedland.oa.circulate.utils.OADownloadUtil;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
 import cc.seedland.oa.circulate.utils.Utils;
@@ -435,11 +438,26 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 //                progressBar.setProgress(40);
 //                LogUtil.e("url = " + downloadUrl);
 //                String str = HttpApis.HostApi + "/file/8d09513f-d567-44b6-b7e1-132001b3f2b3.png";
+                    final Handler handler = new Handler() {
+                        @Override
+                        public void handleMessage(Message msg) {
+                            switch (msg.what) {
+                                case 100:
+                                    tvSpeed.setText(msg.obj.toString());
+                                    break;
+                            }
+                            super.handleMessage(msg);
+                        }
+                    };
+                    final NetWorkSpeedUtils netWorkSpeedUtils = new NetWorkSpeedUtils(this, handler);
+                    netWorkSpeedUtils.startShowNetSpeed();
                     OADownloadUtil.get().download(downloadUrl, Global.sFileFolder, Global
                             .sPreViewFileName, new OADownloadUtil.OnDownloadListener() {
 
                         @Override
                         public void onDownloadSuccess() {
+                            netWorkSpeedUtils.stop();
+                            handler.removeCallbacksAndMessages(null);
                             CYDetailActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -481,7 +499,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                                 @Override
                                 public void run() {
                                     progressBar.setProgress(progress);
-                                    tvSpeed.setText(speed + "MB/S");
+//                                    tvSpeed.setText(speed + "MB/S");
 //                                LogUtil.e("progress = " + progress);
 //                                LogUtil.e("speed = " + speed);
                                 }
@@ -490,6 +508,8 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 
                         @Override
                         public void onDownloadFailed() {
+                            netWorkSpeedUtils.stop();
+                            handler.removeCallbacksAndMessages(null);
                             CYDetailActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

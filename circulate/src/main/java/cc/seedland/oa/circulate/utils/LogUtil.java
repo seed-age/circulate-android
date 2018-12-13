@@ -7,7 +7,7 @@ import android.util.Log;
  */
 public class LogUtil {
 	
-	private static final boolean mDebug = false;
+	private static final boolean mDebug = true;
 
 	private static final String TAG = "circulate";
 

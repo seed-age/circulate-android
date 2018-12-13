@@ -123,7 +123,7 @@ public class CYDetailAdapter extends BaseMultiItemQuickAdapter<CYDetailInfo, Bas
         TextView tvContent = helper.getView(R.id.tv_content);
         // 设置为Html
         RichText.fromHtml(mailInfo.mailContent).into(tvContent);
-        helper.setText(R.id.tv_sender, mailInfo.lastName + "   " + mailInfo.loginId);
+        helper.setText(R.id.tv_sender, mailInfo.lastName);
         TextView tvAttachNum = helper.getView(R.id.tv_attach_num);
         TextView tvAccessoryNum = helper.getView(R.id.tv_accessory_num);
         if (attachmentItems == null || attachmentItems.size() == 0) {

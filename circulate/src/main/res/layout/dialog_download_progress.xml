@@ -44,7 +44,7 @@
             android:id="@+id/tv_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4.75MB/S"
+            android:text="0.0kb/s"
             android:textColor="@color/color_22262A"
             android:textSize="@dimen/sp_14"
             android:textStyle="bold"

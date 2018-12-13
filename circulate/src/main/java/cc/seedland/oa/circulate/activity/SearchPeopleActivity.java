@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import cc.seedland.oa.circulate.R;
@@ -21,7 +23,9 @@ import cc.seedland.oa.circulate.global.Constants;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.ContactsMultiInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
+import cc.seedland.oa.circulate.utils.PreferenceUtils;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
+import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.LimitDialog;
 
 import java.io.Serializable;
@@ -195,6 +199,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
     @Override
     public void onClick(View v, int id) {
         if(id == R.id.tv_cancel) {
+            refreshSelectedUser(mSelectedData);
             Intent intent = new Intent();
             intent.putExtra("DATA", (Serializable) mSelectedData);
             setResult(UISkipUtils.FROM_SELECTED, intent);
@@ -202,6 +207,32 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         }else if(id == R.id.tv_btn) {
             mLimitDialog.dismiss();
         }
+    }
+
+    private void refreshSelectedUser(List<UserInfo> selectedNode) {
+        String selectedUser = PreferenceUtils.getString(this, "SELECTED_USER");
+        List<UserInfo> userInfos = null;
+        if (!TextUtils.isEmpty(selectedUser)) {
+            userInfos = Utils.parseJsonArray(selectedUser, UserInfo.class);
+        }
+        if (userInfos == null) {
+            userInfos = selectedNode;
+        }else {
+            List<String> userIds = new ArrayList<>();
+            for (UserInfo userInfo : userInfos) {
+                userIds.add(userInfo.userId);
+            }
+            for (UserInfo userInfo : selectedNode) {
+                if (!userIds.contains(userInfo.userId)) {
+                    if (userInfos.size() >= 10) {
+                        userInfos.remove(0);
+                    }
+                    userInfos.add(userInfo);
+                }
+            }
+        }
+        String newSelectedUser = JSONArray.toJSONString(userInfos);
+        PreferenceUtils.putString(this,"SELECTED_USER",newSelectedUser);
     }
 
     @Override

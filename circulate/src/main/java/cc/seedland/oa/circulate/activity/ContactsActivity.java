@@ -173,8 +173,12 @@ public class ContactsActivity extends CirculateBaseActivity {
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
         List<UserInfo> user_list = (List<UserInfo>) intent.getSerializableExtra("USER_LIST");
-        if (user_list != null)
+        if (user_list != null) {
             mSelectedUserList = user_list;
+            mTvSelected.setText("(" + mSelectedUserList.size() + ")");
+        }else {
+            mTvSelected.setText("(" + 0 + ")");
+        }
         List<ContactsMultiInfo> contentInfo = new ArrayList<>();
         String selectedUser = PreferenceUtils.getString(this, "SELECTED_USER");
         if (!TextUtils.isEmpty(selectedUser)) {
@@ -202,7 +206,7 @@ public class ContactsActivity extends CirculateBaseActivity {
                 }
             }
         }
-        refreshSelected(contentInfo);
+//        refreshSelected(contentInfo);
 //        // 按首字母进行排序
 //        Collections.sort(contentInfo, new Comparator<ContactsMultiInfo>() {
 //
