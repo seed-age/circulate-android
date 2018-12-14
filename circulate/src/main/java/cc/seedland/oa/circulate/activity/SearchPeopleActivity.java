@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONArray;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.adapter.SearchPeopleAdapter;
 import cc.seedland.oa.circulate.base.CirculateBaseActivity;
@@ -154,12 +155,28 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
                     if (selectedDatum.userId.equals(datum.userId)) {
                         if (!datum.isSelected) {
 //                            mSelectedData.remove(selectedDatum);
-                            needDel.add(selectedDatum);
+                            if (needDel.size()>0) {
+                                for (UserInfo userInfo : needDel) {
+                                    if (!userInfo.userId.equals(selectedDatum.userId)) {
+                                        needDel.add(selectedDatum);
+                                    }
+                                }
+                            }else {
+                                needDel.add(selectedDatum);
+                            }
                         }
                     } else {
                         if (datum.isSelected) {
 //                            mSelectedData.add(datum);
-                            needAdd.add(datum);
+                            if (needAdd.size()>0) {
+                                for (UserInfo userInfo : needAdd) {
+                                    if (!userInfo.userId.equals(datum.userId)) {
+                                        needAdd.add(datum);
+                                    }
+                                }
+                            }else {
+                                needAdd.add(datum);
+                            }
                         }
                     }
                 }
@@ -198,13 +215,13 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
 
     @Override
     public void onClick(View v, int id) {
-        if(id == R.id.tv_cancel) {
+        if (id == R.id.tv_cancel) {
             refreshSelectedUser(mSelectedData);
             Intent intent = new Intent();
             intent.putExtra("DATA", (Serializable) mSelectedData);
             setResult(UISkipUtils.FROM_SELECTED, intent);
             finish();
-        }else if(id == R.id.tv_btn) {
+        } else if (id == R.id.tv_btn) {
             mLimitDialog.dismiss();
         }
     }
@@ -217,7 +234,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         }
         if (userInfos == null) {
             userInfos = selectedNode;
-        }else {
+        } else {
             List<String> userIds = new ArrayList<>();
             for (UserInfo userInfo : userInfos) {
                 userIds.add(userInfo.userId);
@@ -232,7 +249,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
             }
         }
         String newSelectedUser = JSONArray.toJSONString(userInfos);
-        PreferenceUtils.putString(this,"SELECTED_USER",newSelectedUser);
+        PreferenceUtils.putString(this, "SELECTED_USER", newSelectedUser);
     }
 
     @Override

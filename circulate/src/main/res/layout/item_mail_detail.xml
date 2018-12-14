@@ -128,8 +128,24 @@
         android:paddingTop="@dimen/dp_12"
         android:text="OA传阅迭代更新OA传阅迭代更新OA传阅迭代更新OA传阅迭代更新"
         android:textColor="@color/color_22262A"
-        android:textSize="@dimen/sp_14"/>
-
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_323"
+        android:visibility="visible">
+        <WebView
+            android:id="@+id/web_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_323"
+            tools:ignore="WebViewLayout"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            android:paddingTop="@dimen/dp_12"/>
+    </FrameLayout>
     <View
         android:id="@+id/view_divider"
         android:layout_width="match_parent"

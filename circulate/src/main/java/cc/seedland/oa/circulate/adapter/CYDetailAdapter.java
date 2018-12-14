@@ -1,9 +1,11 @@
 package cc.seedland.oa.circulate.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,6 +20,7 @@ import cc.seedland.oa.circulate.modle.bean.AttachInfo;
 import cc.seedland.oa.circulate.modle.bean.CYDetailInfo;
 import cc.seedland.oa.circulate.modle.bean.DiscussesInfo;
 import cc.seedland.oa.circulate.modle.bean.MailInfo;
+import cc.seedland.oa.circulate.modle.net.HttpApis;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.BottomDialog;
@@ -121,8 +124,19 @@ public class CYDetailAdapter extends BaseMultiItemQuickAdapter<CYDetailInfo, Bas
         List<AttachInfo> attachmentItems = mailInfo.attachmentItemss;
         helper.setText(R.id.tv_mail_title, mailInfo.title);
         TextView tvContent = helper.getView(R.id.tv_content);
+        WebView webView = helper.getView(R.id.web_content);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY); //取消滚动条白边效果
+        webView.getSettings().setDefaultTextEncodingName("UTF-8") ;
+        webView.getSettings().setBlockNetworkImage(false);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            webView.getSettings().setMixedContentMode(webView.getSettings().MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
+        }
+        webView.loadDataWithBaseURL(Global.sKnife.getHost(),mailInfo.mailContent,"text/html", "UTF-8", null);
         // 设置为Html
-        RichText.fromHtml(mailInfo.mailContent).into(tvContent);
+//        RichText.fromHtml(mailInfo.mailContent).autoPlay(true).into(tvContent);
         helper.setText(R.id.tv_sender, mailInfo.lastName);
         TextView tvAttachNum = helper.getView(R.id.tv_attach_num);
         TextView tvAccessoryNum = helper.getView(R.id.tv_accessory_num);
