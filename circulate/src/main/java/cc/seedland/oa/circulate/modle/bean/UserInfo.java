@@ -28,5 +28,7 @@ public class UserInfo implements Serializable{
     public String pyName; //拼音简写
     public String pyFullName; //拼音
     public String tel;
+    public String departmentName; //部门
+    public String subcompanyName; //公司
 
 }

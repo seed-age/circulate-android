@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.global.Constants;
 import cc.seedland.oa.circulate.global.Global;
@@ -48,8 +49,8 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
             helper.addOnClickListener(R.id.ll_common_group);
             helper.addOnClickListener(R.id.ll_private_group);
             helper.addOnClickListener(R.id.ll_search);
-        }else if (itemType == ContactsMultiInfo.CONTENT) {
-            helper.setText(R.id.tv_name,item.getName());
+        } else if (itemType == ContactsMultiInfo.CONTENT) {
+            helper.setText(R.id.tv_name, item.getName());
             // ============把首字母逻辑注释==============
 //            TextView tvLetter = helper.getView(R.id.tv_letter);
 //            String initLetter = item.getInitLetter();
@@ -82,10 +83,23 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
 //                }
 //            }
             // ============把首字母逻辑注释==============
-
-            helper.setText(R.id.tv_department, item.userInfo.fullCompanyName + "/" + item.userInfo.deptFullName);
+            String department = "";
+            if (item.userInfo.subcompanyName != null) {
+                department += item.userInfo.subcompanyName + "/";
+            }
+            if (item.userInfo.departmentName != null) {
+                department += item.userInfo.departmentName;
+            }
+            if (department.length()>0) {
+                String last = String.valueOf(department.charAt(department.length() - 1));
+                if (last.equals("/")) {
+                    department = department.substring(0,department.length() - 1);
+                }
+            }
+            helper.setText(R.id.tv_department, department);
             if (!TextUtils.isEmpty(item.userInfo.headerUrl)) {
-                Global.sKnife.loadImage(item.userInfo.headerUrl, (ImageView) helper.getView(R.id.civ_head));
+                Global.sKnife.loadImage(item.userInfo.headerUrl, (ImageView) helper.getView(R.id
+                        .civ_head));
             }
             ImageView ivSelector = helper.getView(R.id.iv_selector);
             ivSelector.setSelected(item.isSelected);

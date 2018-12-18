@@ -51,7 +51,20 @@ public class SelectedContactsAdapter extends BaseQuickAdapter<UserInfo,BaseViewH
         });
 
         helper.setText(R.id.tv_name, item.lastName);
-        helper.setText(R.id.tv_department, item.fullCompanyName + "/" + item.deptFullName);
+        String department = "";
+        if (item.subcompanyName != null) {
+            department += item.subcompanyName + "/";
+        }
+        if (item.departmentName != null) {
+            department += item.departmentName;
+        }
+        if (department.length()>0) {
+            String last = String.valueOf(department.charAt(department.length() - 1));
+            if (last.equals("/")) {
+                department = department.substring(0,department.length() - 1);
+            }
+        }
+        helper.setText(R.id.tv_department, department);
         helper.addOnClickListener(R.id.tv_delete);
     }
 }
