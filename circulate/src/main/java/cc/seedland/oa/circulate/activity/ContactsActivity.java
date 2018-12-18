@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.adapter.ContactsAdapter;
 import cc.seedland.oa.circulate.base.CirculateBaseActivity;
@@ -28,6 +29,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -157,15 +159,36 @@ public class ContactsActivity extends CirculateBaseActivity {
 
     //刷新选中人数
     private void refreshSelected(List<ContactsMultiInfo> data) {
-        int userCount = 0;
-        mSelectedUserList.clear();
+//        int userCount = 0;
+//        mSelectedUserList.clear();
+//        List<String> selectedUserId = new ArrayList<>();
+//        for (UserInfo userInfo : mSelectedUserList) {
+//            selectedUserId.add(userInfo.userId);
+//        }
         for (ContactsMultiInfo datum : data) {
-            if (datum.isSelected) {
-                mSelectedUserList.add(datum.userInfo);
-                userCount++;
+            boolean isContainer = false;
+            Iterator<UserInfo> iterator = mSelectedUserList.iterator();
+            UserInfo userInfo = datum.userInfo;
+            if (userInfo != null) {
+                while (iterator.hasNext()) {
+                    UserInfo next = iterator.next();
+                    if (next.userId.equals(userInfo.userId)) {
+                        if (!datum.isSelected) {
+                            iterator.remove();
+                        }
+                        isContainer = true;
+                    }
+                }
+                if (datum.isSelected) {
+                    if (isContainer) {
+                        continue;
+                    }
+                    mSelectedUserList.add(userInfo);
+//                userCount++;
+                }
             }
         }
-        mTvSelected.setText("(" + userCount + ")");
+        mTvSelected.setText("(" + mSelectedUserList.size() + ")");
     }
 
     @Override
@@ -176,7 +199,7 @@ public class ContactsActivity extends CirculateBaseActivity {
         if (user_list != null) {
             mSelectedUserList = user_list;
             mTvSelected.setText("(" + mSelectedUserList.size() + ")");
-        }else {
+        } else {
             mTvSelected.setText("(" + 0 + ")");
         }
         List<ContactsMultiInfo> contentInfo = new ArrayList<>();
@@ -189,7 +212,8 @@ public class ContactsActivity extends CirculateBaseActivity {
                 for (int i = 0; i < userInfos.size(); i++) {
                     UserInfo userInfo = userInfos.get(i);
                     if (userInfo != null) {
-                        ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo
+                        ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo
+                                (ContactsMultiInfo
                                 .CONTENT);
 
                         contactsMultiInfo.setName(userInfo.lastName);
@@ -227,9 +251,9 @@ public class ContactsActivity extends CirculateBaseActivity {
 
     @Override
     public void onClick(View v, int id) {
-        if(id == R.id.ll_selected) {
+        if (id == R.id.ll_selected) {
             UISkipUtils.skipToSelectedContactsActivity(this, mSelectedUserList, mMailId);
-        }else if(id == R.id.tv_right) {
+        } else if (id == R.id.tv_right) {
             List<UserInfo> userInfos = new ArrayList<>();
             List<ContactsMultiInfo> data = mAdapter.getData();
             for (ContactsMultiInfo datum : data) {
@@ -241,7 +265,7 @@ public class ContactsActivity extends CirculateBaseActivity {
             intent.putExtra("USER", (Serializable) userInfos);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
-        }else if(id == R.id.tv_btn) {
+        } else if (id == R.id.tv_btn) {
             mLimitDialog.dismiss();
         }
     }
