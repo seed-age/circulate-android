@@ -31,6 +31,7 @@ import cc.seedland.oa.circulate.view.LimitDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -150,16 +151,36 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         } else {
             List<UserInfo> needAdd = new ArrayList<>();
             List<UserInfo> needDel = new ArrayList<>();
+//            for (UserInfo datum : data) {
+//                boolean isContainer = false;
+//                Iterator<UserInfo> iterator = mSelectedData.iterator();
+//                while (iterator.hasNext()) {
+//                    UserInfo selectedDatum = iterator.next();
+//                    if (datum.userId.equals(selectedDatum.userId)) {
+//                        isContainer = true;
+//                        if (!datum.isSelected) {
+////                            iterator.remove();
+//                            if (needDel.size()>0) {
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             for (UserInfo selectedDatum : mSelectedData) {
                 for (UserInfo datum : data) {
                     if (selectedDatum.userId.equals(datum.userId)) {
                         if (!datum.isSelected) {
 //                            mSelectedData.remove(selectedDatum);
                             if (needDel.size()>0) {
+                                boolean isContainer = false;
                                 for (UserInfo userInfo : needDel) {
-                                    if (!userInfo.userId.equals(selectedDatum.userId)) {
-                                        needDel.add(selectedDatum);
+                                    if (userInfo.userId.equals(selectedDatum.userId)) {
+                                        isContainer = true;
                                     }
+                                }
+                                if (!isContainer) {
+                                    needDel.add(selectedDatum);
                                 }
                             }else {
                                 needDel.add(selectedDatum);
@@ -169,13 +190,30 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
                         if (datum.isSelected) {
 //                            mSelectedData.add(datum);
                             if (needAdd.size()>0) {
+                                boolean isContainer = false;
                                 for (UserInfo userInfo : needAdd) {
-                                    if (!userInfo.userId.equals(datum.userId)) {
-                                        needAdd.add(datum);
+                                    if (userInfo.userId.equals(datum.userId)) {
+                                        isContainer = true;
                                     }
                                 }
+                                for (UserInfo userInfo : mSelectedData) {
+                                    if (userInfo.userId.equals(datum.userId)) {
+                                        isContainer = true;
+                                    }
+                                }
+                                if (!isContainer) {
+                                    needAdd.add(datum);
+                                }
                             }else {
-                                needAdd.add(datum);
+                                boolean isContainer = false;
+                                for (UserInfo userInfo : mSelectedData) {
+                                    if (userInfo.userId.equals(datum.userId)) {
+                                        isContainer = true;
+                                    }
+                                }
+                                if (!isContainer) {
+                                    needAdd.add(datum);
+                                }
                             }
                         }
                     }
