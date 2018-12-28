@@ -1,6 +1,7 @@
 package cc.seedland.oa.circulate.adapter;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -9,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import cc.seedland.oa.circulate.R;
+import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.view.SwipeLayout;
 import cc.seedland.oa.circulate.view.SwipeLayoutManager;
@@ -73,6 +75,7 @@ public class SelectedContactsAdapter extends BaseQuickAdapter<UserInfo, BaseView
             }
         }
         helper.setText(R.id.tv_department, department);
+        Global.sKnife.loadImage(TextUtils.isEmpty(item.headerUrl) ? "/avatar/" + item.lastName : item.headerUrl, (ImageView)helper.getView(R.id.civ_head));
         helper.addOnClickListener(R.id.tv_delete);
     }
 }

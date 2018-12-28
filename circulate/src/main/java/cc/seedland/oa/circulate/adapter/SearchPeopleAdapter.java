@@ -34,9 +34,6 @@ public class SearchPeopleAdapter extends BaseQuickAdapter<UserInfo, BaseViewHold
         helper.setText(R.id.tv_department, item.fullCompanyName + "/" + item.deptFullName);
         ImageView ivSelector = helper.getView(R.id.iv_selector);
         ivSelector.setSelected(item.isSelected);
-        if (!TextUtils.isEmpty(item.headerUrl)) {
-            Global.sKnife.loadImage(item.headerUrl, (ImageView) helper.getView(R.id
-                    .civ_head));
-        }
+        Global.sKnife.loadImage(TextUtils.isEmpty(item.headerUrl) ? "/avatar/" + item.lastName : item.headerUrl, (ImageView)helper.getView(R.id.civ_head));
     }
 }

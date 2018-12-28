@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: '../config.gradle'
+//apply from: '../config.gradle'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -36,7 +36,7 @@ android {
 
         debug {
             resValue "string", "host", "http://cc-test.seedland.cc"
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -74,7 +74,7 @@ dependencies {
     //MaterialChipsInput
     //    compile 'com.github.pchmn:MaterialChipsInput:1.0.8'
     //fastjson
-    implementation 'com.alibaba:fastjson:1.2.44'
+    implementation 'com.alibaba:fastjson:1.2.49'
     //AgentWeb
     implementation 'com.just.agentweb:agentweb:4.0.2'
     //glide图片加载框架
@@ -94,6 +94,8 @@ dependencies {
 //    implementation ("com.alibaba:arouter-api:$arouter_api_version"){
 //        exclude group:'com.android.support'
 //    }
-    implementation "com.alibaba:arouter-api:$arouter_api_version"
+    implementation ("com.alibaba:arouter-api:$arouter_api_version"){
+        exclude group:'com.android.support'
+    }
     annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }

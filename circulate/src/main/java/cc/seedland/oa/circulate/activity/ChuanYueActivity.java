@@ -91,9 +91,9 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
 
     @Override
     public void onClick(View v, int id) {
-        if(id == R.id.tv_new){
+        /*if(id == R.id.tv_new){
             UISkipUtils.skipToCreateMailActivity(this);
-        }else if(id == R.id.ll_received_chuanyue) {
+        }else*/ if(id == R.id.ll_received_chuanyue) {
             status = 5;
             UISkipUtils.skipToReceiveListActivity(this, status, "收到传阅", true);//1
         }else if(id == R.id.ll_sent_list) {

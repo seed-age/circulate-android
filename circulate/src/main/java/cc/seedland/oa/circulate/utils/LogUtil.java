@@ -2,12 +2,14 @@ package cc.seedland.oa.circulate.utils;
 
 import android.util.Log;
 
+import cc.seedland.oa.circulate.BuildConfig;
+
 /**
  * 日志打印
  */
 public class LogUtil {
 	
-	private static final boolean mDebug = true;
+	private static final boolean mDebug = false;
 
 	private static final String TAG = "circulate";
 
