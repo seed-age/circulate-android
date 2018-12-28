@@ -2,6 +2,7 @@ package cc.seedland.oa.circulate.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,7 @@ import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.utils.LogUtil;
 import cc.seedland.oa.circulate.utils.NetWorkSpeedUtils;
 import cc.seedland.oa.circulate.utils.OADownloadUtil;
+import cc.seedland.oa.circulate.utils.ReceivessCache;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
 import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.BottomDialog;
@@ -103,6 +105,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"};
+
 
     @Override
     public int getLayoutRes() {
@@ -188,11 +191,11 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 
     @Override
     public void onClick(View v, int id) {
-        if (id == R.id.fl_right_first_ic) {
+        if (id == R.id.fl_right_first_ic) {//弹框
             showEditMenu();
         } else if (id == R.id.fl_comment) {
             UISkipUtils.skipToCommentListActivity(this, mMailInfo, commentApi);
-        } else if (id == R.id.fl_object) {
+        } else if (id == R.id.fl_object) {//人员
             UISkipUtils.skipToObjectListActivity(this, mMailId);
         } else if (id == R.id.fl_focus) {
             boolean receiveAttention = mFlag == 3 ? mMailInfo.receiveAttention : mMailInfo
@@ -204,9 +207,18 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
             showConfirmDialog();
         } else if (id == R.id.tv_cancel) {
             mEditDialog.dismiss();
-        } else if (id == R.id.tv_add_object) {
-            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId);
-            mEditDialog.dismiss();
+        } else if (id == R.id.tv_add_object) {//新增人员
+            //TODO 530 新增人员这里receivess size过大，需要进行缓存
+//            if (mMailInfo.receivess != null && !mMailInfo.receivess.isEmpty()) {
+//                ReceivessCache.clear();
+//                boolean status = ReceivessCache.pullReceivessObj(mMailInfo.receivess);
+//                if (status) {
+//                    //UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess,mMailId);
+//                    UISkipUtils.skipToContactsActivity(this, mMailId);
+//                    mEditDialog.dismiss();
+//                }
+//            }
+            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess,mMailId);
         } else if (id == R.id.tv_add_file) {
             UISkipUtils.skipToDBankActivity(this);
             mEditDialog.dismiss();
@@ -309,7 +321,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                 break;
             case UISkipUtils.TO_EDIT:
                 if (resultCode == UISkipUtils.FROM_EDIT && data != null) {
-                    List<UserInfo> userInfos = (List<UserInfo>) data.getSerializableExtra("USER");
+                    List<UserInfo> userInfos =  data.getParcelableArrayListExtra("USER");
                     List<String> receiveUserId = new ArrayList<>();
                     for (UserInfo userInfo : userInfos) {
                         receiveUserId.add(String.valueOf(userInfo.userId));
@@ -477,7 +489,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                                 intent.setDataAndType(getUriForFile(file), type);
                                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//注意加上这句话
-                                            }else {
+                                            } else {
                                                 intent.setDataAndType(Uri.fromFile(file), type);
                                             }
                                             //跳转

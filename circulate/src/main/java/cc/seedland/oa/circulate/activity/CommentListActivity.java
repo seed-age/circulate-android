@@ -25,6 +25,7 @@ import cc.seedland.oa.circulate.modle.bean.MailInfo;
 import cc.seedland.oa.circulate.modle.net.BaseResponse;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
+import cc.seedland.oa.circulate.utils.LogUtil;
 import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.MyToolbar;
 
@@ -144,7 +145,7 @@ public class CommentListActivity extends NoImmerseBaseActivity implements Respon
     public void initData() {
         Intent intent = getIntent();
         mApi = intent.getStringExtra("API");
-        MailInfo mailInfo = (MailInfo) intent.getSerializableExtra("DATA");
+        MailInfo mailInfo = (MailInfo) intent.getParcelableExtra("DATA");
         mMailId = mailInfo.mailId;
         HttpService.loadDiscussList(INIT_DATA, mMailId, page, this);
     }

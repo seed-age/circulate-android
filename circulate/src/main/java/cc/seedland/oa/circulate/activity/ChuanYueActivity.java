@@ -95,10 +95,10 @@ public class ChuanYueActivity extends CirculateBaseActivity implements ResponseH
             UISkipUtils.skipToCreateMailActivity(this);
         }else if(id == R.id.ll_received_chuanyue) {
             status = 5;
-            UISkipUtils.skipToReceiveListActivity(this, status, "收到传阅", true);
+            UISkipUtils.skipToReceiveListActivity(this, status, "收到传阅", true);//1
         }else if(id == R.id.ll_sent_list) {
             status = 0;
-            UISkipUtils.skipToSentListActivity(this, status, "已发传阅");
+            UISkipUtils.skipToSentListActivity(this, status, "已发传阅");//2
         }else if(id == R.id.ll_delete) {
             UISkipUtils.skipToRemovedListActivity(this);
         }else if(id == R.id.rl_wait_deal) {

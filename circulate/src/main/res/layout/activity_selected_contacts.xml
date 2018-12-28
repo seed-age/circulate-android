@@ -15,19 +15,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_44"/>
     </FrameLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"/>
+
+
     <TextView
         android:id="@+id/tv_continue"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_49"
         android:background="@color/color_008cd6"
-        android:textColor="@color/colorWhite"
-        android:text="继续添加"
-        android:onClick="onClick"
         android:gravity="center"
+        android:onClick="onClick"
+        android:text="继续添加"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/sp_14"/>
 </LinearLayout>

@@ -1,5 +1,7 @@
 package cc.seedland.oa.circulate.modle.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.io.Serializable;
@@ -9,7 +11,7 @@ import java.util.List;
  * Created by hch on 2018/1/19.
  */
 
-public class MailInfo implements Serializable {
+public class MailInfo implements Parcelable {
     public String allReceiveName;//收件人名字
     public List<AttachInfo> attachmentItemss;//附件集合
     public boolean attention;//是否关注该传阅
@@ -51,10 +53,107 @@ public class MailInfo implements Serializable {
     private String time;
     public boolean isSelected;
 
+    public MailInfo() {
+    }
+
+    protected MailInfo(Parcel in) {
+        allReceiveName = in.readString();
+        attention = in.readByte() != 0;
+        completeTime = in.readLong();
+        createTime = in.readLong();
+        enabled = in.readByte() != 0;
+        hasAttachment = in.readByte() != 0;
+        ifAdd = in.readByte() != 0;
+        ifImportant = in.readByte() != 0;
+        ifNotify = in.readByte() != 0;
+        ifRead = in.readByte() != 0;
+        ifRemind = in.readByte() != 0;
+        ifRemindAll = in.readByte() != 0;
+        ifSecrecy = in.readByte() != 0;
+        ifSequence = in.readByte() != 0;
+        ifUpdate = in.readByte() != 0;
+        ifUpload = in.readByte() != 0;
+        lastName = in.readString();
+        loginId = in.readString();
+        mailContent = in.readString();
+        mailId = in.readInt();
+        ruleName = in.readString();
+        sendTime = in.readString();
+        status = in.readInt();
+        stepStatus = in.readInt();
+        title = in.readString();
+        userId = in.readInt();
+        workCode = in.readString();
+        receiveAttention = in.readByte() != 0;
+        mailState = in.readInt();
+        receiveMailState = in.readInt();
+        ifConfirmss = in.readByte() != 0;
+        afreshConfimss = in.readByte() != 0;
+        receiveTime = in.readString();
+        time = in.readString();
+        isSelected = in.readByte() != 0;
+    }
+
+    public static final Creator<MailInfo> CREATOR = new Creator<MailInfo>() {
+        @Override
+        public MailInfo createFromParcel(Parcel in) {
+            return new MailInfo(in);
+        }
+
+        @Override
+        public MailInfo[] newArray(int size) {
+            return new MailInfo[size];
+        }
+    };
+
     public String getTime() {
         if (!TextUtils.isEmpty(sendTime)) {
             time = sendTime.substring(0, sendTime.indexOf("-"));
         }
         return time;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(allReceiveName);
+        parcel.writeByte((byte) (attention ? 1 : 0));
+        parcel.writeLong(completeTime);
+        parcel.writeLong(createTime);
+        parcel.writeByte((byte) (enabled ? 1 : 0));
+        parcel.writeByte((byte) (hasAttachment ? 1 : 0));
+        parcel.writeByte((byte) (ifAdd ? 1 : 0));
+        parcel.writeByte((byte) (ifImportant ? 1 : 0));
+        parcel.writeByte((byte) (ifNotify ? 1 : 0));
+        parcel.writeByte((byte) (ifRead ? 1 : 0));
+        parcel.writeByte((byte) (ifRemind ? 1 : 0));
+        parcel.writeByte((byte) (ifRemindAll ? 1 : 0));
+        parcel.writeByte((byte) (ifSecrecy ? 1 : 0));
+        parcel.writeByte((byte) (ifSequence ? 1 : 0));
+        parcel.writeByte((byte) (ifUpdate ? 1 : 0));
+        parcel.writeByte((byte) (ifUpload ? 1 : 0));
+        parcel.writeString(lastName);
+        parcel.writeString(loginId);
+        parcel.writeString(mailContent);
+        parcel.writeInt(mailId);
+        parcel.writeString(ruleName);
+        parcel.writeString(sendTime);
+        parcel.writeInt(status);
+        parcel.writeInt(stepStatus);
+        parcel.writeString(title);
+        parcel.writeInt(userId);
+        parcel.writeString(workCode);
+        parcel.writeByte((byte) (receiveAttention ? 1 : 0));
+        parcel.writeInt(mailState);
+        parcel.writeInt(receiveMailState);
+        parcel.writeByte((byte) (ifConfirmss ? 1 : 0));
+        parcel.writeByte((byte) (afreshConfimss ? 1 : 0));
+        parcel.writeString(receiveTime);
+        parcel.writeString(time);
+        parcel.writeByte((byte) (isSelected ? 1 : 0));
     }
 }

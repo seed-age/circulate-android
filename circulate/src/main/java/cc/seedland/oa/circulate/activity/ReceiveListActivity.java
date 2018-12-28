@@ -158,6 +158,7 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
 //                    adapter.notifyDataSetChanged();
 //                    HttpService.readCY(listBean.mail.mailId, ReceiveListActivity.this);
 //                }
+                //1213131
                 UISkipUtils.skipToCYDetailActivity(ReceiveListActivity.this, listBean.mailId,3);
             }
 

@@ -29,6 +29,7 @@ import cc.seedland.oa.circulate.modle.net.HttpApis;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.utils.PinyinUtils;
+import cc.seedland.oa.circulate.utils.ReceivessCache;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
 import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.BottomDialog;
@@ -201,7 +202,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
     @Override
     public void initData() {
         Intent intent = getIntent();
-        mMailInfo = (MailInfo) intent.getSerializableExtra("INFO");
+        mMailInfo = (MailInfo) intent.getParcelableExtra("INFO");
         if (mMailInfo != null) {
             mMailId = mMailInfo.mailId;
             List<UserInfo> receives = mMailInfo.receivess;
@@ -272,18 +273,27 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
 
     @Override
     public void onClick(View v, int id) {
-        if(id == R.id.fl_add) {
+        if (id == R.id.fl_add) {
+            //TODO 530 新增人员这里receivess size过大，需要进行缓存
+//            if (mUserInfos != null && !mUserInfos.isEmpty()) {
+//                ReceivessCache.clear();
+//                boolean status = ReceivessCache.pullReceivessObj(mUserInfos);
+//                if (status) {
+////                    UISkipUtils.skipToContactsActivity(this, mUserInfos, -1);
+//                    UISkipUtils.skipToContactsActivity(this, -1);
+//                }
+//            }
             UISkipUtils.skipToContactsActivity(this, mUserInfos, -1);
-        }else if(id == R.id.fl_accessory){
+        } else if (id == R.id.fl_accessory) {
             showMenu();
-        }else if(id == R.id.tv_pick_file){
+        } else if (id == R.id.tv_pick_file) {
             mBottomDialog.dismiss();
             UISkipUtils.skipToDBankActivity(this);
-        }else if(id == R.id.tv_cancel){
+        } else if (id == R.id.tv_cancel) {
             mBottomDialog.dismiss();
-        }else if(id == R.id.tv_right) {
+        } else if (id == R.id.tv_right) {
             send(true);
-        }else if(id == R.id.ll_back) {
+        } else if (id == R.id.ll_back) {
             finish();
             if (mMailInfo == null)
                 send(false);
@@ -327,7 +337,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
-                List<UserInfo> userInfoList = (List<UserInfo>) data.getSerializableExtra("USER");
+                List<UserInfo> userInfoList = (List<UserInfo>) data.getParcelableExtra("USER");
                 mUserInfos.clear();
                 mCompletionView.clear();
 //                mUserInfos.addAll(userInfoList);
@@ -460,7 +470,8 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                         UISkipUtils.skipToWebActivity(this, Global.sKnife.getHost() + previewStr);
                         break;
                     default:
-                        UISkipUtils.skipToWebActivity(this, HttpApis.PREVIEW_API + Global.sKnife.getHost() + previewStr);
+                        UISkipUtils.skipToWebActivity(this, HttpApis.PREVIEW_API + Global.sKnife.getHost() +
+                                previewStr);
                         break;
                 }
             }

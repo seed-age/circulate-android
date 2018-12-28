@@ -84,7 +84,8 @@ public class OrganizationActivity extends CirculateBaseActivity {
         if (mType == 0) {
             mToolbar.setTitle("组织");
         } else if (mType == 1) {
-            mToolbar.setTitle("公用组");
+           // mToolbar.setTitle("公用组");
+             mToolbar.setTitle("常用组");
         } else if (mType == 2) {
             mToolbar.setTitle("私人组");
         }

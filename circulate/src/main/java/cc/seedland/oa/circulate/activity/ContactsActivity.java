@@ -1,6 +1,7 @@
 package cc.seedland.oa.circulate.activity;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -11,14 +12,18 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
+import org.json.JSONObject;
+
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.adapter.ContactsAdapter;
 import cc.seedland.oa.circulate.base.CirculateBaseActivity;
 import cc.seedland.oa.circulate.global.Constants;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.ContactsMultiInfo;
+
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.utils.PreferenceUtils;
+import cc.seedland.oa.circulate.utils.ReceivessCache;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
 import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.LimitDialog;
@@ -27,8 +32,8 @@ import cc.seedland.oa.circulate.view.QuickIndexBar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -111,7 +116,7 @@ public class ContactsActivity extends CirculateBaseActivity {
                 ContactsMultiInfo contactsMultiInfo = data.get(position);
                 int itemType = contactsMultiInfo.getItemType();
                 if (itemType == ContactsMultiInfo.CONTENT) {
-                    if (mSelectedUserList.size() < Constants.selectLimit) {
+                    if (mSelectedUserList.size() < Constants.selectLimit) {//点击选择联系人，私人组下面的List
                         contactsMultiInfo.isSelected = !contactsMultiInfo.isSelected;
                         refreshSelected(data);
                     } else {
@@ -191,16 +196,56 @@ public class ContactsActivity extends CirculateBaseActivity {
         mTvSelected.setText("(" + mSelectedUserList.size() + ")");
     }
 
+    List<UserInfo> user_list;
+
+    @Override
+    protected void onDestroy() {
+        ///TODO 530
+        ReceivessCache.clear();
+        super.onDestroy();
+    }
+
     @Override
     public void initData() {
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
-        List<UserInfo> user_list = (List<UserInfo>) intent.getSerializableExtra("USER_LIST");
+         user_list = (List<UserInfo>) intent.getParcelableExtra("USER_LIST");
+//        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
             mTvSelected.setText("(" + mSelectedUserList.size() + ")");
         } else {
+            //530
             mTvSelected.setText("(" + 0 + ")");
+//            user_list = new ArrayList<>();
+//            HttpService.loadObjectList(INIT_DATA, mMailId, new ResponseHandler() {
+//                @Override
+//                public void onError(String msg, String code) {
+//
+//                }
+//
+//                @Override
+//                public void onSuccess(String json, JSONObject jsonObject, BaseResponse response) {
+//                    NewObjectInfo data = Utils.parseJson(json, NewObjectInfo.class);
+//                    if (data != null) {
+//                        List<NewObjectInfo.DataBean.ListBean> list = data.getData().getList();
+//                        if (list != null && !list.isEmpty()) {
+//                            for (NewObjectInfo.DataBean.ListBean bean : list) {
+//                                UserInfo userInfo = new UserInfo();
+//                                userInfo.departmentName = bean.getDepartmentName();
+//                                userInfo.lastName = bean.getLastName();
+//                                userInfo.loginId = bean.getLoginId();
+//                                userInfo.subcompanyName = bean.getSubcompanyName();
+//                                userInfo.userId = bean.getUserId() + "";
+//                                userInfo.workCode = bean.getWorkCode();
+//                                user_list.add(userInfo);
+//                            }
+//                            mSelectedUserList = user_list;
+//                            mTvSelected.setText("(" + mSelectedUserList.size() + ")");
+//                        }
+//                    }
+//                }
+//            });
         }
         List<ContactsMultiInfo> contentInfo = new ArrayList<>();
         String selectedUser = PreferenceUtils.getString(this, "SELECTED_USER");
@@ -212,10 +257,7 @@ public class ContactsActivity extends CirculateBaseActivity {
                 for (int i = 0; i < userInfos.size(); i++) {
                     UserInfo userInfo = userInfos.get(i);
                     if (userInfo != null) {
-                        ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo
-                                (ContactsMultiInfo
-                                .CONTENT);
-
+                        ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
                         contactsMultiInfo.setName(userInfo.lastName);
                         contactsMultiInfo.userInfo = userInfo;
                         if (mSelectedUserList != null && mSelectedUserList.size() > 0) {
@@ -262,7 +304,7 @@ public class ContactsActivity extends CirculateBaseActivity {
                 }
             }
             Intent intent = new Intent();
-            intent.putExtra("USER", (Serializable) userInfos);
+            intent.putParcelableArrayListExtra("USER", (ArrayList<? extends Parcelable>) userInfos);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         } else if (id == R.id.tv_btn) {
@@ -276,7 +318,7 @@ public class ContactsActivity extends CirculateBaseActivity {
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
                 List<ContactsMultiInfo> listData = mAdapter.getData();
-                List<UserInfo> selected = (List<UserInfo>) data.getSerializableExtra("DATA");
+                List<UserInfo> selected =  data.getParcelableArrayListExtra("DATA");
                 for (ContactsMultiInfo listDatum : listData) {
                     listDatum.isSelected = false;
                     if (listDatum.getItemType() == ContactsMultiInfo.CONTENT) {
@@ -290,9 +332,9 @@ public class ContactsActivity extends CirculateBaseActivity {
                 refreshSelected(listData);
                 mAdapter.notifyDataSetChanged();
             } else if (resultCode == UISkipUtils.FROM_SELECTED) {
-                List<UserInfo> selected = (List<UserInfo>) data.getSerializableExtra("DATA");
+                List<UserInfo> selected = (List<UserInfo>) data.getParcelableExtra("DATA");
                 Intent intent = new Intent();
-                intent.putExtra("USER", (Serializable) selected);
+                intent.putParcelableArrayListExtra("USER", (ArrayList<? extends Parcelable>) selected);
                 setResult(UISkipUtils.FROM_EDIT, intent);
                 finish();
             }

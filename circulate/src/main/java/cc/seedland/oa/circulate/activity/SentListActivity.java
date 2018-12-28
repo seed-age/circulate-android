@@ -234,7 +234,7 @@ public class SentListActivity extends CirculateBaseActivity implements ResponseH
 
     @Override
     public void onClick(View v, int id) {
-        if(id == R.id.fl_right_first_ic) {
+        if(id == R.id.fl_right_first_ic) {//编辑
             UISkipUtils.skipToEditSentCYListActivity(this, status);
         }else if(id == R.id.fl_right_second_ic) {
             UISkipUtils.skipToSearchCYActivity(this, HttpApis.getSearchSendList(),1);

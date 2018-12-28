@@ -79,7 +79,7 @@ public class HttpService {
      */
     public static void focusSentMail(List<String> mailId, boolean attention, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId",  Global.sKnife.getCurrentUserId());
+        params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("attention", attention);
         BaseRequest.getInstance()
@@ -95,9 +95,9 @@ public class HttpService {
      * @param mailId
      * @param attention
      * @param handler
-     * @param status 1:已发 3：已收
+     * @param status    1:已发 3：已收
      */
-    public static void focusReceivedMail(List<String> mailId, boolean attention,int status, ResponseHandler handler) {
+    public static void focusReceivedMail(List<String> mailId, boolean attention, int status, ResponseHandler handler) {
         HttpParams params = new HttpParams();
         params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
@@ -228,7 +228,8 @@ public class HttpService {
      */
     public static void loadMailDetail(long mailId, int mailStatus, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId", !TextUtils.isEmpty(Global.sKnife.getCurrentUserId()) ? Global.sKnife.getCurrentUserId() : Global.sKnife.getCurrentUserId());
+        params.put("userId", !TextUtils.isEmpty(Global.sKnife.getCurrentUserId()) ? Global.sKnife.getCurrentUserId()
+                : Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("mailStatus", mailStatus);
         BaseRequest.getInstance()
@@ -245,15 +246,23 @@ public class HttpService {
      * @param mailId
      * @param handler
      */
-    public static void loadObjectList(int type, long mailId, ResponseHandler handler) {
+    public static void loadObjectList(int type, long mailId, int page, ResponseHandler handler) {
         HttpParams params = new HttpParams();
         params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
-//        params.put("page",page);
-//        params.put("pageRows",pageRows);
+        params.put("page", page);
+        params.put("pageRows", pageRows);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getObjectList())
                 .setType(type)
+                .params(params)
+                .postExecute(handler);
+    }
+
+    public static void loadObjectList(HttpParams params, ResponseHandler handler) {
+        BaseRequest.getInstance()
+                .setUrl(HttpApis.getObjectList())
+//                .setType(type)
                 .params(params)
                 .postExecute(handler);
     }
@@ -415,7 +424,7 @@ public class HttpService {
         HttpParams params = new HttpParams();
         params.put("path", path);
         params.put("pathType", pathType);
-        params.put("page",page);
+        params.put("page", page);
         params.put("pageRows", pageRows);
         params.put("userId", Global.sKnife.getCurrentUserId());
         BaseRequest.getInstance()
@@ -436,7 +445,7 @@ public class HttpService {
      * @param handler
      */
     public static void createMail(boolean transmission, List<String> receiveUserId, List<String> bulkId,
-                                  String title, String mailContent,long mailId, ResponseHandler handler) {
+                                  String title, String mailContent, long mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
         params.put("transmission", transmission);
         params.put("receiveUserId", receiveUserId);
@@ -455,15 +464,16 @@ public class HttpService {
 
     /**
      * 上传附件
+     *
      * @param mailId
      * @param neid
      * @param handler
      */
-    public static void uploadFile(long mailId,List<String> neid,ResponseHandler handler) {
+    public static void uploadFile(long mailId, List<String> neid, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("mailId",mailId);
-        params.put("neid",neid);
-        params.put("userId",Global.sKnife.getCurrentUserId());
+        params.put("mailId", mailId);
+        params.put("neid", neid);
+        params.put("userId", Global.sKnife.getCurrentUserId());
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getUploadFile())
                 .setType(HttpApis.getUploadFile().hashCode())
@@ -474,19 +484,21 @@ public class HttpService {
 
     /**
      * 查询附件
+     *
      * @param type
      * @param page
      * @param likeName
      * @param handler
      */
-    public static void searchFile(int type,int page,String likeName,String searchPath,String pathType,ResponseHandler handler) {
+    public static void searchFile(int type, int page, String likeName, String searchPath, String pathType,
+                                  ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("likeName",likeName);
-        params.put("searchPath",searchPath);
-        params.put("pathType",pathType);
-        params.put("userId",Global.sKnife.getCurrentUserId());
-        params.put("page",page);
-        params.put("pageRows",pageRows);
+        params.put("likeName", likeName);
+        params.put("searchPath", searchPath);
+        params.put("pathType", pathType);
+        params.put("userId", Global.sKnife.getCurrentUserId());
+        params.put("page", page);
+        params.put("pageRows", pageRows);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getSearchFile())
                 .setType(type)
@@ -497,15 +509,16 @@ public class HttpService {
 
     /**
      * 删除附件
+     *
      * @param itemId
      * @param mailId
      * @param handler
      */
-    public static void deleteFile(long itemId,long mailId,ResponseHandler handler) {
+    public static void deleteFile(long itemId, long mailId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("userId",Global.sKnife.getCurrentUserId());
-        params.put("itemId",itemId);
-        params.put("mailId",mailId);
+        params.put("userId", Global.sKnife.getCurrentUserId());
+        params.put("itemId", itemId);
+        params.put("mailId", mailId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getDeleteFile())
                 .setType(HttpApis.getDeleteFile().hashCode())
@@ -515,14 +528,15 @@ public class HttpService {
 
     /**
      * 预览附件
+     *
      * @param itemId
      * @param bulkId
      * @param handler
      */
-    public static void previewFile(long itemId,String bulkId,ResponseHandler handler) {
+    public static void previewFile(long itemId, String bulkId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
-        params.put("itemId",itemId);
-        params.put("bulkId",bulkId);
+        params.put("itemId", itemId);
+        params.put("bulkId", bulkId);
         BaseRequest.getInstance()
                 .setUrl(HttpApis.getPreviewFile())
                 .setType(HttpApis.getPreviewFile().hashCode())
