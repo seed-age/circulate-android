@@ -98,7 +98,7 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
             }
             helper.setText(R.id.tv_department, department);
             if (!TextUtils.isEmpty(item.userInfo.headerUrl)) {
-                Global.sKnife.loadImage(item.userInfo.headerUrl, (ImageView) helper.getView(R.id
+                Global.sKnife.loadImage(item.userInfo, (ImageView) helper.getView(R.id
                         .civ_head));
             }
             ImageView ivSelector = helper.getView(R.id.iv_selector);

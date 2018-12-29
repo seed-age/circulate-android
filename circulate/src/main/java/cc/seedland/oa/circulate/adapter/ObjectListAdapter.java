@@ -1,6 +1,7 @@
 package cc.seedland.oa.circulate.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -67,5 +68,6 @@ public class ObjectListAdapter extends BaseQuickAdapter<ObjectInfo,BaseViewHolde
         }else {
             helper.setGone(R.id.tv_delete,false);
         }
+        Global.sKnife.loadImage(item, (ImageView)helper.getView(R.id.civ_head));
     }
 }

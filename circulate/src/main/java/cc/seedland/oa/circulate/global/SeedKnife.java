@@ -11,6 +11,7 @@ import java.util.Map;
 
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
+import cc.seedland.oa.circulate.modle.bean.HeaderInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.view.CommonGroupDepartmentItemHolder;
@@ -37,7 +38,7 @@ public abstract class SeedKnife {
      * 注入加载图片工具
      * @return
      */
-    public abstract void loadImage(String url, ImageView v);
+    public abstract void loadImage(HeaderInfo user, ImageView v);
 
     /**
      * 获取当前用户ID

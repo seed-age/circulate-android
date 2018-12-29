@@ -28,10 +28,6 @@ public class SelectedContactsAdapter extends BaseQuickAdapter<UserInfo, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, UserInfo item) {
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.error(R.drawable.img_head);
-        requestOptions.placeholder(R.drawable.img_head);
-        Glide.with(mContext).load(item.headerUrl).apply(requestOptions).into((ImageView) helper.getView(R.id.civ_head));
         SwipeLayout swipeLayout = helper.getView(R.id.swipeLayout);
         swipeLayout.setOnDragListener(new SwipeLayout.OnDragListener() {
             @Override
@@ -75,7 +71,7 @@ public class SelectedContactsAdapter extends BaseQuickAdapter<UserInfo, BaseView
             }
         }
         helper.setText(R.id.tv_department, department);
-        Global.sKnife.loadImage(TextUtils.isEmpty(item.headerUrl) ? "/avatar/" + item.lastName : item.headerUrl, (ImageView)helper.getView(R.id.civ_head));
+        Global.sKnife.loadImage(item, (ImageView)helper.getView(R.id.civ_head));
         helper.addOnClickListener(R.id.tv_delete);
     }
 }

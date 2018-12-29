@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Administrator on 2018/1/26 0026.
  */
 
-public class UserInfo implements Parcelable{
+public class UserInfo implements Parcelable, HeaderInfo{
 
     public int icon = -1;// 是否显示小图标,-1表示隐藏图标
     public String headerUrl;
@@ -99,5 +99,25 @@ public class UserInfo implements Parcelable{
         parcel.writeString(tel);
         parcel.writeString(departmentName);
         parcel.writeString(subcompanyName);
+    }
+
+    @Override
+    public String getHeaderUrl() {
+        return headerUrl;
+    }
+
+    @Override
+    public String getName() {
+        return lastName;
+    }
+
+    @Override
+    public void setHeaderUrl(String url) {
+        this.headerUrl = url;
+    }
+
+    @Override
+    public String getUserId() {
+        return userId;
     }
 }

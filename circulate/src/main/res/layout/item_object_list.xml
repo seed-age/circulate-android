@@ -33,7 +33,6 @@
             android:id="@+id/civ_head"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
-            android:src="@drawable/img_head"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_name"

@@ -3,9 +3,11 @@ package cc.seedland.oa.circulate.adapter;
 import android.content.Context;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -134,9 +136,18 @@ public class CYDetailAdapter extends BaseMultiItemQuickAdapter<CYDetailInfo, Bas
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             webView.getSettings().setMixedContentMode(webView.getSettings().MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
         }
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
         //https://cy.seedland.cc/web/rich_text.htm?userId=4129&mailId=532用这个吗？
-       // webView.loadDataWithBaseURL(Global.sKnife.getHost(),"/web/rich_text.htm?userId="+mailInfo.userId+"&mailId="+mailInfo.mailId,"text/html", "UTF-8", null);
-        webView.loadUrl(Global.sKnife.getHost()+"/web/rich_text.htm?userId="+mailInfo.userId+"&mailId="+mailInfo.mailId);
+//        webView.loadDataWithBaseURL(Global.sKnife.getHost(),"/web/rich_text.htm?userId="+mailInfo.userId+"&mailId="+mailInfo.mailId,"text/html", "UTF-8", null);
+        String url = Global.sKnife.getHost()+"/web/rich_text.htm?userId="+mailInfo.userId+"&mailId="+mailInfo.mailId;
+        Log.i("CYDetailAdapter", "show mail content with " + url);
+        webView.loadUrl(url);
         // 设置为Html
 //        RichText.fromHtml(mailInfo.mailContent).autoPlay(true).into(tvContent);
         helper.setText(R.id.tv_sender, mailInfo.lastName);

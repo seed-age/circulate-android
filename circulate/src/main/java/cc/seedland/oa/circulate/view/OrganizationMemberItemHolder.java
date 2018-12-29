@@ -50,7 +50,7 @@ public class OrganizationMemberItemHolder extends TreeNode.BaseNodeViewHolder<Us
         });
 
         if (!TextUtils.isEmpty(value.headerUrl)) {
-            Global.sKnife.loadImage(value.headerUrl, (ImageView) view.findViewById(R.id.civ_head));
+            Global.sKnife.loadImage(value, (ImageView) view.findViewById(R.id.civ_head));
         }
 
         return view;
