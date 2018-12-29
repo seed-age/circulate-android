@@ -44,6 +44,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     private long mMailId;
     private int mRemovePosition;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private MyToolbar toolbar;
 
     @Override
     public int getLayoutRes() {
@@ -74,11 +75,9 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     }
 
     private void initToolbar() {
-        MyToolbar toolbar = findView(R.id.toolbar);
+        toolbar = findView(R.id.toolbar);
         toolbar.setBackClickListener(this);
         toolbar.setTitle("已选联系人");
-        toolbar.setRightText("确认");
-        toolbar.setOnRightTextClickListener(this);
     }
 
     private void initStatusBar() {
@@ -125,6 +124,10 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
         mSelectedUser = (List<UserInfo>) intent.getSerializableExtra("SELECTED_USER");
+        if(mSelectedUser!=null&&!mSelectedUser.isEmpty()){
+            toolbar.setRightText("确认");
+            toolbar.setOnRightTextClickListener(this);
+        }
         mAdapter.setNewData(mSelectedUser);
 //        getData();
     /*    mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

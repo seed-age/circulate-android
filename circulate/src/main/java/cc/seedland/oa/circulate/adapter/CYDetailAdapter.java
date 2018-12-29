@@ -134,7 +134,9 @@ public class CYDetailAdapter extends BaseMultiItemQuickAdapter<CYDetailInfo, Bas
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             webView.getSettings().setMixedContentMode(webView.getSettings().MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
         }
-        webView.loadDataWithBaseURL(Global.sKnife.getHost(),mailInfo.mailContent,"text/html", "UTF-8", null);
+        //https://cy.seedland.cc/web/rich_text.htm?userId=4129&mailId=532用这个吗？
+       // webView.loadDataWithBaseURL(Global.sKnife.getHost(),"/web/rich_text.htm?userId="+mailInfo.userId+"&mailId="+mailInfo.mailId,"text/html", "UTF-8", null);
+        webView.loadUrl(Global.sKnife.getHost()+"/web/rich_text.htm?userId="+mailInfo.userId+"&mailId="+mailInfo.mailId);
         // 设置为Html
 //        RichText.fromHtml(mailInfo.mailContent).autoPlay(true).into(tvContent);
         helper.setText(R.id.tv_sender, mailInfo.lastName);

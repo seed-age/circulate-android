@@ -209,7 +209,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     public void initData() {
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
-         user_list = (List<UserInfo>) intent.getParcelableExtra("USER_LIST");
+        user_list = intent.getParcelableArrayListExtra("USER_LIST");
 //        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
@@ -288,6 +288,8 @@ public class ContactsActivity extends CirculateBaseActivity {
         data.add(0, new ContactsMultiInfo(ContactsMultiInfo.HEAD));
         data.addAll(contentInfo);
         mAdapter.notifyDataSetChanged();
+        //
+//        mTvSelected.setText("(" + data.size() + ")");
 
     }
 
@@ -305,7 +307,9 @@ public class ContactsActivity extends CirculateBaseActivity {
             }
             Intent intent = new Intent();
             intent.putParcelableArrayListExtra("USER", (ArrayList<? extends Parcelable>) userInfos);
-            setResult(UISkipUtils.FROM_EDIT, intent);
+            if(userInfos!=null&&!userInfos.isEmpty()) {
+                setResult(UISkipUtils.FROM_EDIT, intent);
+            }
             finish();
         } else if (id == R.id.tv_btn) {
             mLimitDialog.dismiss();
@@ -318,7 +322,7 @@ public class ContactsActivity extends CirculateBaseActivity {
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
                 List<ContactsMultiInfo> listData = mAdapter.getData();
-                List<UserInfo> selected =  data.getParcelableArrayListExtra("DATA");
+                List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
                 for (ContactsMultiInfo listDatum : listData) {
                     listDatum.isSelected = false;
                     if (listDatum.getItemType() == ContactsMultiInfo.CONTENT) {

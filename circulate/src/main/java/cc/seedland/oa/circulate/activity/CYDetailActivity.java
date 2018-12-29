@@ -218,7 +218,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 //                    mEditDialog.dismiss();
 //                }
 //            }
-            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess,mMailId);
+            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId);
         } else if (id == R.id.tv_add_file) {
             UISkipUtils.skipToDBankActivity(this);
             mEditDialog.dismiss();
@@ -321,12 +321,14 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                 break;
             case UISkipUtils.TO_EDIT:
                 if (resultCode == UISkipUtils.FROM_EDIT && data != null) {
-                    List<UserInfo> userInfos =  data.getParcelableArrayListExtra("USER");
-                    List<String> receiveUserId = new ArrayList<>();
-                    for (UserInfo userInfo : userInfos) {
-                        receiveUserId.add(String.valueOf(userInfo.userId));
+                    List<UserInfo> userInfos = data.getParcelableArrayListExtra("USER");
+                    if (userInfos != null) {
+                        List<String> receiveUserId = new ArrayList<>();
+                        for (UserInfo userInfo : userInfos) {
+                            receiveUserId.add(String.valueOf(userInfo.userId));
+                        }
+                        HttpService.addCYObject(mMailId, receiveUserId, this);
                     }
-                    HttpService.addCYObject(mMailId, receiveUserId, this);
                 }
                 break;
             case UISkipUtils.TO_DBANK:
