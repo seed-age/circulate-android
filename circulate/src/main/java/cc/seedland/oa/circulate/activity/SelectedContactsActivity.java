@@ -124,7 +124,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
         mSelectedUser = (List<UserInfo>) intent.getSerializableExtra("SELECTED_USER");
-        if(mSelectedUser!=null&&!mSelectedUser.isEmpty()){
+        if(mSelectedUser!=null&&mSelectedUser.size()>0){
             toolbar.setRightText("确认");
             toolbar.setOnRightTextClickListener(this);
         }

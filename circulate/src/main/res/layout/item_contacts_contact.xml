@@ -60,6 +60,8 @@
                 android:layout_toRightOf="@+id/civ_head"
                 android:layout_alignBottom="@+id/civ_head"
                 android:layout_marginLeft="@dimen/dp_16"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textSize="@dimen/sp_12"/>
         </RelativeLayout>
     </LinearLayout>

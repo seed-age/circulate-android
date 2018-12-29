@@ -22,6 +22,7 @@ import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.ContactsMultiInfo;
 
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
+import cc.seedland.oa.circulate.utils.LogUtil;
 import cc.seedland.oa.circulate.utils.PreferenceUtils;
 import cc.seedland.oa.circulate.utils.ReceivessCache;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
@@ -307,9 +308,7 @@ public class ContactsActivity extends CirculateBaseActivity {
             }
             Intent intent = new Intent();
             intent.putParcelableArrayListExtra("USER", (ArrayList<? extends Parcelable>) userInfos);
-            if(userInfos!=null&&!userInfos.isEmpty()) {
-                setResult(UISkipUtils.FROM_EDIT, intent);
-            }
+            setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         } else if (id == R.id.tv_btn) {
             mLimitDialog.dismiss();
@@ -336,7 +335,7 @@ public class ContactsActivity extends CirculateBaseActivity {
                 refreshSelected(listData);
                 mAdapter.notifyDataSetChanged();
             } else if (resultCode == UISkipUtils.FROM_SELECTED) {
-                List<UserInfo> selected = (List<UserInfo>) data.getParcelableExtra("DATA");
+                List<UserInfo> selected =  data.getParcelableArrayListExtra("DATA");
                 Intent intent = new Intent();
                 intent.putParcelableArrayListExtra("USER", (ArrayList<? extends Parcelable>) selected);
                 setResult(UISkipUtils.FROM_EDIT, intent);

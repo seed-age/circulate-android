@@ -139,7 +139,7 @@ public class UISkipUtils {
 
     public static void skipToSearchPeopleActivity(Activity context, List<UserInfo> selected) {
         Intent intent = new Intent(context, SearchPeopleActivity.class);
-        intent.putExtra("SELECTED_DATA", (Serializable) selected);
+        intent.putParcelableArrayListExtra("SELECTED_DATA", (ArrayList<? extends Parcelable>) selected);
         context.startActivityForResult(intent, TO_EDIT);
     }
 

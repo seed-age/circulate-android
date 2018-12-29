@@ -327,7 +327,9 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                         for (UserInfo userInfo : userInfos) {
                             receiveUserId.add(String.valueOf(userInfo.userId));
                         }
-                        HttpService.addCYObject(mMailId, receiveUserId, this);
+                        if (receiveUserId.size() != 0) {
+                            HttpService.addCYObject(mMailId, receiveUserId, this);
+                        }
                     }
                 }
                 break;

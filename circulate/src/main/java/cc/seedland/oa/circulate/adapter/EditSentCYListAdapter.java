@@ -36,7 +36,7 @@ public class EditSentCYListAdapter extends BaseQuickAdapter<MailInfo, BaseViewHo
         helper.setGone(R.id.iv_focus, item.attention);
         ImageView ivSelector = helper.getView(R.id.iv_selector);
         ivSelector.setSelected(item.isSelected);
-        ivSelector.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (item.isSelected) {
@@ -47,6 +47,17 @@ public class EditSentCYListAdapter extends BaseQuickAdapter<MailInfo, BaseViewHo
                 notifyDataSetChanged();
             }
         });
+//        ivSelector.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (item.isSelected) {
+//                    item.isSelected = false;
+//                } else {
+//                    item.isSelected = true;
+//                }
+//                notifyDataSetChanged();
+//            }
+//        });
 //        helper.addOnClickListener(R.id.fl_selector);
     }
 }

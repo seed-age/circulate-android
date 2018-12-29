@@ -2,6 +2,7 @@ package cc.seedland.oa.circulate.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -172,7 +173,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
                     if (selectedDatum.userId.equals(datum.userId)) {
                         if (!datum.isSelected) {
 //                            mSelectedData.remove(selectedDatum);
-                            if (needDel.size()>0) {
+                            if (needDel.size() > 0) {
                                 boolean isContainer = false;
                                 for (UserInfo userInfo : needDel) {
                                     if (userInfo.userId.equals(selectedDatum.userId)) {
@@ -182,14 +183,14 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
                                 if (!isContainer) {
                                     needDel.add(selectedDatum);
                                 }
-                            }else {
+                            } else {
                                 needDel.add(selectedDatum);
                             }
                         }
                     } else {
                         if (datum.isSelected) {
 //                            mSelectedData.add(datum);
-                            if (needAdd.size()>0) {
+                            if (needAdd.size() > 0) {
                                 boolean isContainer = false;
                                 for (UserInfo userInfo : needAdd) {
                                     if (userInfo.userId.equals(datum.userId)) {
@@ -204,7 +205,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
                                 if (!isContainer) {
                                     needAdd.add(datum);
                                 }
-                            }else {
+                            } else {
                                 boolean isContainer = false;
                                 for (UserInfo userInfo : mSelectedData) {
                                     if (userInfo.userId.equals(datum.userId)) {
@@ -226,8 +227,9 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
 
     @Override
     public void initData() {
+        List<UserInfo> userInfoList = Global.sUserInfo==null?new ArrayList<UserInfo>():Global.sUserInfo;
         Intent intent = getIntent();
-        for (UserInfo userInfo : Global.sUserInfo) {
+        for (UserInfo userInfo : (Global.sUserInfo)) {
             UserInfo user = new UserInfo();
             user.departmentId = userInfo.departmentId;
             user.deptFullName = userInfo.deptFullName;
@@ -238,6 +240,8 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
             user.userId = userInfo.userId;
             user.userMessageId = userInfo.userMessageId;
             user.workCode = userInfo.workCode;
+            user.subcompanyName = userInfo.subcompanyName;
+            user.departmentName = userInfo.departmentName;
             mUserInfos.add(user);
         }
         mSelectedData = (List<UserInfo>) intent.getSerializableExtra("SELECTED_DATA");
@@ -256,7 +260,7 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         if (id == R.id.tv_cancel) {
             refreshSelectedUser(mSelectedData);
             Intent intent = new Intent();
-            intent.putExtra("DATA", (Serializable) mSelectedData);
+            intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedData);
             setResult(UISkipUtils.FROM_SELECTED, intent);
             finish();
         } else if (id == R.id.tv_btn) {

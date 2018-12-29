@@ -69,6 +69,8 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="接收人:  张三;  李经理;  李总"
                 android:textColor="@color/color_ABAFB3"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:textSize="@dimen/sp_12"/>
 
             <TextView
