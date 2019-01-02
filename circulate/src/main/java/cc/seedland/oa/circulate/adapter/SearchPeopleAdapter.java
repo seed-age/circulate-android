@@ -33,11 +33,11 @@ public class SearchPeopleAdapter extends BaseQuickAdapter<UserInfo, BaseViewHold
         helper.setText(R.id.tv_name, item.lastName);
       //  helper.setText(R.id.tv_department, item.fullCompanyName + "/" + item.deptFullName);
         String department = "";
-        if (item.subcompanyName != null) {
-            department += item.subcompanyName + "/";
+        if (item.fullCompanyName != null) {
+            department += item.fullCompanyName + "/";
         }
-        if (item.departmentName != null) {
-            department += item.departmentName;
+        if (item.deptFullName != null) {
+            department += item.deptFullName;
         }
         if (department.length()>0) {
             String last = String.valueOf(department.charAt(department.length() - 1));
