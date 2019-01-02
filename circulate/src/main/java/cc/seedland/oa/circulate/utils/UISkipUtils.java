@@ -89,10 +89,11 @@ public class UISkipUtils {
         context.startActivityForResult(intent, TO_EDIT);
     }
 
-    public static void skipToContactsActivity(Activity context, List<UserInfo> userInfos, long mailId) {
+    public static void skipToContactsActivity(Activity context, List<UserInfo> userInfos, long mailId,int receiverCount) {
         Intent intent = new Intent(context, ContactsActivity.class);
         intent.putParcelableArrayListExtra("USER_LIST", (ArrayList<? extends Parcelable>) userInfos);
         intent.putExtra("MAIL_ID", mailId);
+        intent.putExtra("RECEIVER_COUNT", receiverCount);
         context.startActivityForResult(intent, TO_EDIT);
     }
 

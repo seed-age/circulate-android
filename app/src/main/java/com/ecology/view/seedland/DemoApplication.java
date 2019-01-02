@@ -18,6 +18,7 @@ import cc.seedland.oa.circulate.fragment.OrganizationFragment;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.global.SeedKnife;
 import cc.seedland.oa.circulate.modle.bean.DepartmentInfo;
+import cc.seedland.oa.circulate.modle.bean.HeaderInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
@@ -51,7 +52,7 @@ public class DemoApplication extends Application {
             }
 
             @Override
-            public void loadImage(String url, ImageView v) {
+            public void loadImage(HeaderInfo url, ImageView v) {
 //                if (!TextUtils.isEmpty(url)) {
 //                    try {
 //                        String imageUrl = Global.sKnife.getImageHost().replace("client",

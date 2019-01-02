@@ -15,6 +15,9 @@ import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.adapter.SelectedContactsAdapter;
 import cc.seedland.oa.circulate.base.CirculateBaseActivity;
 import cc.seedland.oa.circulate.global.Global;
+import cc.seedland.oa.circulate.modle.bean.NewObjectInfo;
+import cc.seedland.oa.circulate.modle.bean.ObjectInfo;
+import cc.seedland.oa.circulate.modle.bean.ObjectListInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
 import cc.seedland.oa.circulate.modle.net.BaseResponse;
 import cc.seedland.oa.circulate.modle.net.HttpApis;
@@ -23,6 +26,7 @@ import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
 import cc.seedland.oa.circulate.utils.UISkipUtils;
 
+import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.MyToolbar;
 import cc.seedland.oa.circulate.view.SwipeLayoutManager;
 
@@ -45,6 +49,10 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     private int mRemovePosition;
     SwipeRefreshLayout mSwipeRefreshLayout;
     private MyToolbar toolbar;
+    private int page = 1;
+    private boolean mLoadMoreEnd = false;
+    private boolean mLoadMoreFail = false;
+    private List<UserInfo> mSelectedList;
 
     @Override
     public int getLayoutRes() {
@@ -60,18 +68,17 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
 
     private void initList() {
         mRvList = findView(R.id.rv_list);
+        mSwipeRefreshLayout = findView(R.id.swipe_refresh);
         mRvList.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SelectedContactsAdapter(R.layout.item_selected_contacts, null);
         mRvList.setAdapter(mAdapter);
-//        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
-//        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.BLUE, Color.BLUE);
-//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                page = 1;
-//                getData();
-//            }
-//        });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                HttpService.loadObjectList(INIT_DATA, mMailId, page, SelectedContactsActivity.this);
+            }
+        });
     }
 
     private void initToolbar() {
@@ -123,97 +130,78 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     public void initData() {
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
-        mSelectedUser = (List<UserInfo>) intent.getSerializableExtra("SELECTED_USER");
-        if(mSelectedUser!=null&&mSelectedUser.size()>0){
+        mSelectedList = (List<UserInfo>) intent.getSerializableExtra("SELECTED_USER");
+        if(mSelectedList!=null&&mSelectedList.size()>0){
             toolbar.setRightText("确认");
             toolbar.setOnRightTextClickListener(this);
         }
+        HttpService.loadObjectList(INIT_DATA, mMailId, page, this);
         mAdapter.setNewData(mSelectedUser);
-//        getData();
-    /*    mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 page++;
-                getData();
+                HttpService.loadObjectList(INIT_DATA, mMailId, page, SelectedContactsActivity.this);
             }
-        });*/
+        });
     }
 
-    /**
-     * 530
-     */
-//    int page = 1;
-//
-//    private void getData() {
-//        HttpParams params = new HttpParams();
-//        params.put("userId", Global.sKnife.getCurrentUserId());
-//        params.put("mailId", mMailId);
-//        params.put("page", page);
-//        params.put("pageRows", 15);
-//        HttpService.loadObjectList(params, new ResponseHandler() {
-//            @Override
-//            public void onError(String msg, String code) {
-//                mSwipeRefreshLayout.setRefreshing(false);
-//            }
-//
-//            @Override
-//            public void onSuccess(String json, JSONObject jsonObject, BaseResponse response) {
-//                NewObjectInfo data = Utils.parseJson(json, NewObjectInfo.class);
-//                if (data != null) {
-//                    int currentPage = data.getData().getCurrentPage();
-//                    int totalPage = data.getData().getTotalPage();
-//                    List<NewObjectInfo.DataBean.ListBean> list = data.getData().getList();
-//                    if (list != null && !list.isEmpty()) {
-//                        if (page == 1) {
-//                            mSelectedUser.clear();
-//                            for (NewObjectInfo.DataBean.ListBean bean : list) {
-//                                UserInfo userInfo = new UserInfo();
-//                                userInfo.departmentName = bean.getDepartmentName();
-//                                userInfo.lastName = bean.getLastName();
-//                                userInfo.loginId = bean.getLoginId();
-//                                userInfo.subcompanyName = bean.getSubcompanyName();
-//                                userInfo.userId = bean.getUserId() + "";
-//                                userInfo.workCode = bean.getWorkCode();
-//                                mSelectedUser.add(userInfo);
-//                            }
-//                        } else {
-//                            for (NewObjectInfo.DataBean.ListBean bean : list) {
-//                                UserInfo userInfo = new UserInfo();
-//                                userInfo.departmentName = bean.getDepartmentName();
-//                                userInfo.lastName = bean.getLastName();
-//                                userInfo.loginId = bean.getLoginId();
-//                                userInfo.subcompanyName = bean.getSubcompanyName();
-//                                userInfo.userId = bean.getUserId() + "";
-//                                userInfo.workCode = bean.getWorkCode();
-//                                mSelectedUser.add(userInfo);
-//                            }
-//                        }
-//                        mAdapter.notifyDataSetChanged();
-//
-//                    } else {
-//                        if (page == 1) {
-//                        }
-//                    }
-//                }
-//                mAdapter.loadMoreComplete();
-//                mSwipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
-//    }
+
+    private void refreshList(String dataStr) {
+        ObjectListInfo data = Utils.parseJson(dataStr, ObjectListInfo.class);
+        if (data != null) {
+            List<ObjectInfo> list = data.list;
+            if (list != null) {
+                if (page == 1) {
+                    mSelectedUser.clear();
+                    for (ObjectInfo bean : list) {
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.departmentName = bean.departmentName;
+                        userInfo.lastName = bean.lastName;
+                        userInfo.loginId = bean.loginId;
+                        userInfo.subcompanyName = bean.subcompanyName;
+                        userInfo.userId = bean.getUserId() + "";
+                        userInfo.workCode = bean.workCode;
+                        mSelectedUser.add(userInfo);
+                    }
+                } else {
+                    for (ObjectInfo bean : list) {
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.departmentName = bean.departmentName;
+                        userInfo.lastName = bean.lastName;
+                        userInfo.loginId = bean.loginId;
+                        userInfo.subcompanyName = bean.subcompanyName;
+                        userInfo.userId = bean.getUserId() + "";
+                        userInfo.workCode = bean.workCode;
+                        mSelectedUser.add(userInfo);
+                    }
+                }
+            }
+            mLoadMoreEnd = data.lastPage;
+            mAdapter.loadMoreComplete();
+            if (mSelectedList != null) {
+                mSelectedUser.addAll(mSelectedList);
+            }
+            mAdapter.notifyDataSetChanged();
+            if (mLoadMoreEnd) {
+                mAdapter.loadMoreEnd();
+            }
+        }
+    }
 
     @Override
     public void onClick(View v, int id) {
         Intent intent = new Intent();
         if (id == R.id.tv_continue) {
-            intent.putExtra("DATA", (Serializable) mSelectedUser);
+            intent.putExtra("DATA", (Serializable) mSelectedList);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         } else if (id == R.id.tv_right) {
-            intent.putExtra("DATA", (Serializable) mSelectedUser);
+            intent.putExtra("DATA", (Serializable) mSelectedList);
             setResult(UISkipUtils.FROM_SELECTED, intent);
             finish();
         } else if (id == R.id.ll_back) {
-            intent.putExtra("DATA", (Serializable) mSelectedUser);
+            intent.putExtra("DATA", (Serializable) mSelectedList);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         }
@@ -222,6 +210,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     @Override
     public void onError(String msg, String code) {
         showToast(msg);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -231,6 +220,10 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
             showToast(response.getMsg());
             mSelectedUser.remove(mRemovePosition);
             mAdapter.notifyDataSetChanged();
+        } else if (type == INIT_DATA) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            String dataStr = jsonObject.optString("data");
+            refreshList(dataStr);
         }
     }
 

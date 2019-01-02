@@ -54,6 +54,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     private LimitDialog mLimitDialog;
     private LinearLayoutManager mLayoutManager;
     private int mGroupType; //0:组织架构  1:公用组
+    private int mReceiverCount;
 
     @Override
     public int getLayoutRes() {
@@ -165,7 +166,7 @@ public class ContactsActivity extends CirculateBaseActivity {
 
     //刷新选中人数
     private void refreshSelected(List<ContactsMultiInfo> data) {
-//        int userCount = 0;
+        int addCount = 0;
 //        mSelectedUserList.clear();
 //        List<String> selectedUserId = new ArrayList<>();
 //        for (UserInfo userInfo : mSelectedUserList) {
@@ -186,15 +187,15 @@ public class ContactsActivity extends CirculateBaseActivity {
                     }
                 }
                 if (datum.isSelected) {
+                    addCount++;
                     if (isContainer) {
                         continue;
                     }
                     mSelectedUserList.add(userInfo);
-//                userCount++;
                 }
             }
         }
-        mTvSelected.setText("(" + mSelectedUserList.size() + ")");
+        mTvSelected.setText("(" + (mReceiverCount + addCount) + ")");
     }
 
     List<UserInfo> user_list;
@@ -211,13 +212,14 @@ public class ContactsActivity extends CirculateBaseActivity {
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
         user_list = intent.getParcelableArrayListExtra("USER_LIST");
+        mReceiverCount = intent.getIntExtra("RECEIVER_COUNT", 0);
 //        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
-            mTvSelected.setText("(" + mSelectedUserList.size() + ")");
+            mTvSelected.setText("(" + mReceiverCount + ")");
         } else {
             //530
-            mTvSelected.setText("(" + 0 + ")");
+            mTvSelected.setText("(" + mReceiverCount + ")");
 //            user_list = new ArrayList<>();
 //            HttpService.loadObjectList(INIT_DATA, mMailId, new ResponseHandler() {
 //                @Override

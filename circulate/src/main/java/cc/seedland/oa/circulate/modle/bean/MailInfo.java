@@ -49,6 +49,7 @@ public class MailInfo implements Parcelable {
     public boolean ifConfirmss;
     public boolean afreshConfimss;
     public String receiveTime;
+    public int ReceiveCount;
 
     private String time;
     public boolean isSelected;

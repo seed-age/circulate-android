@@ -218,7 +218,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 //                    mEditDialog.dismiss();
 //                }
 //            }
-            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId);
+            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId,mMailInfo.ReceiveCount);
         } else if (id == R.id.tv_add_file) {
             UISkipUtils.skipToDBankActivity(this);
             mEditDialog.dismiss();

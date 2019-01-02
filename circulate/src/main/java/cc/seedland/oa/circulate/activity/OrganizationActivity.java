@@ -155,9 +155,9 @@ public class OrganizationActivity extends CirculateBaseActivity {
             }
             for (UserInfo userInfo : selectedNode) {
                 if (!userIds.contains(userInfo.userId)) {
-                    if (userInfos.size() >= 10) {
-                        userInfos.remove(0);
-                    }
+//                    if (userInfos.size() >= 10) {
+//                        userInfos.remove(0);
+//                    }
                     userInfos.add(userInfo);
                 }
             }
