@@ -16,8 +16,8 @@ public class UserInfo implements Parcelable, HeaderInfo{
     //分部门
     public String mobile;
     public String departmentId;
-    public String deptFullName;
-    public String fullCompanyName;
+//    public String deptFullName;
+//    public String fullCompanyName;
     public String lastName;//姓名
     public String loginId;
     public String subCompanyId;
@@ -40,8 +40,8 @@ public class UserInfo implements Parcelable, HeaderInfo{
         headerUrl = in.readString();
         mobile = in.readString();
         departmentId = in.readString();
-        deptFullName = in.readString();
-        fullCompanyName = in.readString();
+//        deptFullName = in.readString();
+//        fullCompanyName = in.readString();
         lastName = in.readString();
         loginId = in.readString();
         subCompanyId = in.readString();
@@ -82,8 +82,8 @@ public class UserInfo implements Parcelable, HeaderInfo{
         parcel.writeString(headerUrl);
         parcel.writeString(mobile);
         parcel.writeString(departmentId);
-        parcel.writeString(deptFullName);
-        parcel.writeString(fullCompanyName);
+//        parcel.writeString(deptFullName);
+//        parcel.writeString(fullCompanyName);
         parcel.writeString(lastName);
         parcel.writeString(loginId);
         parcel.writeString(subCompanyId);

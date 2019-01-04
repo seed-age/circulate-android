@@ -232,8 +232,6 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
         for (UserInfo userInfo : (Global.sUserInfo)) {
             UserInfo user = new UserInfo();
             user.departmentId = userInfo.departmentId;
-            user.deptFullName = userInfo.deptFullName;
-            user.fullCompanyName = userInfo.fullCompanyName;
             user.lastName = userInfo.lastName;
             user.loginId = userInfo.loginId;
             user.subCompanyId = userInfo.subCompanyId;

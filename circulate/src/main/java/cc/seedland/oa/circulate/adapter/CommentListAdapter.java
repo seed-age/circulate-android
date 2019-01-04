@@ -1,14 +1,18 @@
 package cc.seedland.oa.circulate.adapter;
 
+import android.media.Image;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import cc.seedland.oa.circulate.R;
+import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.DiscussesInfo;
 
 import java.util.List;
 
+import cc.seedland.oa.circulate.utils.BizUtils;
 import cn.carbs.android.expandabletextview.library.ExpandableTextView;
 
 /**
@@ -33,6 +37,7 @@ public class CommentListAdapter extends BaseQuickAdapter<DiscussesInfo,BaseViewH
         helper.setText(R.id.tv_name,item.lastName);
         helper.setText(R.id.tv_department,item.loginId);
         helper.setText(R.id.tv_time,item.time);
+        Global.sKnife.loadImage(item, (ImageView)helper.getView(R.id.civ_head));
 
     }
 }

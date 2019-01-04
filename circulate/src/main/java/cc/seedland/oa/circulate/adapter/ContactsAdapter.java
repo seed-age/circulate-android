@@ -14,6 +14,7 @@ import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.global.Constants;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.ContactsMultiInfo;
+import cc.seedland.oa.circulate.utils.BizUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -83,20 +84,8 @@ public class ContactsAdapter extends BaseMultiItemQuickAdapter<ContactsMultiInfo
 //                }
 //            }
             // ============把首字母逻辑注释==============
-            String department = "";
-            if (item.userInfo.subcompanyName != null) {
-                department += item.userInfo.subcompanyName + "/";
-            }
-            if (item.userInfo.departmentName != null) {
-                department += item.userInfo.departmentName;
-            }
-            if (department.length()>0) {
-                String last = String.valueOf(department.charAt(department.length() - 1));
-                if (last.equals("/")) {
-                    department = department.substring(0,department.length() - 1);
-                }
-            }
-            helper.setText(R.id.tv_department, department);
+
+            helper.setText(R.id.tv_department, BizUtils.formatOrganInfo(item.userInfo.subcompanyName, item.userInfo.departmentName));
             Global.sKnife.loadImage(item.userInfo, (ImageView) helper.getView(R.id
                     .civ_head));
             ImageView ivSelector = helper.getView(R.id.iv_selector);

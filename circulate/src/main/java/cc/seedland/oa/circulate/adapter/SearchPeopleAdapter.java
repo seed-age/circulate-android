@@ -13,6 +13,7 @@ import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.ContactsMultiInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
+import cc.seedland.oa.circulate.utils.BizUtils;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -31,21 +32,7 @@ public class SearchPeopleAdapter extends BaseQuickAdapter<UserInfo, BaseViewHold
     protected void convert(BaseViewHolder helper, UserInfo item) {
         helper.setGone(R.id.tv_letter, false);
         helper.setText(R.id.tv_name, item.lastName);
-      //  helper.setText(R.id.tv_department, item.fullCompanyName + "/" + item.deptFullName);
-        String department = "";
-        if (item.fullCompanyName != null) {
-            department += item.fullCompanyName + "/";
-        }
-        if (item.deptFullName != null) {
-            department += item.deptFullName;
-        }
-        if (department.length()>0) {
-            String last = String.valueOf(department.charAt(department.length() - 1));
-            if (last.equals("/")) {
-                department = department.substring(0,department.length() - 1);
-            }
-        }
-        helper.setText(R.id.tv_department, department);
+        helper.setText(R.id.tv_department, BizUtils.formatOrganInfo(item.subcompanyName, item.departmentName));
         ImageView ivSelector = helper.getView(R.id.iv_selector);
         ivSelector.setSelected(item.isSelected);
         Global.sKnife.loadImage(item, (ImageView)helper.getView(R.id.civ_head));

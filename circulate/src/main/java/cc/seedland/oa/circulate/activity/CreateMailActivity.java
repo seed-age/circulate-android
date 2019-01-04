@@ -101,8 +101,8 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
 
                     final UserInfo u = getItem(position);
                     ((TextView) convertView.findViewById(R.id.tv_name)).setText(u.lastName);
-                    ((TextView) convertView.findViewById(R.id.tv_company)).setText(u.fullCompanyName);
-                    ((TextView) convertView.findViewById(R.id.tv_department)).setText(u.deptFullName);
+                    ((TextView) convertView.findViewById(R.id.tv_company)).setText(u.subcompanyName);
+                    ((TextView) convertView.findViewById(R.id.tv_department)).setText(u.departmentName);
 
                     convertView.setOnClickListener(new View.OnClickListener() {
                         @Override

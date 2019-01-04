@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by hch on 2018/1/19.
  */
 
-public class DiscussesInfo implements Parcelable{
+public class DiscussesInfo implements Parcelable, HeaderInfo {
     public long createTime;
     public String differentiate;
     public String discussContent;
@@ -19,6 +19,8 @@ public class DiscussesInfo implements Parcelable{
     public int userId;
     public String workCode;
     public String time;
+
+    private String avatar;
 
     public DiscussesInfo() {
     }
@@ -63,5 +65,25 @@ public class DiscussesInfo implements Parcelable{
         parcel.writeInt(userId);
         parcel.writeString(workCode);
         parcel.writeString(time);
+    }
+
+    @Override
+    public String getHeaderUrl() {
+        return avatar;
+    }
+
+    @Override
+    public String getName() {
+        return lastName;
+    }
+
+    @Override
+    public void setHeaderUrl(String url) {
+        this.avatar = url;
+    }
+
+    @Override
+    public String getUserId() {
+        return String.valueOf(userId);
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
+import cc.seedland.oa.circulate.utils.BizUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,7 +38,7 @@ public class OrganizationMemberItemHolder extends TreeNode.BaseNodeViewHolder<Us
         TextView tvName = view.findViewById(R.id.tv_name);
         tvName.setText(value.lastName);
         TextView tvDepartment = view.findViewById(R.id.tv_department);
-        tvDepartment.setText(value.fullCompanyName + "/" + value.deptFullName);
+        tvDepartment.setText(BizUtils.formatOrganInfo(value.subcompanyName, value.departmentName));
         final ImageView ivSelector = view.findViewById(R.id.iv_selector);
         ivSelector.setSelected(node.isSelected());
         view.setOnClickListener(new View.OnClickListener() {

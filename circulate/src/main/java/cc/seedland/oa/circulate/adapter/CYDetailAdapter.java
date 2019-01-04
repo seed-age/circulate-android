@@ -92,6 +92,7 @@ public class CYDetailAdapter extends BaseMultiItemQuickAdapter<CYDetailInfo, Bas
                         TextView tvTime = view.findViewById(R.id.tv_time);
                         ExpandableTextView etv = view.findViewById(R.id.etv);
                         CircleImageView civHead = view.findViewById(R.id.civ_head);
+                        Global.sKnife.loadImage(discussesInfo, civHead);
                         //普通视图中的更新
                         etv.setText(discussesInfo.discussContent);
                         //在ListView/RecyclerView中的应用
