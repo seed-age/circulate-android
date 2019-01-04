@@ -206,9 +206,11 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
         } else if (id == R.id.tv_confirm) {
             showConfirmDialog();
         } else if (id == R.id.tv_cancel) {
-            mEditDialog.dismiss();
+            if (mEditDialog != null) {
+                mEditDialog.dismiss();
+            }
         } else if (id == R.id.tv_add_object) {//新增人员
-            //TODO 530 新增人员这里receivess size过大，需要进行缓存
+            //530 新增人员这里receivess size过大，需要进行缓存
 //            if (mMailInfo.receivess != null && !mMailInfo.receivess.isEmpty()) {
 //                ReceivessCache.clear();
 //                boolean status = ReceivessCache.pullReceivessObj(mMailInfo.receivess);
@@ -219,9 +221,14 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 //                }
 //            }
             UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId,mMailInfo.ReceiveCount);
+            if (mEditDialog != null) {
+                mEditDialog.dismiss();
+            }
         } else if (id == R.id.tv_add_file) {
             UISkipUtils.skipToDBankActivity(this);
-            mEditDialog.dismiss();
+            if (mEditDialog != null) {
+                mEditDialog.dismiss();
+            }
         }
     }
 

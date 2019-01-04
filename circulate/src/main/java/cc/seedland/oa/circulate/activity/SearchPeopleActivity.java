@@ -275,7 +275,12 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
             userInfos = Utils.parseJsonArray(selectedUser, UserInfo.class);
         }
         if (userInfos == null) {
-            userInfos = selectedNode;
+            if (selectedNode.size()>10) {
+                List<UserInfo> userInfoList = selectedNode.subList(0, 10);
+                userInfos = userInfoList;
+            }else {
+                userInfos = selectedNode;
+            }
         } else {
             List<String> userIds = new ArrayList<>();
             for (UserInfo userInfo : userInfos) {
@@ -283,9 +288,9 @@ public class SearchPeopleActivity extends CirculateBaseActivity {
             }
             for (UserInfo userInfo : selectedNode) {
                 if (!userIds.contains(userInfo.userId)) {
-//                    if (userInfos.size() >= 10) {
-//                        userInfos.remove(0);
-//                    }
+                    if (userInfos.size() >= 10) {
+                        userInfos.remove(0);
+                    }
                     userInfos.add(userInfo);
                 }
             }
