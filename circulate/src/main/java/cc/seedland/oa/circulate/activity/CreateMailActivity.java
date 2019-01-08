@@ -21,6 +21,7 @@ import cc.seedland.oa.circulate.adapter.FilteredArrayAdapter;
 import cc.seedland.oa.circulate.base.CirculateBaseActivity;
 import cc.seedland.oa.circulate.global.Global;
 import cc.seedland.oa.circulate.modle.bean.AttachInfo;
+import cc.seedland.oa.circulate.modle.bean.CYDetailInfo;
 import cc.seedland.oa.circulate.modle.bean.FileInfo;
 import cc.seedland.oa.circulate.modle.bean.MailInfo;
 import cc.seedland.oa.circulate.modle.bean.UserInfo;
@@ -202,30 +203,9 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
     @Override
     public void initData() {
         Intent intent = getIntent();
-        mMailInfo = (MailInfo) intent.getParcelableExtra("INFO");
-        if (mMailInfo != null) {
-            mMailId = mMailInfo.mailId;
-            List<UserInfo> receives = mMailInfo.receivess;
-            if (receives != null) {
-                for (UserInfo receive : receives) {
-                    mCompletionView.addObject(receive);
-                }
-            }
-            if (mMailInfo.title.equals("（无主题）")) {
-                mEdtTheme.setHint(mMailInfo.title);
-            } else {
-                mEdtTheme.setText(mMailInfo.title);
-            }
-            mEdtContent.setText(mMailInfo.mailContent);
-            List<AttachInfo> attachmentItemss = mMailInfo.attachmentItemss;
-            if (attachmentItemss != null) {
-                mAttachInfos.addAll(attachmentItemss);
-                if (attachmentItemss != null && attachmentItemss.size() > 0) {
-                    refreshFile();
-                } else {
-                    mViewDivider.setVisibility(View.GONE);
-                }
-            }
+        mMailId = intent.getIntExtra("MAIL_ID", -1);
+        if (mMailId != -1) {
+            HttpService.loadMailDetail(mMailId, 0, this);
         }
     }
 
@@ -431,6 +411,40 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                         UISkipUtils.skipToWebActivity(this, HttpApis.PREVIEW_API + Global.sKnife.getHost() +
                                 previewStr);
                         break;
+                }
+            }else if (type == HttpApis.getMailDetail().hashCode()) {
+                String dataStr = jsonObject.optString("data");
+                if (!TextUtils.isEmpty(dataStr) && !"null".equalsIgnoreCase(dataStr)) {
+                    refreshData(dataStr);
+                }
+            }
+        }
+    }
+
+
+    private void refreshData(String dataStr) {
+        mMailInfo = Utils.parseJson(dataStr, MailInfo.class);
+        if (mMailInfo != null) {
+            mMailId = mMailInfo.mailId;
+            List<UserInfo> receives = mMailInfo.receivess;
+            if (receives != null) {
+                for (UserInfo receive : receives) {
+                    mCompletionView.addObject(receive);
+                }
+            }
+            if (mMailInfo.title.equals("（无主题）")) {
+                mEdtTheme.setHint(mMailInfo.title);
+            } else {
+                mEdtTheme.setText(mMailInfo.title);
+            }
+            mEdtContent.setText(mMailInfo.mailContent);
+            List<AttachInfo> attachmentItemss = mMailInfo.attachmentItemss;
+            if (attachmentItemss != null) {
+                mAttachInfos.addAll(attachmentItemss);
+                if (attachmentItemss != null && attachmentItemss.size() > 0) {
+                    refreshFile();
+                } else {
+                    mViewDivider.setVisibility(View.GONE);
                 }
             }
         }

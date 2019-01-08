@@ -132,7 +132,7 @@ public class DraftListActivity extends CirculateBaseActivity implements Response
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 List<MailInfo> data = adapter.getData();
                 MailInfo mailInfo = data.get(position);
-                UISkipUtils.skipToCreateMailActivity(DraftListActivity.this, mailInfo);
+                UISkipUtils.skipToCreateMailActivity(DraftListActivity.this, mailInfo.mailId);
             }
 
             @Override

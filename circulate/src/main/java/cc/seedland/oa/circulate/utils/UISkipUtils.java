@@ -51,9 +51,9 @@ public class UISkipUtils {
         context.startActivity(intent);
     }
 
-    public static void skipToCreateMailActivity(Activity context, MailInfo mailInfo) {
+    public static void skipToCreateMailActivity(Activity context, int mailId) {
         Intent intent = new Intent(context, CreateMailActivity.class);
-        intent.putExtra("INFO", mailInfo);
+        intent.putExtra("MAIL_ID", mailId);
         context.startActivityForResult(intent, TO_EDIT);
     }
 

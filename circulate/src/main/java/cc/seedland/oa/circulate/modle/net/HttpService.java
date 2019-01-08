@@ -225,6 +225,7 @@ public class HttpService {
      *
      * @param mailId
      * @param handler
+     * @param mailStatus 待发 为 0 / 已发 为 1 /已删除 为 2 / 已收 为 3
      */
     public static void loadMailDetail(long mailId, int mailStatus, ResponseHandler handler) {
         HttpParams params = new HttpParams();

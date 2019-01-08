@@ -131,7 +131,7 @@ public class SearchCYActivity extends CirculateBaseActivity implements ResponseH
                 List<MailInfo> data = adapter.getData();
                 MailInfo mailInfo = data.get(position);
                 if (mType == 4) {
-                    UISkipUtils.skipToCreateMailActivity(SearchCYActivity.this, mailInfo);
+                    UISkipUtils.skipToCreateMailActivity(SearchCYActivity.this, mailInfo.mailId);
                 }else {
                     UISkipUtils.skipToCYDetailActivity(SearchCYActivity.this, mailInfo.mailId,mType);
                 }
