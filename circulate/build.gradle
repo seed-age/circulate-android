@@ -20,6 +20,8 @@ android {
             }
         }
 
+        buildConfigField 'boolean','LOGABLE','false'
+
     }
 
     buildTypes {

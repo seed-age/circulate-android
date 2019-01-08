@@ -8,8 +8,8 @@ import cc.seedland.oa.circulate.BuildConfig;
  * 日志打印
  */
 public class LogUtil {
-	
-	private static final boolean mDebug = false;
+
+	private static final boolean mDebug = BuildConfig.LOGABLE;
 
 	private static final String TAG = "circulate";
 
