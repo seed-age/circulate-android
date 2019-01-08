@@ -322,20 +322,23 @@ public class ContactsActivity extends CirculateBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
-                List<ContactsMultiInfo> listData = mAdapter.getData();
+                //注释刷新已选人数逻辑
+//                List<ContactsMultiInfo> listData = mAdapter.getData();
                 List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
-                for (ContactsMultiInfo listDatum : listData) {
-                    listDatum.isSelected = false;
-                    if (listDatum.getItemType() == ContactsMultiInfo.CONTENT) {
-                        for (UserInfo userInfo : selected) {
-                            if (userInfo.userId.equals(listDatum.userInfo.userId)) {
-                                listDatum.isSelected = true;
-                            }
-                        }
-                    }
-                }
-                refreshSelected(listData);
-                mAdapter.notifyDataSetChanged();
+                mReceiverCount = selected.size();
+                mTvSelected.setText("(" + mReceiverCount + ")");
+//                for (ContactsMultiInfo listDatum : listData) {
+//                    listDatum.isSelected = false;
+//                    if (listDatum.getItemType() == ContactsMultiInfo.CONTENT) {
+//                        for (UserInfo userInfo : selected) {
+//                            if (userInfo.userId.equals(listDatum.userInfo.userId)) {
+//                                listDatum.isSelected = true;
+//                            }
+//                        }
+//                    }
+//                }
+//                refreshSelected(listData);
+//                mAdapter.notifyDataSetChanged();
             } else if (resultCode == UISkipUtils.FROM_SELECTED) {
                 List<UserInfo> selected =  data.getParcelableArrayListExtra("DATA");
                 Intent intent = new Intent();

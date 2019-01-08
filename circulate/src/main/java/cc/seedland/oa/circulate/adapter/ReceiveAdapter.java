@@ -68,7 +68,7 @@ public class ReceiveAdapter extends BaseQuickAdapter<MailInfo, BaseViewHolder> {
         helper.setText(R.id.tv_focus, item.receiveAttention ? "取消关注" : "关注");
         helper.addOnClickListener(R.id.tv_focus);
         helper.addOnClickListener(R.id.tv_delete);
-        helper.setText(R.id.tv_delete, "跳过");
+        helper.setText(R.id.tv_delete, "确认");
         helper.setBackgroundRes(R.id.tv_delete, R.color.color_204_204_204);
         helper.setTextColor(R.id.tv_delete, Global.getColor(R.color.color_22262A));
         if (mIsSearch) {

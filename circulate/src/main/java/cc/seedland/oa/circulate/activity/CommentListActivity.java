@@ -169,7 +169,7 @@ public class CommentListActivity extends NoImmerseBaseActivity implements Respon
         if (type == INIT_DATA) {
             mData.clear();
             refreshList(dataStr);
-            mRvList.scrollToPosition(mAdapter.getItemCount() - 1);
+//            mRvList.scrollToPosition(mAdapter.getItemCount() - 1);
         } else if (type == LOAD_MORE) {
             refreshList(dataStr);
         } else if (type == mApi.hashCode()) {

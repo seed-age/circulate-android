@@ -9,7 +9,7 @@ import cc.seedland.oa.circulate.BuildConfig;
  */
 public class LogUtil {
 	
-	private static final boolean mDebug = false;
+	private static final boolean mDebug = true;
 
 	private static final String TAG = "circulate";
 

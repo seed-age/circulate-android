@@ -71,7 +71,7 @@ public class DemoApplication extends Application {
             }
             @Override
             public String getCurrentUserId() {
-                return "4173";
+                return "4129";
             }
 
             @Override

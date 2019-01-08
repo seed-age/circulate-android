@@ -314,15 +314,17 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
             }
         }else if (type == HttpApis.getJumpMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
-            List<MailInfo> data = mAdapter.getData();
-            for (int i = 0; i < data.size(); i++) {
-                MailInfo listBean = data.get(i);
-                if (listBean.mailId == mJumpMailId) {
-                    data.remove(i);
-                    mAdapter.notifyDataSetChanged();
-                    return;
-                }
-            }
+//            List<MailInfo> data = mAdapter.getData();
+//            for (int i = 0; i < data.size(); i++) {
+//                MailInfo listBean = data.get(i);
+//                if (listBean.mailId == mJumpMailId) {
+//                    data.remove(i);
+//                    mAdapter.notifyDataSetChanged();
+//                    return;
+//                }
+//            }
+//            showDelayDialog();
+            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page, orderBy, this);
         }
     }
 

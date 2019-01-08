@@ -3,11 +3,13 @@ package cc.seedland.oa.circulate.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import cc.seedland.oa.circulate.R;
+import cc.seedland.oa.circulate.utils.EmojiFilter;
 
 
 /**
@@ -120,6 +122,7 @@ public class EditTextDialog extends Dialog {
         yes =  findViewById(R.id.yes);
         no =  findViewById(R.id.no);
         messageTv = findViewById(R.id.message);
+        messageTv.setFilters(new InputFilter[]{new EmojiFilter()});
     }
 
 

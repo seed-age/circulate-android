@@ -218,57 +218,15 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
             }
             mEdtContent.setText(mMailInfo.mailContent);
             List<AttachInfo> attachmentItemss = mMailInfo.attachmentItemss;
-            mAttachInfos.addAll(attachmentItemss);
-            if (attachmentItemss != null && attachmentItemss.size() > 0) {
-//                mLlAccessoryContainer.removeAllViews();
-//                mViewDivider.setVisibility(View.VISIBLE);
-//                for (AttachInfo itemss : mAttachInfos) {
-//                    View view = mInflater.inflate(R.layout.item_accessory,
-// mLlAccessoryContainer, false);
-//                    TextView tvFileTitle = view.findViewById(R.id.tv_file_title);
-//                    TextView tvFileSize = view.findViewById(R.id.tv_file_size);
-//                    ImageView ivType = view.findViewById(R.id.iv_type);
-//                    String fileName = itemss.fileName;
-//                    tvFileTitle.setText(itemss.fileName);
-//                    tvFileSize.setText(itemss.itemSize);
-//                    String fileType = itemss.fileName.substring(fileName.lastIndexOf("."));
-//                    switch (fileType) {
-//                        case ".xlsx":
-//                            ivType.setImageResource(R.drawable.icon_excel);
-//                            break;
-//                        case ".docx":
-//                            ivType.setImageResource(R.drawable.icon_word);
-//                            break;
-//                        case ".jpg":
-//                            ivType.setImageResource(R.drawable.icon_pic);
-//                            break;
-//                        case ".png":
-//                            ivType.setImageResource(R.drawable.icon_pic);
-//                            break;
-//                    }
-//                    mLlAccessoryContainer.addView(view);
-//                }
-                refreshFile();
-            } else {
-                mViewDivider.setVisibility(View.GONE);
+            if (attachmentItemss != null) {
+                mAttachInfos.addAll(attachmentItemss);
+                if (attachmentItemss != null && attachmentItemss.size() > 0) {
+                    refreshFile();
+                } else {
+                    mViewDivider.setVisibility(View.GONE);
+                }
             }
         }
-//        mLlAccessoryContainer.removeAllViews();
-//        for (int i = 0; i < 3; i++) {
-//            View view = mInflater.inflate(R.layout.item_accessory, mLlAccessoryContainer, false);
-//            mLlAccessoryContainer.addView(view);
-//        }
-//        getChipList();
-    }
-
-    private void getChipList() {
-//        List<UserInfo> userInfo = Global.sUserInfo;
-//        List<ChipInfo> chipList = new ArrayList<>();
-//        for (UserInfo info : userInfo) {
-//            chipList.add(new ChipInfo(info.userId,info.lastName,info.fullName,info.deptFullname));
-//        }
-//        chipsInput.setFilterableList(chipList);
-
     }
 
     @Override
@@ -283,7 +241,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
 //                    UISkipUtils.skipToContactsActivity(this, -1);
 //                }
 //            }
-            UISkipUtils.skipToContactsActivity(this, mUserInfos, -1,0);
+            UISkipUtils.skipToContactsActivity(this, mUserInfos, -1, 0);
         } else if (id == R.id.fl_accessory) {
             showMenu();
         } else if (id == R.id.tv_pick_file) {
