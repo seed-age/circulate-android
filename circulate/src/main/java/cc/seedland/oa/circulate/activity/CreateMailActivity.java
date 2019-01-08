@@ -205,6 +205,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
         Intent intent = getIntent();
         mMailId = intent.getIntExtra("MAIL_ID", -1);
         if (mMailId != -1) {
+            showDelayDialog();
             HttpService.loadMailDetail(mMailId, 0, this);
         }
     }
@@ -275,12 +276,14 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
-                List<UserInfo> userInfoList = (List<UserInfo>) data.getParcelableExtra("USER");
-                mUserInfos.clear();
-                mCompletionView.clear();
+                List<UserInfo> userInfoList = data.getParcelableArrayListExtra("USER");
+                if (userInfoList != null) {
+                    mUserInfos.clear();
+                    mCompletionView.clear();
 //                mUserInfos.addAll(userInfoList);
-                for (UserInfo userInfo : userInfoList) {
-                    mCompletionView.addObject(userInfo);
+                    for (UserInfo userInfo : userInfoList) {
+                        mCompletionView.addObject(userInfo);
+                    }
                 }
             }
         } else if (requestCode == UISkipUtils.TO_DBANK) {
@@ -412,7 +415,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
                                 previewStr);
                         break;
                 }
-            }else if (type == HttpApis.getMailDetail().hashCode()) {
+            } else if (type == HttpApis.getMailDetail().hashCode()) {
                 String dataStr = jsonObject.optString("data");
                 if (!TextUtils.isEmpty(dataStr) && !"null".equalsIgnoreCase(dataStr)) {
                     refreshData(dataStr);

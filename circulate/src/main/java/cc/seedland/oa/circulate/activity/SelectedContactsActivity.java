@@ -2,6 +2,7 @@ package cc.seedland.oa.circulate.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -201,7 +202,8 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
             setResult(UISkipUtils.FROM_SELECTED, intent);
             finish();
         } else if (id == R.id.ll_back) {
-            intent.putExtra("DATA", (Serializable) mSelectedList);
+//            intent.putExtra("DATA", (Serializable) mSelectedList);
+            intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         }
@@ -230,7 +232,8 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra("DATA", (Serializable) mSelectedUser);
+//        intent.putExtra("DATA", (Serializable) mSelectedUser);
+        intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
         setResult(UISkipUtils.FROM_EDIT, intent);
         finish();
         super.onBackPressed();
