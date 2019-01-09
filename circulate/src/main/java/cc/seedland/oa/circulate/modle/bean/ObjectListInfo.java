@@ -9,5 +9,6 @@ import java.util.List;
 public class ObjectListInfo {
     public boolean firstPage;
     public boolean lastPage;
+    public int totalRecord;
     public List<ObjectInfo> list;
 }

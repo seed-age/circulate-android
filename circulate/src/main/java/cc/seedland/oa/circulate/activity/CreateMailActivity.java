@@ -79,7 +79,9 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
     private MailInfo mMailInfo;
 
     private UserInfo currentUser;
-  @Override
+    private int mReceiveCount;
+
+    @Override
     public int getLayoutRes() {
         return R.layout.activity_create_mail;
     }
@@ -240,7 +242,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
 //                    UISkipUtils.skipToContactsActivity(this, -1);
 //                }
 //            }
-            UISkipUtils.skipToContactsActivity(this, mUserInfos, -1, 0);
+            UISkipUtils.skipToContactsActivity(this, mUserInfos, mMailId, mReceiveCount);
         } else if (id == R.id.fl_accessory) {
             showMenu();
         } else if (id == R.id.tv_pick_file) {
@@ -448,6 +450,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
         mMailInfo = Utils.parseJson(dataStr, MailInfo.class);
         if (mMailInfo != null) {
             mMailId = mMailInfo.mailId;
+            mReceiveCount = mMailInfo.ReceiveCount;
             List<UserInfo> receives = mMailInfo.receivess;
             if (receives != null) {
 //                for (UserInfo receive : receives) {

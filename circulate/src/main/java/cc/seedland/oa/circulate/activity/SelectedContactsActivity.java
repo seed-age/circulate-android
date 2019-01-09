@@ -54,6 +54,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     private boolean mLoadMoreEnd = false;
     private boolean mLoadMoreFail = false;
     private List<UserInfo> mSelectedList;
+    private int mTotalRecord;
 
     @Override
     public int getLayoutRes() {
@@ -151,6 +152,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     private void refreshList(String dataStr) {
         ObjectListInfo data = Utils.parseJson(dataStr, ObjectListInfo.class);
         if (data != null) {
+            mTotalRecord = data.totalRecord;
             List<ObjectInfo> list = data.list;
             if (list != null) {
                 if (page == 1) {
@@ -204,6 +206,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         } else if (id == R.id.ll_back) {
 //            intent.putExtra("DATA", (Serializable) mSelectedList);
             intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
+            intent.putExtra("COUNT",mTotalRecord);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         }
@@ -234,6 +237,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = new Intent();
 //        intent.putExtra("DATA", (Serializable) mSelectedUser);
         intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
+        intent.putExtra("COUNT",mTotalRecord);
         setResult(UISkipUtils.FROM_EDIT, intent);
         finish();
         super.onBackPressed();

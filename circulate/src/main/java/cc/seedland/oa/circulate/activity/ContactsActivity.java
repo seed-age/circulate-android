@@ -325,7 +325,8 @@ public class ContactsActivity extends CirculateBaseActivity {
                 //注释刷新已选人数逻辑
 //                List<ContactsMultiInfo> listData = mAdapter.getData();
                 List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
-                mReceiverCount = selected.size();
+                mReceiverCount = data.getIntExtra("COUNT", 0);
+//                mReceiverCount = selected.size();
                 mTvSelected.setText("(" + mReceiverCount + ")");
 //                for (ContactsMultiInfo listDatum : listData) {
 //                    listDatum.isSelected = false;

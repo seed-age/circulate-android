@@ -152,6 +152,7 @@ public class DraftListActivity extends CirculateBaseActivity implements Response
 
     @Override
     public void initData() {
+        showDelayDialog();
         HttpService.loadDraftList(INIT_DATA,page, this);
     }
 
@@ -174,6 +175,7 @@ public class DraftListActivity extends CirculateBaseActivity implements Response
 
     @Override
     public void onError(String msg, String code) {
+        hideDelayDialog();
         showToast(msg);
     }
 

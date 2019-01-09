@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+
 import cc.seedland.oa.circulate.R;
 import cc.seedland.oa.circulate.adapter.ReceiveAdapter;
 import cc.seedland.oa.circulate.base.CirculateBaseActivity;
@@ -159,7 +160,7 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
 //                    HttpService.readCY(listBean.mail.mailId, ReceiveListActivity.this);
 //                }
                 //1213131
-                UISkipUtils.skipToCYDetailActivity(ReceiveListActivity.this, listBean.mailId,3);
+                UISkipUtils.skipToCYDetailActivity(ReceiveListActivity.this, listBean.mailId, 3);
             }
 
             @Override
@@ -167,16 +168,16 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
                 List<MailInfo> data = adapter.getData();
                 MailInfo listBean = data.get(position);
                 int id = view.getId();
-                if(id == R.id.tv_focus) {
+                if (id == R.id.tv_focus) {
                     mFocusMailId = listBean.mailId;
                     List<String> focusMailId = new ArrayList<>();
                     focusMailId.add(String.valueOf(mFocusMailId));
-                    HttpService.focusReceivedMail(focusMailId,!listBean.receiveAttention,3,ReceiveListActivity.this);
-                }else if(id == R.id.tv_delete) {
+                    HttpService.focusReceivedMail(focusMailId, !listBean.receiveAttention, 3, ReceiveListActivity.this);
+                } else if (id == R.id.tv_delete) {
                     mJumpMailId = listBean.mailId;
                     List<String> jumpMailId = new ArrayList<>();
                     jumpMailId.add(String.valueOf(mJumpMailId));
-                    HttpService.jumpMail(jumpMailId,ReceiveListActivity.this);
+                    HttpService.jumpMail(jumpMailId, ReceiveListActivity.this);
                 }
             }
         });
@@ -211,8 +212,8 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
         Intent intent = getIntent();
         int type = intent.getIntExtra("TYPE", 0);
         String title = intent.getStringExtra("TITLE");
-        boolean isShowTab = intent.getBooleanExtra("IS_SHOW_TAB",true);
-        mLlTabBar.setVisibility(isShowTab?View.VISIBLE:View.GONE);
+        boolean isShowTab = intent.getBooleanExtra("IS_SHOW_TAB", true);
+        mLlTabBar.setVisibility(isShowTab ? View.VISIBLE : View.GONE);
         mToolbar.setTitle(title);
         LinkedHashMap<String, Integer> tabs = new LinkedHashMap<>();
         tabs.put("未读", 5);
@@ -224,7 +225,7 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
         mAdapter.setType(status);
         for (int i = 0; i < mTabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
-            if ((int)tab.getTag() == status) {
+            if ((int) tab.getTag() == status) {
                 tab.select();
                 break;
             }
@@ -236,13 +237,13 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
 
     @Override
     public void onClick(View v, int id) {
-        if(id == R.id.fl_right_first_ic) {
+        if (id == R.id.fl_right_first_ic) {
             UISkipUtils.skipToEditReceiveCYListActivity(this, status);
-        }else if(id == R.id.fl_right_second_ic) {
-            UISkipUtils.skipToSearchCYActivity(this, HttpApis.getSearchReceiveList(),3);
-        }else if(id == R.id.fl_sort) {
+        } else if (id == R.id.fl_right_second_ic) {
+            UISkipUtils.skipToSearchCYActivity(this, HttpApis.getSearchReceiveList(), 3);
+        } else if (id == R.id.fl_sort) {
             showSortDialog();
-        }else if(id == R.id.tv_sort_des) {
+        } else if (id == R.id.tv_sort_des) {
             mSortDialog.dismiss();
             page = 1;
             orderBy = 2;
@@ -250,7 +251,7 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
             showDelayDialog();
             HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page,
                     orderBy, this);
-        }else if(id == R.id.tv_sort_asc){
+        } else if (id == R.id.tv_sort_asc) {
             mSortDialog.dismiss();
             page = 1;
             orderBy = 1;
@@ -258,7 +259,7 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
             showDelayDialog();
             HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page,
                     orderBy, this);
-        }else if(id == R.id.tv_cancel) {
+        } else if (id == R.id.tv_cancel) {
             mSortDialog.dismiss();
         }
     }
@@ -299,9 +300,9 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
         if (type == INIT_DATA) {
             mData.clear();
             refreshList(dataStr);
-        }else if (type == LOAD_MORE) {
+        } else if (type == LOAD_MORE) {
             refreshList(dataStr);
-        }else if (type == HttpApis.getReceivedFocusMail().hashCode()) {
+        } else if (type == HttpApis.getReceivedFocusMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
             List<MailInfo> data = mAdapter.getData();
             for (int i = 0; i < data.size(); i++) {
@@ -312,19 +313,22 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
                     return;
                 }
             }
-        }else if (type == HttpApis.getJumpMail().hashCode()) {
+        } else if (type == HttpApis.getJumpMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
-//            List<MailInfo> data = mAdapter.getData();
-//            for (int i = 0; i < data.size(); i++) {
-//                MailInfo listBean = data.get(i);
-//                if (listBean.mailId == mJumpMailId) {
-//                    data.remove(i);
-//                    mAdapter.notifyDataSetChanged();
-//                    return;
-//                }
-//            }
+            List<MailInfo> data = mAdapter.getData();
+            if (status == 5 || status == 2) {
+                for (int i = 0; i < data.size(); i++) {
+                    MailInfo listBean = data.get(i);
+                    if (listBean.mailId == mJumpMailId) {
+                        data.remove(i);
+                        mAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                }
+            }
 //            showDelayDialog();
-            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page, orderBy, this);
+//            page = 1;
+//            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page, orderBy, this);
         }
     }
 
@@ -340,7 +344,7 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
             if (mData.size() == 0) {
                 mLlNoMail.setVisibility(View.VISIBLE);
                 mRecyclerView.setVisibility(View.GONE);
-            }else {
+            } else {
                 mLlNoMail.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
             }
