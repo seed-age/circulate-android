@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +43,17 @@ import cc.seedland.oa.circulate.view.contacts.TokenCompleteTextView;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2018/1/5 0005.
  */
 
-public class CreateMailActivity extends CirculateBaseActivity implements TokenCompleteTextView
-        .TokenListener<UserInfo>,
+public class CreateMailActivity extends CirculateBaseActivity implements /*TokenCompleteTextView
+        .TokenListener<UserInfo>,*/
         ResponseHandler {
 
     private BottomDialog mBottomDialog;
@@ -57,9 +61,12 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
     private LayoutInflater mInflater;
     //    private ChipsInput chipsInput;
     private ScrollView mScrollView;
-    private ContactsCompletionView mCompletionView;
-    private List<UserInfo> filterData = new ArrayList<>();
-    private FilteredArrayAdapter<UserInfo> mFilterAdapter;
+
+    private TextView receiverV;
+//    private ContactsCompletionView mCompletionView;
+//    private List<UserInfo> filterData = new ArrayList<>();
+//    private FilteredArrayAdapter<UserInfo> mFilterAdapter;
+
     private EditText mEdtTheme;
     private EditText mEdtContent;
     private View mViewDivider;
@@ -71,110 +78,121 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
     private int mMailId;
     private MailInfo mMailInfo;
 
-    @Override
+    private UserInfo currentUser;
+  @Override
     public int getLayoutRes() {
         return R.layout.activity_create_mail;
     }
 
     @Override
     public void initView() {
+
+      currentUser = new UserInfo();
+      currentUser.userId = Global.sKnife.getCurrentUserId();
+
         mInflater = LayoutInflater.from(this);
         initStatusBar();
         initToolbar();
         mLlAccessoryContainer = findView(R.id.ll_accessory_container);
 //        chipsInput = findView(R.id.chips_input);
         mScrollView = findView(R.id.scrollView);
-        mCompletionView = findView(R.id.searchView);
-        filterData = Global.sUserInfo;
-        if (filterData != null) {
-            mFilterAdapter = new FilteredArrayAdapter<UserInfo>(this, R.layout
-                    .item_search_contacts, filterData) {
-                @NonNull
-                @Override
-                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup
-                        parent) {
-                    if (convertView == null) {
 
-                        LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity
-                                .LAYOUT_INFLATER_SERVICE);
-                        convertView = l.inflate(R.layout.item_search_contacts, parent, false);
-                    }
+//        mCompletionView = findView(R.id.searchView);
+        receiverV = findView(R.id.receiver);
+        receiverV.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-                    final UserInfo u = getItem(position);
-                    ((TextView) convertView.findViewById(R.id.tv_name)).setText(u.lastName);
-                    ((TextView) convertView.findViewById(R.id.tv_company)).setText(u.subcompanyName);
-                    ((TextView) convertView.findViewById(R.id.tv_department)).setText(u.departmentName);
-
-                    convertView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            for (UserInfo userInfo : mUserInfos) {
-                                if (u.userId.equals(userInfo.userId)) {
-                                    return;
-                                }
-                            }
-                            mCompletionView.replaceText(mCompletionView.convertSelectionToString(u));
-//                        mCompletionView.addObject(u);
-                        }
-                    });
-                    return convertView;
-                }
-
-
-                @Override
-                protected boolean keepObject(UserInfo obj, String mask) {
-                    String lastName = obj.lastName;
-                    if (mask.length() > lastName.length()) {
-                        return false;
-                    }
-                    if (mask.matches("[0-9]+") || (mask.getBytes().length != mask.length())) {//当输入数字或中文的时候
-                        for (int i = 0; i < mask.length(); i++) {
-                            String maskStr = String.valueOf(mask.charAt(i));
-                            String nameStr = String.valueOf(lastName.charAt(i));
-                            if (!maskStr.equals(nameStr)) {
-                                return false;
-                            }
-                        }
-                        return true;
-//                        if (lastName.contains(mask)) {
-//                            return true;
-//                        } else {
+//        filterData = Global.sUserInfo;
+//        if (filterData != null) {
+//            mFilterAdapter = new FilteredArrayAdapter<UserInfo>(this, R.layout
+//                    .item_search_contacts, filterData) {
+//                @NonNull
+//                @Override
+//                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup
+//                        parent) {
+//                    if (convertView == null) {
+//
+//                        LayoutInflater l = (LayoutInflater) getContext().getSystemService(Activity
+//                                .LAYOUT_INFLATER_SERVICE);
+//                        convertView = l.inflate(R.layout.item_search_contacts, parent, false);
+//                    }
+//
+//                    final UserInfo u = getItem(position);
+//                    ((TextView) convertView.findViewById(R.id.tv_name)).setText(u.lastName);
+//                    ((TextView) convertView.findViewById(R.id.tv_company)).setText(u.subcompanyName);
+//                    ((TextView) convertView.findViewById(R.id.tv_department)).setText(u.departmentName);
+//
+//                    convertView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            for (UserInfo userInfo : mUserInfos) {
+//                                if (u.userId.equals(userInfo.userId)) {
+//                                    return;
+//                                }
+//                            }
+//
+////                            mCompletionView.replaceText(mCompletionView.convertSelectionToString(u));
+//
+////                        mCompletionView.addObject(u);
+//                        }
+//                    });
+//                    return convertView;
+//                }
+//
+//
+//                @Override
+//                protected boolean keepObject(UserInfo obj, String mask) {
+//                    String lastName = obj.lastName;
+//                    if (mask.length() > lastName.length()) {
+//                        return false;
+//                    }
+//                    if (mask.matches("[0-9]+") || (mask.getBytes().length != mask.length())) {//当输入数字或中文的时候
+//                        for (int i = 0; i < mask.length(); i++) {
+//                            String maskStr = String.valueOf(mask.charAt(i));
+//                            String nameStr = String.valueOf(lastName.charAt(i));
+//                            if (!maskStr.equals(nameStr)) {
+//                                return false;
+//                            }
+//                        }
+//                        return true;
+////                        if (lastName.contains(mask)) {
+////                            return true;
+////                        } else {
+////                            return false;
+////                        }
+//                    } else {
+//                        StringBuilder nameFront = new StringBuilder();
+//                        StringBuilder namePinyin = new StringBuilder();
+//                        StringBuilder maskPinyin = new StringBuilder();
+//                        for (int i = 0; i < lastName.length(); i++) {
+//                            nameFront.append(lastName.charAt(i));
+//                        }
+//                        for (int i = 0; i < nameFront.length(); i++) {
+//                            namePinyin.append(PinyinUtils.getPinyin(String.valueOf(nameFront
+//                                    .charAt(i))).toLowerCase().charAt(0));
+//                        }
+//                        for (int i = 0; i < mask.length(); i++) {
+//                            maskPinyin.append(PinyinUtils.getPinyin(String.valueOf(mask.charAt(i)
+//                            )).toLowerCase());
+//                        }
+//                        if (maskPinyin.length() > namePinyin.length()) {
 //                            return false;
 //                        }
-                    } else {
-                        StringBuilder nameFront = new StringBuilder();
-                        StringBuilder namePinyin = new StringBuilder();
-                        StringBuilder maskPinyin = new StringBuilder();
-                        for (int i = 0; i < lastName.length(); i++) {
-                            nameFront.append(lastName.charAt(i));
-                        }
-                        for (int i = 0; i < nameFront.length(); i++) {
-                            namePinyin.append(PinyinUtils.getPinyin(String.valueOf(nameFront
-                                    .charAt(i))).toLowerCase().charAt(0));
-                        }
-                        for (int i = 0; i < mask.length(); i++) {
-                            maskPinyin.append(PinyinUtils.getPinyin(String.valueOf(mask.charAt(i)
-                            )).toLowerCase());
-                        }
-                        if (maskPinyin.length() > namePinyin.length()) {
-                            return false;
-                        }
-                        for (int i = 0; i < maskPinyin.length(); i++) {
-                            String marskStr = String.valueOf(maskPinyin.charAt(i));
-                            String nameStr = String.valueOf(namePinyin.charAt(i));
-                            if (!marskStr.equals(nameStr)) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                }
-
-            };
-        }
-        mCompletionView.setAdapter(mFilterAdapter);
-        mCompletionView.setTokenListener(this);
-        mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
+//                        for (int i = 0; i < maskPinyin.length(); i++) {
+//                            String marskStr = String.valueOf(maskPinyin.charAt(i));
+//                            String nameStr = String.valueOf(namePinyin.charAt(i));
+//                            if (!marskStr.equals(nameStr)) {
+//                                return false;
+//                            }
+//                        }
+//                        return true;
+//                    }
+//                }
+//
+//            };
+//        }
+//        mCompletionView.setAdapter(mFilterAdapter);
+//        mCompletionView.setTokenListener(this);
+//        mCompletionView.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
 
         mEdtTheme = findView(R.id.edt_theme);
         mEdtContent = findView(R.id.edt_content);
@@ -278,12 +296,13 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
             if (resultCode == UISkipUtils.FROM_EDIT) {
                 List<UserInfo> userInfoList = data.getParcelableArrayListExtra("USER");
                 if (userInfoList != null) {
-                    mUserInfos.clear();
-                    mCompletionView.clear();
-//                mUserInfos.addAll(userInfoList);
-                    for (UserInfo userInfo : userInfoList) {
-                        mCompletionView.addObject(userInfo);
-                    }
+//                    mUserInfos.clear();
+//                    mCompletionView.clear();
+                mUserInfos.addAll(userInfoList);
+                updateContent(receiverV, mUserInfos);
+//                    for (UserInfo userInfo : userInfoList) {
+//                        mCompletionView.addObject(userInfo);
+//                    }
                 }
             }
         } else if (requestCode == UISkipUtils.TO_DBANK) {
@@ -319,20 +338,20 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
         tvCancel.setOnClickListener(this);
     }
 
-    @Override
-    public void onTokenAdded(UserInfo token) {
-        mUserInfos.add(token);
-    }
-
-    @Override
-    public void onTokenRemoved(UserInfo token) {
-        mUserInfos.remove(token);
-    }
-
-    @Override
-    public void onDuplicateRemoved(UserInfo token) {
-
-    }
+//    @Override
+//    public void onTokenAdded(UserInfo token) {
+//        mUserInfos.add(token);
+//    }
+//
+//    @Override
+//    public void onTokenRemoved(UserInfo token) {
+//        mUserInfos.remove(token);
+//    }
+//
+//    @Override
+//    public void onDuplicateRemoved(UserInfo token) {
+//
+//    }
 
     @Override
     public void onError(String msg, String code) {
@@ -431,9 +450,12 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
             mMailId = mMailInfo.mailId;
             List<UserInfo> receives = mMailInfo.receivess;
             if (receives != null) {
-                for (UserInfo receive : receives) {
-                    mCompletionView.addObject(receive);
-                }
+//                for (UserInfo receive : receives) {
+//                    mCompletionView.addObject(receive);
+
+//                }
+                mUserInfos.addAll(receives);
+                updateContent(receiverV, mUserInfos);
             }
             if (mMailInfo.title.equals("（无主题）")) {
                 mEdtTheme.setHint(mMailInfo.title);
@@ -550,5 +572,25 @@ public class CreateMailActivity extends CirculateBaseActivity implements TokenCo
         if (mResultDialog == null)
             mResultDialog = new ResultDialog(this);
         mResultDialog.show();
+    }
+
+    private void updateContent(TextView v, List<UserInfo> list) {
+
+        // 去重
+        Set<UserInfo> set = new HashSet<>(list);
+        list.clear();
+        list.addAll(set);
+        list.remove(currentUser);
+
+        String result = "";
+        if(list != null && !list.isEmpty()) {
+            String raw = list.toString();
+            result = raw.substring(1, raw.length() - 1);
+        }
+        v.setText(result);
+        int offset = (v.getLineCount() - 1) * v.getLineHeight();
+        if(offset > (v.getHeight() - v.getLineHeight())){
+            v.scrollTo(0,offset - v.getHeight() + v.getLineHeight());
+        }
     }
 }

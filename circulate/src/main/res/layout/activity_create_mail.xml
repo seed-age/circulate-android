@@ -56,22 +56,32 @@
                 <!--app:chip_deletable="true"-->
                 <!--app:chip_backgroundColor="@color/color_008cd6"-->
                 <!--android:textSize="@dimen/sp_10"/>-->
-                <cc.seedland.oa.circulate.view.contacts.ContactsCompletionView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
+
+
+                <!--<cc.seedland.oa.circulate.view.contacts.ContactsCompletionView-->
+                    <!--android:id="@+id/searchView"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginLeft="@dimen/dp_5"-->
+                    <!--android:layout_marginRight="@dimen/dp_5"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@null"-->
+                    <!--android:focusableInTouchMode="true"-->
+                    <!--android:imeOptions="actionDone"-->
+                    <!--android:inputType="text|textNoSuggestions|textMultiLine"-->
+                    <!--android:lineSpacingExtra="1dp"-->
+                    <!--android:nextFocusDown="@+id/editText"-->
+                    <!--android:textColor="@android:color/darker_gray"-->
+                    <!--android:textSize="@dimen/sp_16"/>-->
+
+                <TextView
+                    android:id="@+id/receiver"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_marginRight="@dimen/dp_5"
                     android:layout_weight="1"
-                    android:background="@null"
-                    android:focusableInTouchMode="true"
-                    android:imeOptions="actionDone"
-                    android:inputType="text|textNoSuggestions|textMultiLine"
-                    android:lineSpacingExtra="1dp"
-                    android:nextFocusDown="@+id/editText"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="@dimen/sp_16"/>
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"/>
 
                 <FrameLayout
                     android:id="@+id/fl_add"

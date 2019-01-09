@@ -2,6 +2,7 @@ package cc.seedland.oa.circulate.modle.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.io.Serializable;
 
@@ -119,5 +120,38 @@ public class UserInfo implements Parcelable, HeaderInfo{
     @Override
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public String toString() {
+        return lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof UserInfo))
+            return false;
+
+        UserInfo user = (UserInfo) o;
+
+        boolean result = false;
+
+        if(!TextUtils.isEmpty(user.userId) && !TextUtils.isEmpty(userId)) {
+            result = user.userId.equals(this.userId);
+        }
+
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        if(!TextUtils.isEmpty(userId)) {
+            result = result * 37 + userId.hashCode();
+        }
+        return result;
     }
 }
