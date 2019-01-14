@@ -281,9 +281,9 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
-            page = 1;
-            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page,
-                    orderBy, this);
+//            page = 1;
+//            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page,
+//                    orderBy, this);
         }
     }
 
@@ -316,13 +316,16 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
         } else if (type == HttpApis.getJumpMail().hashCode()) {
             showToast(jsonObject.optString("msg"));
             List<MailInfo> data = mAdapter.getData();
-            if (status == 5 || status == 2) {
-                for (int i = 0; i < data.size(); i++) {
-                    MailInfo listBean = data.get(i);
-                    if (listBean.mailId == mJumpMailId) {
+            for (int i = 0; i < data.size(); i++) {
+                MailInfo listBean = data.get(i);
+                if (listBean.mailId == mJumpMailId) {
+                    if (status == 5 || status == 2) {
                         data.remove(i);
                         mAdapter.notifyDataSetChanged();
                         return;
+                    } else {
+                        listBean.receiveMailState = 6;
+                        mAdapter.notifyDataSetChanged();
                     }
                 }
             }

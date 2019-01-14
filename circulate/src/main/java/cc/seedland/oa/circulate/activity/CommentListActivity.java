@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ import cc.seedland.oa.circulate.modle.bean.MailInfo;
 import cc.seedland.oa.circulate.modle.net.BaseResponse;
 import cc.seedland.oa.circulate.modle.net.HttpService;
 import cc.seedland.oa.circulate.modle.net.ResponseHandler;
+import cc.seedland.oa.circulate.utils.EmojiFilter;
 import cc.seedland.oa.circulate.utils.LogUtil;
 import cc.seedland.oa.circulate.utils.Utils;
 import cc.seedland.oa.circulate.view.MyToolbar;
@@ -63,6 +65,7 @@ public class CommentListActivity extends NoImmerseBaseActivity implements Respon
         initToolbar();
         initList();
         mEdtComment = findView(R.id.edt_comment);
+        mEdtComment.setFilters(new InputFilter[]{new EmojiFilter()});
         mSwipeRefresh = findView(R.id.swipe_refresh);
     }
 

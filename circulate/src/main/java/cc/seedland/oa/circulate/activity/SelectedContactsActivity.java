@@ -197,6 +197,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = new Intent();
         if (id == R.id.tv_continue) {
             intent.putExtra("DATA", (Serializable) mSelectedList);
+            intent.putExtra("COUNT",mTotalRecord);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         } else if (id == R.id.tv_right) {
