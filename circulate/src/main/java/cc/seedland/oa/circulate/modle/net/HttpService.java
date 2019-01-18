@@ -544,4 +544,22 @@ public class HttpService {
                 .params(params)
                 .postExecute(handler);
     }
+
+    /**
+     * 新增待发传阅对象
+     * @param mailId
+     * @param receiveUserId
+     * @param handler
+     */
+    public static void insertObjectWait(long mailId, List<String> receiveUserId,ResponseHandler handler) {
+        HttpParams params = new HttpParams();
+        params.put("userId", Global.sKnife.getCurrentUserId());
+        params.put("mailId", mailId);
+        params.put("receiveUserId", receiveUserId);
+        BaseRequest.getInstance()
+                .setUrl(HttpApis.insertObjectWait())
+                .setType(HttpApis.insertObjectWait().hashCode())
+                .params(params)
+                .postExecute(handler);
+    }
 }

@@ -82,7 +82,7 @@ public class ContactsActivity extends CirculateBaseActivity {
 
     private void initToolbar() {
         MyToolbar toolbar = findView(R.id.toolbar);
-        toolbar.setOnBackClickListener(this);
+        toolbar.setBackClickListener(this);
         toolbar.setTitle("选择联系人");
         toolbar.setRightText("确认");
         toolbar.setOnRightTextClickListener(this);
@@ -143,15 +143,15 @@ public class ContactsActivity extends CirculateBaseActivity {
                 } else if (id == R.id.ll_organization) {
                     mGroupType = 0;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
-                            mSelectedUserList, mGroupType);
+                            mSelectedUserList, mGroupType,mReceiverCount);
                 } else if (id == R.id.ll_common_group) {
                     mGroupType = 1;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
-                            mSelectedUserList, mGroupType);
+                            mSelectedUserList, mGroupType,mReceiverCount);
                 } else if (id == R.id.ll_private_group) {
                     mGroupType = 2;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
-                            mSelectedUserList, mGroupType);
+                            mSelectedUserList, mGroupType,mReceiverCount);
                 }
             }
         });
@@ -165,6 +165,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     }
 
     //刷新选中人数
+    private boolean isFirstSelect = true;
     private void refreshSelected(List<ContactsMultiInfo> data) {
         int addCount = 0;
 //        mSelectedUserList.clear();
@@ -172,6 +173,17 @@ public class ContactsActivity extends CirculateBaseActivity {
 //        for (UserInfo userInfo : mSelectedUserList) {
 //            selectedUserId.add(userInfo.userId);
 //        }
+        if (mSelectedUserList.size() > 0) {
+            if (isFirstSelect) {
+                addCount = mSelectedUserList.size();
+                isFirstSelect = false;
+            }else {
+                addCount = mReceiverCount;
+            }
+        }else {
+            isFirstSelect = false;
+            addCount = mReceiverCount;
+        }
         for (ContactsMultiInfo datum : data) {
             boolean isContainer = false;
             Iterator<UserInfo> iterator = mSelectedUserList.iterator();
@@ -187,15 +199,16 @@ public class ContactsActivity extends CirculateBaseActivity {
                     }
                 }
                 if (datum.isSelected) {
-                    addCount++;
                     if (isContainer) {
                         continue;
                     }
+                    addCount++;
                     mSelectedUserList.add(userInfo);
                 }
             }
         }
-        mTvSelected.setText("(" + (mReceiverCount + addCount) + ")");
+        mReceiverCount = addCount;
+        mTvSelected.setText("(" + (addCount) + ")");
     }
 
     List<UserInfo> user_list;
@@ -216,39 +229,10 @@ public class ContactsActivity extends CirculateBaseActivity {
 //        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
+//            mReceiverCount = mSelectedUserList.size();
             mTvSelected.setText("(" + mReceiverCount + ")");
         } else {
-            //530
             mTvSelected.setText("(" + mReceiverCount + ")");
-//            user_list = new ArrayList<>();
-//            HttpService.loadObjectList(INIT_DATA, mMailId, new ResponseHandler() {
-//                @Override
-//                public void onError(String msg, String code) {
-//
-//                }
-//
-//                @Override
-//                public void onSuccess(String json, JSONObject jsonObject, BaseResponse response) {
-//                    NewObjectInfo data = Utils.parseJson(json, NewObjectInfo.class);
-//                    if (data != null) {
-//                        List<NewObjectInfo.DataBean.ListBean> list = data.getData().getList();
-//                        if (list != null && !list.isEmpty()) {
-//                            for (NewObjectInfo.DataBean.ListBean bean : list) {
-//                                UserInfo userInfo = new UserInfo();
-//                                userInfo.departmentName = bean.getDepartmentName();
-//                                userInfo.lastName = bean.getLastName();
-//                                userInfo.loginId = bean.getLoginId();
-//                                userInfo.subcompanyName = bean.getSubcompanyName();
-//                                userInfo.userId = bean.getUserId() + "";
-//                                userInfo.workCode = bean.getWorkCode();
-//                                user_list.add(userInfo);
-//                            }
-//                            mSelectedUserList = user_list;
-//                            mTvSelected.setText("(" + mSelectedUserList.size() + ")");
-//                        }
-//                    }
-//                }
-//            });
         }
         List<ContactsMultiInfo> contentInfo = new ArrayList<>();
         String selectedUser = PreferenceUtils.getString(this, "SELECTED_USER");
@@ -314,7 +298,17 @@ public class ContactsActivity extends CirculateBaseActivity {
             finish();
         } else if (id == R.id.tv_btn) {
             mLimitDialog.dismiss();
+        } else if (id == R.id.ll_back) {
+            setResult(UISkipUtils.FROM_EDIT);
+            finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(UISkipUtils.FROM_EDIT);
+        finish();
     }
 
     @Override
@@ -341,7 +335,7 @@ public class ContactsActivity extends CirculateBaseActivity {
 //                refreshSelected(listData);
 //                mAdapter.notifyDataSetChanged();
             } else if (resultCode == UISkipUtils.FROM_SELECTED) {
-                List<UserInfo> selected =  data.getParcelableArrayListExtra("DATA");
+                List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
                 Intent intent = new Intent();
                 intent.putParcelableArrayListExtra("USER", (ArrayList<? extends Parcelable>) selected);
                 setResult(UISkipUtils.FROM_EDIT, intent);

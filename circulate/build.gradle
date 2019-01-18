@@ -20,7 +20,7 @@ android {
             }
         }
 
-        buildConfigField 'boolean','LOGABLE','false'
+        buildConfigField 'boolean','LOGABLE','true'
 
     }
 

@@ -223,10 +223,11 @@ public class UISkipUtils {
         context.startActivity(intent);
     }
 
-    public static void skipToOrganizationActivity(Activity activity, List<UserInfo> userInfos, int type) {
+    public static void skipToOrganizationActivity(Activity activity, List<UserInfo> userInfos, int type,int count) {
         Intent intent = new Intent(activity, OrganizationActivity.class);
         intent.putExtra("DATA", (Serializable) userInfos);
         intent.putExtra("TYPE", type);
+        intent.putExtra("COUNT",count);
         activity.startActivityForResult(intent, TO_EDIT);
     }
 

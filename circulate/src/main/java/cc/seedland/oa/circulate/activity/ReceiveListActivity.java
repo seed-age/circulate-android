@@ -281,9 +281,9 @@ public class ReceiveListActivity extends CirculateBaseActivity implements Respon
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
-//            page = 1;
-//            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page,
-//                    orderBy, this);
+            page = 1;
+            HttpService.loadCYListData(HttpApis.getReceivedList(), INIT_DATA, status, page,
+                    orderBy, this);
         }
     }
 

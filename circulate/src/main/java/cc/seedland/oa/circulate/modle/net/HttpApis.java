@@ -43,6 +43,7 @@ public class HttpApis {
     private static final String SEARCH_FILE = "/app/create/find-like-name.htm";//附件搜索
     private static final String DELETE_FILE = "/app/create/delete-upload.htm";//删除附件
     private static final String PREVIEW_FILE = "/app/create/preview-file.htm";//预览附件
+    private static final String INSERT_OBJECT_WAIT = "/app/wait/insert-mail-object-wait.htm";//新增待发传阅对象
 
     /**
      * 首页统计
@@ -177,5 +178,9 @@ public class HttpApis {
 
     public static String getPreviewFile() {
         return Global.sKnife.getHost() + PREVIEW_FILE;
+    }
+
+    public static String insertObjectWait() {
+        return Global.sKnife.getHost() + INSERT_OBJECT_WAIT;
     }
 }

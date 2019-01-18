@@ -89,8 +89,8 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
     @Override
     public void initView() {
 
-      currentUser = new UserInfo();
-      currentUser.userId = Global.sKnife.getCurrentUserId();
+        currentUser = new UserInfo();
+        currentUser.userId = Global.sKnife.getCurrentUserId();
 
         mInflater = LayoutInflater.from(this);
         initStatusBar();
@@ -296,16 +296,33 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
-                List<UserInfo> userInfoList = data.getParcelableArrayListExtra("USER");
-                if (userInfoList != null) {
+                if (data != null) {
+                    List<UserInfo> userInfoList = data.getParcelableArrayListExtra("USER");
+                    if (userInfoList != null) {
+                        List<String> receiveUserId = new ArrayList<>();
+                        for (UserInfo userInfo : userInfoList) {
+                            receiveUserId.add(String.valueOf(userInfo.userId));
+                        }
+                        if (receiveUserId.size() != 0) {
+                            HttpService.insertObjectWait(mMailId, receiveUserId, this);
+                        }
+                    } else {
+                        showDelayDialog();
+                        HttpService.loadMailDetail(mMailId, 0, this);
+                    }
+                }else {
+                    showDelayDialog();
+                    HttpService.loadMailDetail(mMailId, 0, this);
+                }
+                /*if (userInfoList != null) {
 //                    mUserInfos.clear();
 //                    mCompletionView.clear();
-                mUserInfos.addAll(userInfoList);
-                updateContent(receiverV, mUserInfos);
+                    mUserInfos.addAll(userInfoList);
+                    updateContent(receiverV, mUserInfos);
 //                    for (UserInfo userInfo : userInfoList) {
 //                        mCompletionView.addObject(userInfo);
 //                    }
-                }
+                }*/
             }
         } else if (requestCode == UISkipUtils.TO_DBANK) {
             List<FileInfo> selectedFiles = Global.sSelectedFiles;
@@ -441,6 +458,9 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
                 if (!TextUtils.isEmpty(dataStr) && !"null".equalsIgnoreCase(dataStr)) {
                     refreshData(dataStr);
                 }
+            } else if (type == HttpApis.insertObjectWait().hashCode()) {
+                showToast(response.getMsg());
+                HttpService.loadMailDetail(mMailId, 0, this);
             }
         }
     }
@@ -450,8 +470,8 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
         mMailInfo = Utils.parseJson(dataStr, MailInfo.class);
         if (mMailInfo != null) {
             mMailId = mMailInfo.mailId;
-            mReceiveCount = mMailInfo.ReceiveCount;
             List<UserInfo> receives = mMailInfo.receivess;
+            mReceiveCount = mMailInfo.ReceiveCount;
             if (receives != null) {
 //                for (UserInfo receive : receives) {
 //                    mCompletionView.addObject(receive);
@@ -584,16 +604,16 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
         list.clear();
         list.addAll(set);
         list.remove(currentUser);
-
+        mReceiveCount = list.size();
         String result = "";
-        if(list != null && !list.isEmpty()) {
+        if (list != null && !list.isEmpty()) {
             String raw = list.toString();
             result = raw.substring(1, raw.length() - 1);
         }
         v.setText(result);
         int offset = (v.getLineCount() - 1) * v.getLineHeight();
-        if(offset > (v.getHeight() - v.getLineHeight())){
-            v.scrollTo(0,offset - v.getHeight() + v.getLineHeight());
+        if (offset > (v.getHeight() - v.getLineHeight())) {
+            v.scrollTo(0, offset - v.getHeight() + v.getLineHeight());
         }
     }
 }

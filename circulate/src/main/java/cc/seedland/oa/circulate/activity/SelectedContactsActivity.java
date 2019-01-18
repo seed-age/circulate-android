@@ -133,10 +133,12 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
         mSelectedList = (List<UserInfo>) intent.getSerializableExtra("SELECTED_USER");
-        if(mSelectedList!=null&&mSelectedList.size()>0){
+        if (mSelectedList != null && mSelectedList.size() > 0) {
             toolbar.setRightText("确认");
             toolbar.setOnRightTextClickListener(this);
+            mSelectedUser.addAll(mSelectedList);
         }
+        showDelayDialog();
         HttpService.loadObjectList(INIT_DATA, mMailId, page, this);
         mAdapter.setNewData(mSelectedUser);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -157,33 +159,36 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
             if (list != null) {
                 if (page == 1) {
                     mSelectedUser.clear();
-                    for (ObjectInfo bean : list) {
-                        UserInfo userInfo = new UserInfo();
-                        userInfo.departmentName = bean.departmentName;
-                        userInfo.lastName = bean.lastName;
-                        userInfo.loginId = bean.loginId;
-                        userInfo.subcompanyName = bean.subcompanyName;
-                        userInfo.userId = bean.getUserId() + "";
-                        userInfo.workCode = bean.workCode;
-                        mSelectedUser.add(userInfo);
-                    }
+                    updateList(list);
+//                    for (ObjectInfo bean : list) {
+//                        UserInfo userInfo = new UserInfo();
+//                        userInfo.departmentName = bean.departmentName;
+//                        userInfo.lastName = bean.lastName;
+//                        userInfo.loginId = bean.loginId;
+//                        userInfo.subcompanyName = bean.subcompanyName;
+//                        userInfo.userId = bean.getUserId() + "";
+//                        userInfo.workCode = bean.workCode;
+//                        mSelectedUser.add(userInfo);
+//                    }
                 } else {
-                    for (ObjectInfo bean : list) {
-                        UserInfo userInfo = new UserInfo();
-                        userInfo.departmentName = bean.departmentName;
-                        userInfo.lastName = bean.lastName;
-                        userInfo.loginId = bean.loginId;
-                        userInfo.subcompanyName = bean.subcompanyName;
-                        userInfo.userId = bean.getUserId() + "";
-                        userInfo.workCode = bean.workCode;
-                        mSelectedUser.add(userInfo);
-                    }
+                    updateList(list);
+//                    for (ObjectInfo bean : list) {
+//                        UserInfo userInfo = new UserInfo();
+//                        userInfo.departmentName = bean.departmentName;
+//                        userInfo.lastName = bean.lastName;
+//                        userInfo.loginId = bean.loginId;
+//                        userInfo.subcompanyName = bean.subcompanyName;
+//                        userInfo.userId = bean.getUserId() + "";
+//                        userInfo.workCode = bean.workCode;
+//                        mSelectedUser.add(userInfo);
+//                    }
                 }
             }
             mLoadMoreEnd = data.lastPage;
             mAdapter.loadMoreComplete();
             if (mSelectedList != null) {
-                mSelectedUser.addAll(mSelectedList);
+//                mSelectedUser.addAll(mSelectedList);
+//                mTotalRecord += mSelectedList.size();
             }
             mAdapter.notifyDataSetChanged();
             if (mLoadMoreEnd) {
@@ -192,12 +197,43 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         }
     }
 
+    private void updateList(List<ObjectInfo> list) {
+        if (mSelectedUser != null && mSelectedUser.size() > 0) {
+            List<String> idList = new ArrayList<>();
+            for (UserInfo userInfo : mSelectedUser) {
+                idList.add(userInfo.userId);
+            }
+            for (ObjectInfo objectInfo : list) {
+                if (!idList.contains(objectInfo.getUserId())) {
+                    packUserInfo(objectInfo);
+                }
+            }
+        } else {
+            for (ObjectInfo objectInfo : list) {
+                packUserInfo(objectInfo);
+            }
+        }
+        mTotalRecord = mSelectedUser.size();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void packUserInfo(ObjectInfo objectInfo) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.departmentName = objectInfo.departmentName;
+        userInfo.lastName = objectInfo.lastName;
+        userInfo.loginId = objectInfo.loginId;
+        userInfo.subcompanyName = objectInfo.subcompanyName;
+        userInfo.userId = objectInfo.getUserId();
+        userInfo.workCode = objectInfo.workCode;
+        mSelectedUser.add(userInfo);
+    }
+
     @Override
     public void onClick(View v, int id) {
         Intent intent = new Intent();
         if (id == R.id.tv_continue) {
             intent.putExtra("DATA", (Serializable) mSelectedList);
-            intent.putExtra("COUNT",mTotalRecord);
+            intent.putExtra("COUNT", mTotalRecord);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         } else if (id == R.id.tv_right) {
@@ -207,7 +243,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         } else if (id == R.id.ll_back) {
 //            intent.putExtra("DATA", (Serializable) mSelectedList);
             intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
-            intent.putExtra("COUNT",mTotalRecord);
+            intent.putExtra("COUNT", mTotalRecord);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         }
@@ -221,6 +257,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
 
     @Override
     public void onSuccess(String json, JSONObject jsonObject, BaseResponse response) {
+        hideDelayDialog();
         int type = response.getType();
         if (type == HttpApis.getRemoveObject().hashCode()) {
             showToast(response.getMsg());
@@ -238,7 +275,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = new Intent();
 //        intent.putExtra("DATA", (Serializable) mSelectedUser);
         intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
-        intent.putExtra("COUNT",mTotalRecord);
+        intent.putExtra("COUNT", mTotalRecord);
         setResult(UISkipUtils.FROM_EDIT, intent);
         finish();
         super.onBackPressed();

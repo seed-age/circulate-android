@@ -64,6 +64,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.seedland.oa.circulate.view.SwipeLayoutManager;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 import permissions.dispatcher.NeedsPermission;
@@ -160,6 +161,31 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                     mAdapter.openDetail();
                 } else if (id == R.id.tv_close) {
                     mAdapter.closeDetail();
+                }
+            }
+        });
+
+        mRvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+              if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+                    if (manager instanceof LinearLayoutManager) {
+                        LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
+                        int lastPosition = layoutManager.findLastVisibleItemPosition();
+                        if (lastPosition == mAdapter.getItemCount() - 1)
+                            if (!mLoadMoreFail) {
+                                if (!mLoadMoreEnd) {
+                                    page++;
+                                    HttpService.loadDiscussList(LOAD_MORE, mMailId, page, CYDetailActivity.this);
+                                } else {
+                                    mAdapter.loadMoreEnd();
+                                }
+                            } else {
+                                mLoadMoreFail = false;
+                                mAdapter.loadMoreFail();
+                            }
+                    }
                 }
             }
         });
@@ -668,8 +694,8 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
     public void onLoadMoreRequested() {
         if (!mLoadMoreFail) {
             if (!mLoadMoreEnd) {
-                page++;
-                HttpService.loadDiscussList(LOAD_MORE, mMailId, page, CYDetailActivity.this);
+//                page++;
+//                HttpService.loadDiscussList(LOAD_MORE, mMailId, page, CYDetailActivity.this);
             } else {
                 mAdapter.loadMoreEnd();
             }

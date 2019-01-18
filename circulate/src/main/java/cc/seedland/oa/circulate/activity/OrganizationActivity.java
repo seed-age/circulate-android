@@ -44,6 +44,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
     private CommonGroupFragment mCommonGroupFragment;
     private PrivateGroupFragment mPrivateGroupFragment;
     private MyToolbar mToolbar;
+    private int mCount;
 
     @Override
     public int getLayoutRes() {
@@ -81,6 +82,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
         Intent intent = getIntent();
         mSelectedData = (List<UserInfo>) intent.getSerializableExtra("DATA");
         mType = intent.getIntExtra("TYPE", 0);
+        mCount = intent.getIntExtra("COUNT", 0);
         if (mType == 0) {
             mToolbar.setTitle("组织");
         } else if (mType == 1) {
@@ -126,6 +128,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
         if(id == R.id.tv_right) {
             refreshSelectedUser(selectedNode);
             intent.putExtra("DATA", (Serializable) selectedNode);
+            intent.putExtra("COUNT",mCount);
             setResult(UISkipUtils.FROM_SELECTED, intent);
             finish();
         }else if(id == R.id.ll_back) {
@@ -133,6 +136,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
                 intent.putExtra("DATA", (Serializable) selectedNode);
             else
                 intent.putExtra("DATA", (Serializable) mSelectedData);
+            intent.putExtra("COUNT",mCount);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
         }else if(id == R.id.ll_search) {
@@ -203,6 +207,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
             selectedNode = mPrivateGroupFragment.getSelectedNode();
         }
         intent.putExtra("DATA", (Serializable) selectedNode);
+        intent.putExtra("COUNT",mCount);
         setResult(UISkipUtils.FROM_EDIT, intent);
         finish();
     }
