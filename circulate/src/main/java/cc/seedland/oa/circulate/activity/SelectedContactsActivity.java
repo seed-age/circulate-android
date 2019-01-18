@@ -118,6 +118,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
                     if (mMailId != -1) {
                         mRemovePosition = position;
                         UserInfo userInfo = mSelectedUser.get(position);
+                        showDelayDialog();
                         HttpService.removeObject(mMailId, userInfo.userId, SelectedContactsActivity.this);
                     } else {
                         mSelectedUser.remove(position);
@@ -251,6 +252,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
 
     @Override
     public void onError(String msg, String code) {
+        hideDelayDialog();
         showToast(msg);
         mSwipeRefreshLayout.setRefreshing(false);
     }

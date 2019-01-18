@@ -477,7 +477,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
 //                    mCompletionView.addObject(receive);
 
 //                }
-                mUserInfos.addAll(receives);
+                mUserInfos=receives;
                 updateContent(receiverV, mUserInfos);
             }
             if (mMailInfo.title.equals("（无主题）")) {
