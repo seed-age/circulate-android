@@ -254,7 +254,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
             send(true);
         } else if (id == R.id.ll_back) {
             finish();
-            if (mMailInfo == null)
+            if (mMailInfo != null)
                 send(false);
         }
     }
