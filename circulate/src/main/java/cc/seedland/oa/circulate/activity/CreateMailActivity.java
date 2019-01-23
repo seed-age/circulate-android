@@ -242,7 +242,7 @@ public class CreateMailActivity extends CirculateBaseActivity implements /*Token
 //                    UISkipUtils.skipToContactsActivity(this, -1);
 //                }
 //            }
-            UISkipUtils.skipToContactsActivity(this, mUserInfos, mMailId, mReceiveCount);
+            UISkipUtils.skipToContactsActivity(this, mUserInfos, mMailId, mReceiveCount,2);
         } else if (id == R.id.fl_accessory) {
             showMenu();
         } else if (id == R.id.tv_pick_file) {

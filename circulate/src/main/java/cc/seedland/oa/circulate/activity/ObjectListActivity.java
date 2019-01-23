@@ -104,7 +104,7 @@ public class ObjectListActivity extends CirculateBaseActivity implements Respons
                 ObjectInfo objectInfo = data.get(position);
                 if (id == R.id.tv_delete) {
                     showDelayDialog();
-                    HttpService.removeObject(mMailid, objectInfo.userId, ObjectListActivity.this);
+                    HttpService.removeObject(HttpApis.getRemoveObject(),mMailid, objectInfo.userId, ObjectListActivity.this);
                 }
             }
         });

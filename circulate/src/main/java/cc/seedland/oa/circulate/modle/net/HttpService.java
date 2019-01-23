@@ -315,14 +315,14 @@ public class HttpService {
      * @param receiveUserId
      * @param handler
      */
-    public static void removeObject(long mailId, String receiveUserId, ResponseHandler handler) {
+    public static void removeObject(String api,long mailId, String receiveUserId, ResponseHandler handler) {
         HttpParams params = new HttpParams();
         params.put("userId", Global.sKnife.getCurrentUserId());
         params.put("mailId", mailId);
         params.put("receiveUserId", receiveUserId);
         BaseRequest.getInstance()
-                .setUrl(HttpApis.getRemoveObject())
-                .setType(HttpApis.getRemoveObject().hashCode())
+                .setUrl(api)
+                .setType(api.hashCode())
                 .params(params)
                 .postExecute(handler);
     }

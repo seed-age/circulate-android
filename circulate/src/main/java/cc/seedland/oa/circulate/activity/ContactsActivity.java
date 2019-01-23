@@ -55,6 +55,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     private LinearLayoutManager mLayoutManager;
     private int mGroupType; //0:组织架构  1:公用组
     private int mReceiverCount;
+    private int mType;
 
     @Override
     public int getLayoutRes() {
@@ -226,6 +227,7 @@ public class ContactsActivity extends CirculateBaseActivity {
         mMailId = intent.getLongExtra("MAIL_ID", -1);
         user_list = intent.getParcelableArrayListExtra("USER_LIST");
         mReceiverCount = intent.getIntExtra("RECEIVER_COUNT", 0);
+        mType = intent.getIntExtra("type", 1);
 //        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
@@ -283,7 +285,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     @Override
     public void onClick(View v, int id) {
         if (id == R.id.ll_selected) {
-            UISkipUtils.skipToSelectedContactsActivity(this, mSelectedUserList, mMailId);
+            UISkipUtils.skipToSelectedContactsActivity(this, mSelectedUserList, mMailId,mType);
         } else if (id == R.id.tv_right) {
             List<UserInfo> userInfos = new ArrayList<>();
             List<ContactsMultiInfo> data = mAdapter.getData();
@@ -319,9 +321,22 @@ public class ContactsActivity extends CirculateBaseActivity {
                 //注释刷新已选人数逻辑
 //                List<ContactsMultiInfo> listData = mAdapter.getData();
                 List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
+                ArrayList<String> deleteUserIdList = data.getStringArrayListExtra("DELETE_LIST");
                 mReceiverCount = data.getIntExtra("COUNT", 0);
 //                mReceiverCount = selected.size();
                 mTvSelected.setText("(" + mReceiverCount + ")");
+                if (mType == 2) {
+                    if (deleteUserIdList.size() > 0) {
+                        for (ContactsMultiInfo datum : this.data) {
+                            if (datum.getItemType() == ContactsMultiInfo.CONTENT) {
+                                if (deleteUserIdList.contains(datum.userInfo.userId)) {
+                                    datum.isSelected = false;
+                                }
+                            }
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
 //                for (ContactsMultiInfo listDatum : listData) {
 //                    listDatum.isSelected = false;
 //                    if (listDatum.getItemType() == ContactsMultiInfo.CONTENT) {

@@ -44,6 +44,7 @@ public class HttpApis {
     private static final String DELETE_FILE = "/app/create/delete-upload.htm";//删除附件
     private static final String PREVIEW_FILE = "/app/create/preview-file.htm";//预览附件
     private static final String INSERT_OBJECT_WAIT = "/app/wait/insert-mail-object-wait.htm";//新增待发传阅对象
+    private static final String DELETE_OBJECT_WAIT = "/app/wait/delete-wait-mail-object.htm";//删除待发传阅对象
 
     /**
      * 首页统计
@@ -182,5 +183,8 @@ public class HttpApis {
 
     public static String insertObjectWait() {
         return Global.sKnife.getHost() + INSERT_OBJECT_WAIT;
+    }
+    public static String deleteObjectWait() {
+        return Global.sKnife.getHost() + DELETE_OBJECT_WAIT;
     }
 }

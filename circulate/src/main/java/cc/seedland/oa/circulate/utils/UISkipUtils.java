@@ -89,11 +89,20 @@ public class UISkipUtils {
         context.startActivityForResult(intent, TO_EDIT);
     }
 
-    public static void skipToContactsActivity(Activity context, List<UserInfo> userInfos, long mailId,int receiverCount) {
+    /**
+     * 跳转到联系人列表
+     * @param context
+     * @param userInfos
+     * @param mailId
+     * @param receiverCount
+     * @param type 1：来自传阅详情 2：来自待发传阅
+     */
+    public static void skipToContactsActivity(Activity context, List<UserInfo> userInfos, long mailId,int receiverCount,int type) {
         Intent intent = new Intent(context, ContactsActivity.class);
         intent.putParcelableArrayListExtra("USER_LIST", (ArrayList<? extends Parcelable>) userInfos);
         intent.putExtra("MAIL_ID", mailId);
         intent.putExtra("RECEIVER_COUNT", receiverCount);
+        intent.putExtra("type",type);
         context.startActivityForResult(intent, TO_EDIT);
     }
 
@@ -101,6 +110,7 @@ public class UISkipUtils {
      * tisp Intent 传bunder有限制，
      * @param context
      * @param mailId
+     * @param type
      */
 /*    public static void skipToContactsActivity(Activity context, long mailId) {
         Intent intent = new Intent(context, ContactsActivity.class);
@@ -109,11 +119,19 @@ public class UISkipUtils {
         context.startActivityForResult(intent, TO_EDIT);
     }*/
 
+    /**
+     * 跳转到已选传阅对象列表
+     * @param context
+     * @param selectedUserList
+     * @param mailId
+     * @param type 1：来自传阅详情 2：来自待发传阅
+     */
     public static void skipToSelectedContactsActivity(Activity context, List<UserInfo>
-            selectedUserList, long mailId) {
+            selectedUserList, long mailId, int type) {
         Intent intent = new Intent(context, SelectedContactsActivity.class);
         intent.putExtra("SELECTED_USER", (Serializable) selectedUserList);
         intent.putExtra("MAIL_ID", mailId);
+        intent.putExtra("type",type);
         context.startActivityForResult(intent, TO_EDIT);
     }
 

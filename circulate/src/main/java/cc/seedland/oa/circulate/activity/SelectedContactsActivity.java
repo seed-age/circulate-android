@@ -55,6 +55,9 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     private boolean mLoadMoreFail = false;
     private List<UserInfo> mSelectedList;
     private int mTotalRecord;
+    private String mDeleteApi;
+    private int mType;
+    private ArrayList<String> mDeleteUserIdList = new ArrayList<>();
 
     @Override
     public int getLayoutRes() {
@@ -119,7 +122,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
                         mRemovePosition = position;
                         UserInfo userInfo = mSelectedUser.get(position);
                         showDelayDialog();
-                        HttpService.removeObject(mMailId, userInfo.userId, SelectedContactsActivity.this);
+                        HttpService.removeObject(mDeleteApi,mMailId, userInfo.userId, SelectedContactsActivity.this);
                     } else {
                         mSelectedUser.remove(position);
                         adapter.notifyDataSetChanged();
@@ -133,6 +136,12 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     public void initData() {
         Intent intent = getIntent();
         mMailId = intent.getLongExtra("MAIL_ID", -1);
+        mType = intent.getIntExtra("type", 1);
+        if (mType == 1) {//来自传阅详情
+            mDeleteApi = HttpApis.getRemoveObject();
+        }else if (mType == 2) {//来自待发传阅
+            mDeleteApi = HttpApis.deleteObjectWait();
+        }
         mSelectedList = (List<UserInfo>) intent.getSerializableExtra("SELECTED_USER");
         if (mSelectedList != null && mSelectedList.size() > 0) {
             toolbar.setRightText("确认");
@@ -161,28 +170,8 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
                 if (page == 1) {
                     mSelectedUser.clear();
                     updateList(list);
-//                    for (ObjectInfo bean : list) {
-//                        UserInfo userInfo = new UserInfo();
-//                        userInfo.departmentName = bean.departmentName;
-//                        userInfo.lastName = bean.lastName;
-//                        userInfo.loginId = bean.loginId;
-//                        userInfo.subcompanyName = bean.subcompanyName;
-//                        userInfo.userId = bean.getUserId() + "";
-//                        userInfo.workCode = bean.workCode;
-//                        mSelectedUser.add(userInfo);
-//                    }
                 } else {
                     updateList(list);
-//                    for (ObjectInfo bean : list) {
-//                        UserInfo userInfo = new UserInfo();
-//                        userInfo.departmentName = bean.departmentName;
-//                        userInfo.lastName = bean.lastName;
-//                        userInfo.loginId = bean.loginId;
-//                        userInfo.subcompanyName = bean.subcompanyName;
-//                        userInfo.userId = bean.getUserId() + "";
-//                        userInfo.workCode = bean.workCode;
-//                        mSelectedUser.add(userInfo);
-//                    }
                 }
             }
             mLoadMoreEnd = data.lastPage;
@@ -244,6 +233,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         } else if (id == R.id.ll_back) {
 //            intent.putExtra("DATA", (Serializable) mSelectedList);
             intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
+            intent.putStringArrayListExtra("DELETE_LIST",mDeleteUserIdList);
             intent.putExtra("COUNT", mTotalRecord);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
@@ -261,10 +251,15 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     public void onSuccess(String json, JSONObject jsonObject, BaseResponse response) {
         hideDelayDialog();
         int type = response.getType();
-        if (type == HttpApis.getRemoveObject().hashCode()) {
+        if (type == mDeleteApi.hashCode()) {
             showToast(response.getMsg());
-            mSelectedUser.remove(mRemovePosition);
-            mAdapter.notifyDataSetChanged();
+            if (response.getCode().equals("200")) {
+                String userId = mSelectedUser.get(mRemovePosition).getUserId();
+                mDeleteUserIdList.add(userId);
+                mSelectedUser.remove(mRemovePosition);
+                mTotalRecord--;
+                mAdapter.notifyDataSetChanged();
+            }
         } else if (type == INIT_DATA) {
             mSwipeRefreshLayout.setRefreshing(false);
             String dataStr = jsonObject.optString("data");
@@ -277,6 +272,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = new Intent();
 //        intent.putExtra("DATA", (Serializable) mSelectedUser);
         intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
+        intent.putExtra("DELETE_LIST", (Parcelable) mDeleteUserIdList);
         intent.putExtra("COUNT", mTotalRecord);
         setResult(UISkipUtils.FROM_EDIT, intent);
         finish();
