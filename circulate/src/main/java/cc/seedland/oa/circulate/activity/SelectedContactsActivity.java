@@ -222,7 +222,8 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
     public void onClick(View v, int id) {
         Intent intent = new Intent();
         if (id == R.id.tv_continue) {
-            intent.putExtra("DATA", (Serializable) mSelectedList);
+            intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
+            intent.putStringArrayListExtra("DELETE_LIST",  mDeleteUserIdList);
             intent.putExtra("COUNT", mTotalRecord);
             setResult(UISkipUtils.FROM_EDIT, intent);
             finish();
@@ -272,7 +273,7 @@ public class SelectedContactsActivity extends CirculateBaseActivity implements R
         Intent intent = new Intent();
 //        intent.putExtra("DATA", (Serializable) mSelectedUser);
         intent.putParcelableArrayListExtra("DATA", (ArrayList<? extends Parcelable>) mSelectedUser);
-        intent.putExtra("DELETE_LIST", (Parcelable) mDeleteUserIdList);
+        intent.putStringArrayListExtra("DELETE_LIST",  mDeleteUserIdList);
         intent.putExtra("COUNT", mTotalRecord);
         setResult(UISkipUtils.FROM_EDIT, intent);
         finish();
