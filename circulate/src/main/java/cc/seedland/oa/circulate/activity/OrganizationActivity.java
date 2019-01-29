@@ -182,7 +182,7 @@ public class OrganizationActivity extends CirculateBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UISkipUtils.TO_EDIT) {
             if (resultCode == UISkipUtils.FROM_EDIT) {
-                List<UserInfo> selected = (List<UserInfo>) data.getSerializableExtra("DATA");
+                List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
                 if (mType == 0) {
                     mOrganizationFragment.setSelectedNode(selected);
                 } else if (mType == 1) {
@@ -190,6 +190,25 @@ public class OrganizationActivity extends CirculateBaseActivity {
                 } else if (mType == 2) {
                     mPrivateGroupFragment.setSelectedNode(selected);
                 }
+            }else if (resultCode == UISkipUtils.FROM_SELECTED) {
+                Intent intent = new Intent();
+                List<UserInfo> selected = data.getParcelableArrayListExtra("DATA");
+                List<UserInfo> selectedNode = null;
+                if (mType == 0) {
+                    mOrganizationFragment.setSelectedNode(selected);
+                    selectedNode = mOrganizationFragment.getSelectedNode();
+                } else if (mType == 1) {
+                    mCommonGroupFragment.setSelectedNode(selected);
+                    selectedNode = mCommonGroupFragment.getSelectedNode();
+                } else if (mType == 2) {
+                    mPrivateGroupFragment.setSelectedNode(selected);
+                    selectedNode = mPrivateGroupFragment.getSelectedNode();
+                }
+                refreshSelectedUser(selectedNode);
+                intent.putExtra("DATA", (Serializable) selectedNode);
+                intent.putExtra("COUNT",mCount);
+                setResult(UISkipUtils.FROM_SELECTED, intent);
+                finish();
             }
         }
     }

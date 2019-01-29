@@ -246,7 +246,7 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
 //                    mEditDialog.dismiss();
 //                }
 //            }
-            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId,mMailInfo.ReceiveCount,1);
+            UISkipUtils.skipToContactsActivity(this, mMailInfo.receivess, mMailId,mMailInfo.ReceiveCount,mMailInfo.receiveUserIds,1);
             if (mEditDialog != null) {
                 mEditDialog.dismiss();
             }

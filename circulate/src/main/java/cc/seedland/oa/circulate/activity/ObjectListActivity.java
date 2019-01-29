@@ -141,6 +141,7 @@ public class ObjectListActivity extends CirculateBaseActivity implements Respons
 
     @Override
     public void onError(String msg, String code) {
+        hideDelayDialog();
         showToast(msg);
         swipeRefreshView.setRefreshing(false);
     }

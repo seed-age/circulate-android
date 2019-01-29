@@ -35,6 +35,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -144,15 +145,15 @@ public class ContactsActivity extends CirculateBaseActivity {
                 } else if (id == R.id.ll_organization) {
                     mGroupType = 0;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
-                            mSelectedUserList, mGroupType,mReceiverCount);
+                            mSelectedUserList, mGroupType, mReceiverCount);
                 } else if (id == R.id.ll_common_group) {
                     mGroupType = 1;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
-                            mSelectedUserList, mGroupType,mReceiverCount);
+                            mSelectedUserList, mGroupType, mReceiverCount);
                 } else if (id == R.id.ll_private_group) {
                     mGroupType = 2;
                     UISkipUtils.skipToOrganizationActivity(ContactsActivity.this,
-                            mSelectedUserList, mGroupType,mReceiverCount);
+                            mSelectedUserList, mGroupType, mReceiverCount);
                 }
             }
         });
@@ -167,6 +168,7 @@ public class ContactsActivity extends CirculateBaseActivity {
 
     //刷新选中人数
     private boolean isFirstSelect = true;
+
     private void refreshSelected(List<ContactsMultiInfo> data) {
         int addCount = 0;
 //        mSelectedUserList.clear();
@@ -178,10 +180,10 @@ public class ContactsActivity extends CirculateBaseActivity {
             if (isFirstSelect) {
                 addCount = mSelectedUserList.size();
                 isFirstSelect = false;
-            }else {
+            } else {
                 addCount = mReceiverCount;
             }
-        }else {
+        } else {
             isFirstSelect = false;
             addCount = mReceiverCount;
         }
@@ -228,6 +230,9 @@ public class ContactsActivity extends CirculateBaseActivity {
         user_list = intent.getParcelableArrayListExtra("USER_LIST");
         mReceiverCount = intent.getIntExtra("RECEIVER_COUNT", 0);
         mType = intent.getIntExtra("type", 1);
+        String userIds = intent.getStringExtra("USER_ID");
+        String[] userIdArray = userIds.split(",");
+        List<String> userIdList = Arrays.asList(userIdArray);
 //        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
@@ -249,13 +254,18 @@ public class ContactsActivity extends CirculateBaseActivity {
                         ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
                         contactsMultiInfo.setName(userInfo.lastName);
                         contactsMultiInfo.userInfo = userInfo;
-                        if (mSelectedUserList != null && mSelectedUserList.size() > 0) {
-                            for (UserInfo info : mSelectedUserList) {
-                                if (userInfo.userId.equals(info.userId)) {
-                                    contactsMultiInfo.isSelected = true;
-                                }
+                        if (userIdList != null && userIdList.size() > 0) {
+                            if (userIdList.contains(userInfo.userId)) {
+                                contactsMultiInfo.isSelected = true;
                             }
                         }
+//                        if (mSelectedUserList != null && mSelectedUserList.size() > 0) {
+//                            for (UserInfo info : mSelectedUserList) {
+//                                if (userInfo.userId.equals(info.userId)) {
+//                                    contactsMultiInfo.isSelected = true;
+//                                }
+//                            }
+//                        }
                         contentInfo.add(contactsMultiInfo);
                     }
                 }
@@ -285,7 +295,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     @Override
     public void onClick(View v, int id) {
         if (id == R.id.ll_selected) {
-            UISkipUtils.skipToSelectedContactsActivity(this, mSelectedUserList, mMailId,mType);
+            UISkipUtils.skipToSelectedContactsActivity(this, mSelectedUserList, mMailId, mType);
         } else if (id == R.id.tv_right) {
             List<UserInfo> userInfos = new ArrayList<>();
             List<ContactsMultiInfo> data = mAdapter.getData();

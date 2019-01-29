@@ -56,8 +56,14 @@ public class SentAdapter extends BaseQuickAdapter<MailInfo, BaseViewHolder> {
         helper.setText(R.id.tv_desc, item.title);
         helper.setGone(R.id.iv_has_notify, false);
         String date = "";
-        if (!TextUtils.isEmpty(item.sendTime)) {
-            date = item.sendTime.substring(item.sendTime.indexOf("-") + 1, item.sendTime.length());
+        if (!isRemovedList) {
+            if (!TextUtils.isEmpty(item.sendTime)) {
+                date = item.sendTime.substring(item.sendTime.indexOf("-") + 1, item.sendTime.length());
+            }
+        }else {
+            if (!TextUtils.isEmpty(item.deleteTime)) {
+                date = item.deleteTime.substring(item.deleteTime.indexOf("-") + 1, item.deleteTime.length());
+            }
         }
         helper.setText(R.id.tv_date, date);
         helper.setGone(R.id.iv_accessory, item.hasAttachment);

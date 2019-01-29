@@ -97,12 +97,13 @@ public class UISkipUtils {
      * @param receiverCount
      * @param type 1：来自传阅详情 2：来自待发传阅
      */
-    public static void skipToContactsActivity(Activity context, List<UserInfo> userInfos, long mailId,int receiverCount,int type) {
+    public static void skipToContactsActivity(Activity context, List<UserInfo> userInfos, long mailId,int receiverCount,String userIds,int type) {
         Intent intent = new Intent(context, ContactsActivity.class);
         intent.putParcelableArrayListExtra("USER_LIST", (ArrayList<? extends Parcelable>) userInfos);
         intent.putExtra("MAIL_ID", mailId);
         intent.putExtra("RECEIVER_COUNT", receiverCount);
         intent.putExtra("type",type);
+        intent.putExtra("USER_ID",userIds);
         context.startActivityForResult(intent, TO_EDIT);
     }
 
@@ -150,10 +151,10 @@ public class UISkipUtils {
         context.startActivityForResult(intent, TO_COMMENT);
     }
 
-    public static void skipToObjectListActivity(Context context, long mailId) {
+    public static void skipToObjectListActivity(Activity context, long mailId) {
         Intent intent = new Intent(context, ObjectListActivity.class);
         intent.putExtra("MAILID", mailId);
-        context.startActivity(intent);
+        context.startActivityForResult(intent,TO_COMMENT);
     }
 
     public static void skipToSearchPeopleActivity(Activity context, List<UserInfo> selected) {

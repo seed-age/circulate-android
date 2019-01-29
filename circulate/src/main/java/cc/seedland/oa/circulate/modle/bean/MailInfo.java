@@ -50,6 +50,8 @@ public class MailInfo implements Parcelable {
     public boolean afreshConfimss;
     public String receiveTime;
     public int ReceiveCount;
+    public String deleteTime;
+    public String receiveUserIds;
 
     private String time;
     public boolean isSelected;
@@ -91,6 +93,8 @@ public class MailInfo implements Parcelable {
         ifConfirmss = in.readByte() != 0;
         afreshConfimss = in.readByte() != 0;
         receiveTime = in.readString();
+        deleteTime = in.readString();
+        receiveUserIds = in.readString();
         time = in.readString();
         isSelected = in.readByte() != 0;
     }
@@ -154,6 +158,8 @@ public class MailInfo implements Parcelable {
         parcel.writeByte((byte) (ifConfirmss ? 1 : 0));
         parcel.writeByte((byte) (afreshConfimss ? 1 : 0));
         parcel.writeString(receiveTime);
+        parcel.writeString(deleteTime);
+        parcel.writeString(receiveUserIds);
         parcel.writeString(time);
         parcel.writeByte((byte) (isSelected ? 1 : 0));
     }
