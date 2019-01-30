@@ -353,16 +353,21 @@ public class CYDetailActivity extends CirculateBaseActivity implements ResponseH
                 }
                 break;
             case UISkipUtils.TO_EDIT:
-                if (resultCode == UISkipUtils.FROM_EDIT && data != null) {
-                    List<UserInfo> userInfos = data.getParcelableArrayListExtra("USER");
-                    if (userInfos != null) {
-                        List<String> receiveUserId = new ArrayList<>();
-                        for (UserInfo userInfo : userInfos) {
-                            receiveUserId.add(String.valueOf(userInfo.userId));
+                if (resultCode == UISkipUtils.FROM_EDIT) {
+                    if (data != null) {
+                        List<UserInfo> userInfos = data.getParcelableArrayListExtra("USER");
+                        if (userInfos != null) {
+                            List<String> receiveUserId = new ArrayList<>();
+                            for (UserInfo userInfo : userInfos) {
+                                receiveUserId.add(String.valueOf(userInfo.userId));
+                            }
+                            if (receiveUserId.size() != 0) {
+                                HttpService.addCYObject(mMailId, receiveUserId, this);
+                            }
                         }
-                        if (receiveUserId.size() != 0) {
-                            HttpService.addCYObject(mMailId, receiveUserId, this);
-                        }
+                    }else {
+                        showDelayDialog();
+                        HttpService.loadMailDetail(mMailId, mFlag, this);
                     }
                 }
                 break;

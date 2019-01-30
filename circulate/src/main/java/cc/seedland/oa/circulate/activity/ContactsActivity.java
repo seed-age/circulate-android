@@ -57,6 +57,7 @@ public class ContactsActivity extends CirculateBaseActivity {
     private int mGroupType; //0:组织架构  1:公用组
     private int mReceiverCount;
     private int mType;
+    private List<String> mUserIdList;
 
     @Override
     public int getLayoutRes() {
@@ -178,7 +179,8 @@ public class ContactsActivity extends CirculateBaseActivity {
 //        }
         if (mSelectedUserList.size() > 0) {
             if (isFirstSelect) {
-                addCount = mSelectedUserList.size();
+//                addCount = mSelectedUserList.size();
+                addCount = mReceiverCount;
                 isFirstSelect = false;
             } else {
                 addCount = mReceiverCount;
@@ -188,28 +190,48 @@ public class ContactsActivity extends CirculateBaseActivity {
             addCount = mReceiverCount;
         }
         for (ContactsMultiInfo datum : data) {
-            boolean isContainer = false;
-            Iterator<UserInfo> iterator = mSelectedUserList.iterator();
             UserInfo userInfo = datum.userInfo;
             if (userInfo != null) {
-                while (iterator.hasNext()) {
-                    UserInfo next = iterator.next();
-                    if (next.userId.equals(userInfo.userId)) {
-                        if (!datum.isSelected) {
-                            iterator.remove();
-                        }
-                        isContainer = true;
+                String userId = userInfo.userId;
+                if (mUserIdList.contains(userId)) {
+                    if (!datum.isSelected) {
+                        addCount--;
+                        mUserIdList.remove(userId);
+                        mSelectedUserList.remove(userInfo);
                     }
-                }
-                if (datum.isSelected) {
-                    if (isContainer) {
-                        continue;
+                } else {
+                    if (datum.isSelected) {
+                        addCount++;
+                        mUserIdList.add(userId);
+                        mSelectedUserList.add(userInfo);
                     }
-                    addCount++;
-                    mSelectedUserList.add(userInfo);
                 }
             }
         }
+//        for (ContactsMultiInfo datum : data) {
+//            boolean isContainer = false;
+//            Iterator<UserInfo> iterator = mSelectedUserList.iterator();
+//            UserInfo userInfo = datum.userInfo;
+//            if (userInfo != null) {
+//                while (iterator.hasNext()) {
+//                    UserInfo next = iterator.next();
+//                    if (next.userId.equals(userInfo.userId)) {
+//                        if (!datum.isSelected) {
+//                            addCount--;
+//                            iterator.remove();
+//                        }
+//                        isContainer = true;
+//                    }
+//                }
+//                if (datum.isSelected) {
+//                    if (isContainer) {
+//                        continue;
+//                    }
+//                    addCount++;
+//                    mSelectedUserList.add(userInfo);
+//                }
+//            }
+//        }
         mReceiverCount = addCount;
         mTvSelected.setText("(" + (addCount) + ")");
     }
@@ -232,7 +254,7 @@ public class ContactsActivity extends CirculateBaseActivity {
         mType = intent.getIntExtra("type", 1);
         String userIds = intent.getStringExtra("USER_ID");
         String[] userIdArray = userIds.split(",");
-        List<String> userIdList = Arrays.asList(userIdArray);
+        mUserIdList = new ArrayList(Arrays.asList(userIdArray));
 //        user_list = ReceivessCache.receivess;
         if (user_list != null) {
             mSelectedUserList = user_list;
@@ -254,9 +276,10 @@ public class ContactsActivity extends CirculateBaseActivity {
                         ContactsMultiInfo contactsMultiInfo = new ContactsMultiInfo(ContactsMultiInfo.CONTENT);
                         contactsMultiInfo.setName(userInfo.lastName);
                         contactsMultiInfo.userInfo = userInfo;
-                        if (userIdList != null && userIdList.size() > 0) {
-                            if (userIdList.contains(userInfo.userId)) {
+                        if (mUserIdList != null && mUserIdList.size() > 0) {
+                            if (mUserIdList.contains(userInfo.userId)) {
                                 contactsMultiInfo.isSelected = true;
+                                mSelectedUserList.add(userInfo);
                             }
                         }
 //                        if (mSelectedUserList != null && mSelectedUserList.size() > 0) {
@@ -271,25 +294,9 @@ public class ContactsActivity extends CirculateBaseActivity {
                 }
             }
         }
-//        refreshSelected(contentInfo);
-//        // 按首字母进行排序
-//        Collections.sort(contentInfo, new Comparator<ContactsMultiInfo>() {
-//
-//            @Override
-//            public int compare(ContactsMultiInfo o1, ContactsMultiInfo o2) {
-//                if (o1.getItemType() == ContactsMultiInfo.CONTENT && o2.getItemType() ==
-//                        ContactsMultiInfo.CONTENT)
-//                    return o1.getPingyin().compareTo(o2.getPingyin());
-//                else
-//                    return 0;
-//            }
-//        });
         data.add(0, new ContactsMultiInfo(ContactsMultiInfo.HEAD));
         data.addAll(contentInfo);
         mAdapter.notifyDataSetChanged();
-        //
-//        mTvSelected.setText("(" + data.size() + ")");
-
     }
 
     @Override
@@ -335,18 +342,32 @@ public class ContactsActivity extends CirculateBaseActivity {
                 mReceiverCount = data.getIntExtra("COUNT", 0);
 //                mReceiverCount = selected.size();
                 mTvSelected.setText("(" + mReceiverCount + ")");
-                if (mType == 2) {
-                    if (deleteUserIdList.size() > 0) {
-                        for (ContactsMultiInfo datum : this.data) {
-                            if (datum.getItemType() == ContactsMultiInfo.CONTENT) {
-                                if (deleteUserIdList.contains(datum.userInfo.userId)) {
-                                    datum.isSelected = false;
-                                }
+                if (deleteUserIdList.size() > 0) {
+                    for (ContactsMultiInfo datum : this.data) {
+                        if (datum.getItemType() == ContactsMultiInfo.CONTENT) {
+                            String userId = datum.userInfo.userId;
+                            if (deleteUserIdList.contains(userId)) {
+                                datum.isSelected = false;
                             }
+//                            if (mUserIdList.contains(userId)) {
+//                                mUserIdList.remove(userId);
+//                            }
                         }
-                        mAdapter.notifyDataSetChanged();
                     }
+                    mAdapter.notifyDataSetChanged();
                 }
+//                if (mType == 2) {
+//                    if (deleteUserIdList.size() > 0) {
+//                        for (ContactsMultiInfo datum : this.data) {
+//                            if (datum.getItemType() == ContactsMultiInfo.CONTENT) {
+//                                if (deleteUserIdList.contains(datum.userInfo.userId)) {
+//                                    datum.isSelected = false;
+//                                }
+//                            }
+//                        }
+//                        mAdapter.notifyDataSetChanged();
+//                    }
+//                }
 //                for (ContactsMultiInfo listDatum : listData) {
 //                    listDatum.isSelected = false;
 //                    if (listDatum.getItemType() == ContactsMultiInfo.CONTENT) {
